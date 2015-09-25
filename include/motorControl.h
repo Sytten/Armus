@@ -12,6 +12,7 @@
 #define MOTORCONTROL_H_
 
 #include <libarmus.h>
+#include <math.h>
 
 #include "constants.h"
 

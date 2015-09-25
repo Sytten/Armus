@@ -8,7 +8,7 @@
 ============================================================================
 */
 
-#include <libarmus.h>
+
 #include "motorControl.h"
 
 bool spinXDegrees(int direction, float degree)
@@ -110,21 +110,16 @@ float distanceForDegree (float degree)
 
 bool roll(int distance)
 {
-	int rightSpeed = MASTER_STARTING_SPEED;
-	int leftSpeed = SLAVE_STARTING_SPEED;
+	int rightSpeed = LEFT_STARTING_SPEED;
+	int leftSpeed = RIGHT_STARTING_SPEED;
 
 	int leftEncoder = 0;
 	int rightEncoder = 0;
 
-	int leftDiff = 0;
-	int rightDiff = 0;
-
-	int totalRightDiff  = 0;
-	int totalLeftDiff = 0;
-
 	int totalTicks = distance/WHEEL_CIRC*HOLES_QTY;
 	int doneRightTicks = 0;
 	int doneLeftTicks= 0;
+	int reads = 0;
 
 	//Clear encoders
 	ENCODER_Read(ENCODER_LEFT);
@@ -138,30 +133,23 @@ bool roll(int distance)
 		MOTOR_SetSpeed(MOTOR_RIGHT, rightSpeed);
 		MOTOR_SetSpeed(MOTOR_LEFT, leftSpeed);
 
-		THREAD_MSleep(1000);
+		THREAD_MSleep(500);
 
 		leftEncoder = ENCODER_Read(ENCODER_LEFT);
 		rightEncoder = ENCODER_Read(ENCODER_RIGHT);
 		LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
+
 		doneRightTicks += rightEncoder;
 		doneLeftTicks += leftEncoder;
+		++reads;
 
-		leftDiff = 20 - leftEncoder;
-		rightDiff = 20 - rightEncoder;
+		LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
+		LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
 
-		totalLeftDiff += leftDiff;
-		totalRightDiff += rightDiff;
-
-		totalLeftDiff *= 0.99;
-		totalRightDiff *= 0.99;
-
-		LCD_Printf("Instant: %d\tLong: %d\n", leftDiff, totalLeftDiff);
-		LCD_Printf("Instant: %d\tLong: %d\n", rightDiff, totalRightDiff);
-
-		leftSpeed += leftDiff*INSTANT_PROPORTIONALITY+totalLeftDiff*LONG_PROPORTIONALITY;
-		rightSpeed += rightDiff*INSTANT_PROPORTIONALITY+totalRightDiff*LONG_PROPORTIONALITY;
-
+		leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY);
+		rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY);
+		LCD_Printf("Left: %d\t Right: %d\n*******\n", leftSpeed, rightSpeed);
 	}
 
 	//Stop robot
