@@ -27,7 +27,7 @@
 #define SPIN_LEFT 0
 #define SPIN_RIGHT 1
 #define MOTOR_DEFAULT_SPEED 35
-#define READING_CYCLE_DELAY 125
+#define READING_CYCLE_DELAY 50
 
 /*****Roll Function****/
 #define LEFT_STARTING_SPEED 50 //RobotB:49 RobotA:50

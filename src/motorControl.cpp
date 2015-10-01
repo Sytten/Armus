@@ -224,6 +224,8 @@ int spinXDegreesByHoles(int direction, float degree)
 	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
 	int speedMotorRight = MOTOR_DEFAULT_SPEED;
 
+	float holesAverage = 0;
+
 	// On réinitialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
@@ -234,7 +236,8 @@ int spinXDegreesByHoles(int direction, float degree)
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
 
-	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
+	//while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
+	while(holesAverage < holesToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -259,6 +262,8 @@ int spinXDegreesByHoles(int direction, float degree)
 
 			holesLeft += encoderValLeft;
 			holesRight += encoderValRight;
+
+			holesAverage = (holesLeft + holesRight) / 2;
 
 			/**
 			if(leftTravel > rightTravel)
