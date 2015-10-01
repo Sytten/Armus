@@ -27,6 +27,4 @@ int spinXDegrees(int direction, float degree);
 //Roll
 bool roll(int distance);
 
-int testRun();
-
 #endif /* MOTORCONTROL_H_ */
