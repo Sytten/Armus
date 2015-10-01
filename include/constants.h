@@ -26,8 +26,13 @@
 /*****Spin function*****/
 #define SPIN_LEFT 0
 #define SPIN_RIGHT 1
-#define MOTOR_DEFAULT_SPEED 35
-#define READING_CYCLE_DELAY 50
+#define MOTOR_DEFAULT_SPEED 55
+#define READING_CYCLE_DELAY 100
+#define MAX_PRECISION 2
+
+/*****TURN FUNCTION*****/
+#define TURN_AXIS_DIAMETER 2 * WHEEL_AXE_DIAM
+#define TURN_AXIS_CIRC (TURN_AXIS_DIAMETER * PI_VAL)
 
 /*****Roll Function****/
 #define LEFT_STARTING_SPEED 50 //RobotB:49 RobotA:50

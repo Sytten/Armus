@@ -24,6 +24,9 @@ float distanceForDegree (float degree);
 float holesForDistance(float distanceCM);
 bool spinXDegrees(int direction, float degree);
 
+bool turn(int direction, float degree);
+float holesForTurn(int degree);
+
 //Roll
 bool roll(int distance);
 

@@ -34,6 +34,26 @@ int main()
 			spinXDegrees(SPIN_RIGHT, 12.5);
 			roll(80);
 		}
+		else if(DIGITALIO_Read(BMP_REAR))
+		{
+			roll(205);
+			turn(SPIN_LEFT, 90);
+			roll(40);
+			turn(SPIN_RIGHT, 90);
+			roll(37);
+			turn(SPIN_RIGHT, 90);
+			roll(40);
+			turn(SPIN_LEFT, 90);
+			roll(25);
+			turn(SPIN_RIGHT, 45);
+			roll(68);
+			turn(SPIN_LEFT, 90);
+			roll(54);
+			turn(SPIN_RIGHT, 45);
+			roll(43);
+			turn(SPIN_RIGHT, 12.5);
+			roll(74);
+		}
 		THREAD_MSleep(100);
 	}
 	   

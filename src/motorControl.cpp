@@ -236,8 +236,8 @@ int spinXDegreesByHoles(int direction, float degree)
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
 
-	//while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
-	while(holesAverage < holesToTravel)
+	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
+	//while(holesAverage < holesToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -263,7 +263,7 @@ int spinXDegreesByHoles(int direction, float degree)
 			holesLeft += encoderValLeft;
 			holesRight += encoderValRight;
 
-			holesAverage = (holesLeft + holesRight) / 2;
+			//holesAverage = (holesLeft + holesRight) / 2;
 
 			/**
 			if(leftTravel > rightTravel)
@@ -288,5 +288,67 @@ int spinXDegreesByHoles(int direction, float degree)
 
 	}
 	return 0;
+}
+
+bool turn(int direction, float degree)
+{
+	//Variables de timing pour ralentir les lectures d'encodeur
+	float lastMS = 0;
+	float currentMS = 0;
+
+	//Quantité de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	float holesToTravel = holesForTurn(degree);
+	LCD_Printf("%d HOLES : ", holesToTravel);
+	// Définition des valeurs des distances parcourues Temporaire.
+	int holesTravelled = 0;
+	int wheel;
+	int encoder;
+
+	// Vitesse initial des moteurs par default
+	int speedMotor = MOTOR_DEFAULT_SPEED;
+
+	if(SPIN_LEFT == direction)
+	{
+		wheel = MOTOR_RIGHT;
+		encoder = ENCODER_RIGHT;
+	}
+	else
+	{
+		wheel = MOTOR_LEFT;
+		encoder = ENCODER_LEFT;
+	}
+
+	// On réinitialise les moteurs a 0.
+	MOTOR_SetSpeed (MOTOR_LEFT,0);
+	MOTOR_SetSpeed (MOTOR_RIGHT,0);
+
+	// On lit la valeur de chaque encodeurs.
+	ENCODER_Read(ENCODER_LEFT);
+	ENCODER_Read(ENCODER_RIGHT);
+
+	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
+
+	while(holesTravelled < holesToTravel)
+	{
+		currentMS = SYSTEM_ReadTimerMSeconds();
+		MOTOR_SetSpeed(wheel, speedMotor);
+		//Si le delai d'execution est depasse
+		if(currentMS >= lastMS + READING_CYCLE_DELAY)
+		{
+			holesTravelled += ENCODER_Read(encoder);
+
+			lastMS = currentMS;
+		}
+
+	}
+
+	MOTOR_SetSpeed(wheel, 0);
+	return 0;
+}
+
+float holesForTurn(int degree)
+{
+	 float dist = (float)TURN_AXIS_CIRC * ((float)degree / float(360.0));
+	 return holesForDistance(dist);
 }
 
