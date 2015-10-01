@@ -24,6 +24,4 @@ float distanceForDegree (float degree);
 //Roll
 bool roll(int distance);
 
-int testRun();
-
 #endif /* MOTORCONTROL_H_ */
