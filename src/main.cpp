@@ -15,42 +15,24 @@ int main()
 	while(1)
 	{
 		if(DIGITALIO_Read(BMP_FRONT))
-			roll(200);
-
-		if(DIGITALIO_Read(BMP_REAR))
 		{
-			LCD_Printf(" %f WHEEL_CIRC", WHEEL_CIRC);
-			LCD_Printf(" %f  WHEEL_AXE_CIRC", WHEEL_AXE_CIRC);
-
-			int degreesToTurn = 90;
-
-			spinXDegrees(SPIN_LEFT, degreesToTurn);
-			LCD_Printf("J'ai tourné de : %d ", degreesToTurn);
-
-			//Pause de 2 sec
-			THREAD_MSleep(2000);
-
-			//LCD_Printf(" %f DISTANCE for 32", travelledDistance((float)32));
-			//LCD_Printf(" %f  DIST for 1", travelledDistance((float)1));
-
-			degreesToTurn = 180;
-
-			spinXDegrees(SPIN_LEFT, degreesToTurn);
-			LCD_Printf("J'ai tourné de : %d ", degreesToTurn);
-
-			THREAD_MSleep(2000);
-
-			degreesToTurn = 270;
-
-			spinXDegrees(SPIN_LEFT, degreesToTurn);
-			LCD_Printf("J'ai tourné de : %d ", degreesToTurn);
-
-			THREAD_MSleep(2000);
-
-			spinXDegrees(SPIN_RIGHT, degreesToTurn);
-			LCD_Printf("J'ai tourné de : %d ", degreesToTurn);
-	
-			THREAD_MSleep(2000);
+			roll(223);
+			spinXDegrees(SPIN_LEFT, 90);
+			roll(48);
+			spinXDegrees(SPIN_RIGHT, 90);
+			roll(45);
+			spinXDegrees(SPIN_RIGHT, 90);
+			roll(48);
+			spinXDegrees(SPIN_LEFT, 90);
+			roll(32);
+			spinXDegrees(SPIN_RIGHT, 45);
+			roll(77);
+			spinXDegrees(SPIN_LEFT, 90);
+			roll(63);
+			spinXDegrees(SPIN_RIGHT, 45);
+			roll(50);
+			spinXDegrees(SPIN_RIGHT, 12.5);
+			roll(80);
 		}
 		THREAD_MSleep(100);
 	}
