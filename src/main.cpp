@@ -36,23 +36,42 @@ int main()
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
-			roll(205);
+			roll(210);
 			turn(SPIN_LEFT, 90);
-			roll(40);
+			roll(35);
 			turn(SPIN_RIGHT, 90);
-			roll(37);
+			roll(30);
 			turn(SPIN_RIGHT, 90);
-			roll(40);
+			roll(35);
 			turn(SPIN_LEFT, 90);
-			roll(25);
+			roll(18);
 			turn(SPIN_RIGHT, 45);
-			roll(68);
-			turn(SPIN_LEFT, 90);
-			roll(54);
+			roll(35);
+			turn(SPIN_LEFT, 88);
+			roll(48);
 			turn(SPIN_RIGHT, 45);
 			roll(43);
-			turn(SPIN_RIGHT, 12.5);
+			turn(SPIN_RIGHT, 20);
 			roll(74);
+
+			turn(SPIN_RIGHT, 180);
+			roll(74);
+			turn(SPIN_LEFT, 15);
+			roll(43);
+			turn(SPIN_LEFT, 45);
+			roll(48);
+			turn(SPIN_RIGHT, 90);
+			roll(35);
+			turn(SPIN_LEFT, 45);
+			roll(18);
+			turn(SPIN_RIGHT, 90);
+			roll(35);
+			turn(SPIN_LEFT, 90);
+			roll(30);
+			turn(SPIN_LEFT, 90);
+			roll(35);
+			turn(SPIN_RIGHT, 90);
+			roll(220);
 		}
 		THREAD_MSleep(100);
 	}

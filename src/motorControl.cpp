@@ -159,8 +159,8 @@ bool roll(int distance)
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
 
-			leftSpeed += round((MOTOR_TARGET_SPEED/5-leftEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED/5-doneLeftTicks)*LONG_PROPORTIONALITY/5);
-			rightSpeed += round((MOTOR_TARGET_SPEED/5-rightEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED/5-doneRightTicks)*LONG_PROPORTIONALITY/5);
+			leftSpeed += round((MOTOR_TARGET_SPEED/5-leftEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY/5);
+			rightSpeed += round((MOTOR_TARGET_SPEED/5-rightEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY/5);
 			LCD_Printf("LeftSpeed: %d\t RightSpeed: %d\n", leftSpeed, rightSpeed);
 		}
 
@@ -209,10 +209,10 @@ int spinXDegreesByHoles(int direction, float degree)
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantité de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
-	float holesToTravel = holesForDistance(distanceForDegree(degree));		// Définition de la distance d'un degrée.
+	//Quantitï¿½ de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	float holesToTravel = holesForDistance(distanceForDegree(degree));		// Dï¿½finition de la distance d'un degrï¿½e.
 
-	// Définition des valeurs des distances parcourues Temporaire.
+	// Dï¿½finition des valeurs des distances parcourues Temporaire.
 	int holesLeft = 0;
 	int holesRight = 0;
 
@@ -226,7 +226,7 @@ int spinXDegreesByHoles(int direction, float degree)
 
 	float holesAverage = 0;
 
-	// On réinitialise les moteurs a 0.
+	// On rï¿½initialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
@@ -296,10 +296,10 @@ bool turn(int direction, float degree)
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantité de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	//Quantitï¿½ de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
 	float holesToTravel = holesForTurn(degree);
 	LCD_Printf("%d HOLES : ", holesToTravel);
-	// Définition des valeurs des distances parcourues Temporaire.
+	// Dï¿½finition des valeurs des distances parcourues Temporaire.
 	int holesTravelled = 0;
 	int wheel;
 	int encoder;
@@ -318,7 +318,7 @@ bool turn(int direction, float degree)
 		encoder = ENCODER_LEFT;
 	}
 
-	// On réinitialise les moteurs a 0.
+	// On rï¿½initialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
