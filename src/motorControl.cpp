@@ -33,6 +33,8 @@ bool spinXDegrees(int direction, float degree)
 	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
 	int speedMotorRight = MOTOR_DEFAULT_SPEED;
 
+	float averageDistance = 0;
+
 	// On réinitialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
@@ -44,7 +46,8 @@ bool spinXDegrees(int direction, float degree)
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
 	LCD_Printf("\n# distancetodo :%f cm\n",distanceToTravel);
 	// On comptabilise la distance parcouru pour un deg.
-	while(leftTravel <= distanceToTravel ||  rightTravel <= distanceToTravel)
+	while(leftTravel <= distanceToTravel &&  rightTravel <= distanceToTravel)
+	//while(averageDistance <= distanceToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -76,6 +79,11 @@ bool spinXDegrees(int direction, float degree)
 			else if(leftTravel < rightTravel)
 				speedMotorRight++;
 
+			if(leftTravel >= distanceToTravel)
+				MOTOR_SetSpeed(MOTOR_LEFT,0);
+			else if(rightTravel >= distanceToTravel)
+				MOTOR_SetSpeed(MOTOR_RIGHT,0);
+
 			//LCD_Printf("#gauche :%d\n",encoderValLeft);
 			//LCD_Printf("#droite :%d\n",encoderValRight);
 
@@ -84,6 +92,7 @@ bool spinXDegrees(int direction, float degree)
 
 			lastMS = currentMS;
 		}
+		averageDistance = (rightTravel + leftTravel) * 0.5;
 	}
 	LCD_Printf("\n#distancetodo :%f cm\n",distanceToTravel);
 	LCD_Printf("#dist_gauche f : %f cm\n", leftTravel);
@@ -147,8 +156,8 @@ bool roll(int distance)
 		LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
 		LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
 
-		leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY);
-		rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY);
+		//leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY);
+		//rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY);
 		LCD_Printf("Left: %d\t Right: %d\n*******\n", leftSpeed, rightSpeed);
 	}
 
@@ -157,6 +166,56 @@ bool roll(int distance)
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
 
 	return true;
+}
+
+int testRun()
+{
+
+	int i;
+	float encoderValRight = 0, encoderValLeft = 0;
+
+	// On réinitialise les moteurs a 0.
+	MOTOR_SetSpeed (MOTOR_LEFT,0);
+	MOTOR_SetSpeed (MOTOR_RIGHT,0);
+
+	ENCODER_Read(ENCODER_LEFT);
+	ENCODER_Read(ENCODER_RIGHT);
+
+	//On part les comptabilisateurs.
+
+	MOTOR_SetSpeed (MOTOR_LEFT,50);
+	MOTOR_SetSpeed (MOTOR_RIGHT,50);
+
+	THREAD_MSleep(2000);
+
+	encoderValLeft = ENCODER_Read(ENCODER_LEFT);
+	encoderValRight = ENCODER_Read(ENCODER_RIGHT);
+
+	LCD_Printf("#nb LEF: %f cm\n", encoderValLeft);
+	LCD_Printf("#nb RIG: %f cm\n", encoderValRight);
+
+	// On réinitialise les moteurs a 0.
+	MOTOR_SetSpeed (MOTOR_LEFT,0);
+	MOTOR_SetSpeed (MOTOR_RIGHT,0);
+
+
+
+	MOTOR_SetSpeed (MOTOR_LEFT,100);
+	MOTOR_SetSpeed (MOTOR_RIGHT,100);
+
+	ENCODER_Read(ENCODER_LEFT);
+	ENCODER_Read(ENCODER_RIGHT);
+	THREAD_MSleep(2000);
+	encoderValLeft = ENCODER_Read(ENCODER_LEFT);
+	encoderValRight = ENCODER_Read(ENCODER_RIGHT);
+
+	LCD_Printf("#nb LEF: %f cm\n", encoderValLeft);
+	LCD_Printf("#nb RIG: %f cm\n", encoderValRight);
+
+	MOTOR_SetSpeed (MOTOR_LEFT,0);
+	MOTOR_SetSpeed (MOTOR_RIGHT,0);
+
+	return 0;
 }
 
 
