@@ -17,9 +17,12 @@
 #include "constants.h"
 
 //Spin
-bool spinXDegrees(int direction, float degree);
+bool spinXDegreesCM(int direction, float degree);
 float travelledDistance(float holesQty);
 float distanceForDegree (float degree);
+
+float holesForDistance(float distanceCM);
+int spinXDegrees(int direction, float degree);
 
 //Roll
 bool roll(int distance);

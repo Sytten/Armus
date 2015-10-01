@@ -219,3 +219,90 @@ int testRun()
 }
 
 
+float holesForDistance(float distanceCM)
+{
+	return distanceCM / (float)WHEEL_CIRC * (float)HOLES_QTY;
+}
+
+int spinXDegreesByHoles(int direction, float degree)
+{
+	//Variables de timing pour ralentir les lectures d'encodeur
+	float lastMS = 0;
+	float currentMS = 0;
+
+	//Quantité de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	float holesToTravel = holesForDistance(distanceForDegree(degree));		// Définition de la distance d'un degrée.
+
+	// Définition des valeurs des distances parcourues Temporaire.
+	int holesLeft = 0;
+	int holesRight = 0;
+
+	// Variable des encodeurs pour se souvenir des distances.
+	int encoderValLeft = 0;
+	int encoderValRight = 0;
+
+	// Vitesse initial des moteurs par default
+	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
+	int speedMotorRight = MOTOR_DEFAULT_SPEED;
+
+	// On réinitialise les moteurs a 0.
+	MOTOR_SetSpeed (MOTOR_LEFT,0);
+	MOTOR_SetSpeed (MOTOR_RIGHT,0);
+
+	// On lit la valeur de chaque encodeurs.
+	ENCODER_Read(ENCODER_LEFT);
+	ENCODER_Read(ENCODER_RIGHT);
+
+	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
+
+	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
+	{
+		if (direction == SPIN_LEFT)
+		{
+			MOTOR_SetSpeed (MOTOR_LEFT,speedMotorLeft * -1);
+			MOTOR_SetSpeed (MOTOR_RIGHT,speedMotorRight);
+		}
+		else
+		{
+			MOTOR_SetSpeed (MOTOR_LEFT,speedMotorLeft);
+			MOTOR_SetSpeed (MOTOR_RIGHT,speedMotorRight * -1);
+		}
+		currentMS = SYSTEM_ReadTimerMSeconds();
+
+		//Si le delai d'execution est depasse
+		if(currentMS >= lastMS + READING_CYCLE_DELAY)
+		{
+			encoderValLeft = ENCODER_Read(ENCODER_LEFT);
+			encoderValRight = ENCODER_Read(ENCODER_RIGHT);
+
+			//LCD_Printf("#gauche :%d\n",encoderValLeft);
+			//LCD_Printf("#droite :%d\n",encoderValRight);
+
+			holesLeft += encoderValLeft;
+			holesRight += encoderValRight;
+
+			/**
+			if(leftTravel > rightTravel)
+				speedMotorLeft++;
+			else if(leftTravel < rightTravel)
+				speedMotorRight++;
+			**/
+
+			if(holesLeft >= holesToTravel)
+				MOTOR_SetSpeed(MOTOR_LEFT,0);
+			else if(holesRight >= holesToTravel)
+				MOTOR_SetSpeed(MOTOR_RIGHT,0);
+
+			//LCD_Printf("#gauche :%d\n",encoderValLeft);
+			//LCD_Printf("#droite :%d\n",encoderValRight);
+
+			LCD_Printf("#dist_gauche : %f fentes\n", holesLeft);
+			LCD_Printf("#dist_droite : %f fentes\n", holesRight);
+
+			lastMS = currentMS;
+		}
+
+	}
+	return 0;
+}
+
