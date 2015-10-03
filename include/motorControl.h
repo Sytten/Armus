@@ -14,6 +14,7 @@
 #include <libarmus.h>
 #include <math.h>
 
+#include "stateMachine.h"
 #include "constants.h"
 
 
@@ -57,5 +58,7 @@ bool turn(int direction, float degree);
 
 //Roll
 bool roll(int distance);
+
+bool rollState(struct Machine * robus);
 
 #endif /* MOTORCONTROL_H_ */

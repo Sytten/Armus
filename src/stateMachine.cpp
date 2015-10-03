@@ -9,6 +9,8 @@
 
 int run()
 {
+	int returnedValue;
+
 	struct Machine robus;
 	robus.CurrentState = StatesInit;
 
@@ -24,7 +26,8 @@ int run()
 				robus.StateParameter = 0;
 				robus.NextState = StatesStop;
 				robus.IRSensorStates = 0;
-				robus.MotorLeftEncoder  = robus.MotorRightEncoder = 0;
+				robus.MotorLeftEncoderTotal  = robus.MotorRightEncoderTotal = 0;
+				robus.StateTicks = 0;
 				break;
 			case StatesStop:
 				break;
@@ -33,6 +36,19 @@ int run()
 			case StatesSpin:
 				break;
 			case StatesRoll:
+				returnedValue = (rollState(&robus));
+
+				if(returnedValue == 2)
+				{
+					robus.StateTicks++;
+				}
+				else if(returnedValue == 1)
+				{
+					robus.NextState == StatesStop;
+				}
+
+				MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
+				MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
 				break;
 			case StatesEnd:
 				break;
@@ -49,12 +65,10 @@ int run()
 
 		if(robus.NextState != robus.CurrentState)
 		{
+			robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
 			switch (robus.NextState)
 			{
 				case StatesStop:
-					robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
-					MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
-					MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
 					break;
 				case StatesTurn:
 					break;
@@ -63,22 +77,29 @@ int run()
 				case StatesEnd:
 					break;
 				case StatesRoll:
-					robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
+					robus.MotorLeftSpeed = RIGHT_STARTING_SPEED;
+					robus.MotorRightSpeed = LEFT_STARTING_SPEED;
 					MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
 					MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
 					break;
 				default:
-					MOTOR_SetSpeed(MOTOR_LEFT, 0);
-					MOTOR_SetSpeed(MOTOR_RIGHT, 0);
+
 					Print_Debug_Data("Error in state changing",DEBUG_CODE);
 					THREAD_MSleep(5000);
 					robus.CurrentState = StatesInit;
 					break;
 			}
-
 			robus.MotorLeftEncoderTotal = robus.MotorRightEncoderTotal = 0;
+			MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
+			MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
+
+			ENCODER_Read(ENCODER_LEFT);
+			ENCODER_Read(ENCODER_RIGHT);
+
+			robus.StateTicks = robus.StateLastMs = 0;
 			robus.CurrentState = robus.NextState;
 		}
+
 	}
 
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
@@ -87,13 +108,13 @@ int run()
 	return 1;
 }
 
-void getSensorStatus(struct Machine * machine)
+void getSensorStatus(struct Machine * robus)
 {
-	machine->IRSensorStates = sensors_IRDetection();
-	machine->MotorLeftEncoderLast = ENCODER_Read(ENCODER_LEFT);
-	machine->MotorRightEncoderLast = ENCODER_Read(ENCODER_RIGHT);
-	machine->MotorLeftEncoderTotal += machine->MotorLeftEncoderLast;
-	machine->MotorRightEncoderTotal += machine->MotorRightEncoderLast;
+	robus->IRSensorStates = sensors_IRDetection();
+	robus->MotorLeftEncoderLast = ENCODER_Read(ENCODER_LEFT);
+	robus->MotorRightEncoderLast = ENCODER_Read(ENCODER_RIGHT);
+	robus->MotorLeftEncoderTotal += robus->MotorLeftEncoderLast;
+	robus->MotorRightEncoderTotal += robus->MotorRightEncoderLast;
 }
 
 void Print_Debug_Data(const char * message, int level)

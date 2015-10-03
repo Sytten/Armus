@@ -42,21 +42,24 @@ enum States
 
 struct Machine
 {
-	int MotorLeftSpeed;
-	int MotorRightSpeed;
-	enum States CurrentState;
-	enum States NextState;
-	int StateParameter;
-	char IRSensorStates;
-	int MotorLeftEncoderTotal;
-	int MotorRightEncoderTotal;
-	int MotorLeftEncoderLast;
-	int MotorRightEncoderLast;
+	int MotorLeftSpeed;				//Motor left speed
+	int MotorRightSpeed;			//Motor right speed
+	enum States CurrentState;		//Current state machine state
+	enum States NextState;			//Next state machine state
+	float StateParameter;			//State parameter (speed, angle)
+	int StateDirection;				//Direction of the state (Forward, left, back, right)
+	char IRSensorStates;			//Char representing all IR sensor values
+	int MotorLeftEncoderTotal;		//Total number of read left encoder values since state change
+	int MotorRightEncoderTotal;		//Total number of read right encoder values since state change
+	int MotorLeftEncoderLast;		//Last number of read left encoder values
+	int MotorRightEncoderLast;		//Last number of read right encoder values
+	int StateTicks;					//Counts number of iterations in the same state
+	int StateLastMs;
 };
 
 int run();
 
-void getSensorStatus(struct Machine * machine);
+void getSensorStatus(struct Machine * robus);
 
 void Print_Debug_Data(const char * message, int level);
 

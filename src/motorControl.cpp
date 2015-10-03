@@ -261,3 +261,40 @@ bool roll(int distance)
 	return true;
 }
 
+int rollState(struct Machine * robus)
+{
+	int currentMS = SYSTEM_ReadTimerMSeconds();
+	int wheelTicks = robus->StateParameter / WHEEL_CIRC * HOLES_QTY;
+
+	if(robus->MotorRightEncoderTotal >= wheelTicks
+			|| robus->MotorLeftEncoderTotal >= wheelTicks)
+	{
+		robus->MotorLeftSpeed = 0;
+		robus->MotorRightSpeed = 0;
+		return 1;
+	}
+	else if(currentMS >= robus->StateLastMs + READING_CYCLE_DELAY_MS)
+	{
+		if(wheelTicks - robus->MotorRightEncoderTotal < MOTOR_TARGET_SPEED
+				|| wheelTicks - robus->MotorLeftEncoderTotal < MOTOR_TARGET_SPEED)
+		{
+			//THREAD_MSleep(100);
+			robus->MotorLeftSpeed  += round((MOTOR_TARGET_SPEED / 5 - robus->MotorLeftEncoderLast)
+													* INSTANT_PROPORTIONALITY / 5 +	(robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorLeftEncoderTotal) * LONG_PROPORTIONALITY / 5);
+			robus->MotorRightSpeed += round((MOTOR_TARGET_SPEED / 5 - robus->MotorRightEncoderLast)
+													* INSTANT_PROPORTIONALITY / 5 + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorRightEncoderTotal) * LONG_PROPORTIONALITY / 5);
+			return 2;
+		}
+		else
+		{
+			//THREAD_MSleep(500);
+			robus->MotorLeftSpeed += round((MOTOR_TARGET_SPEED - robus->MotorLeftEncoderLast) *
+										INSTANT_PROPORTIONALITY + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorLeftEncoderTotal) * LONG_PROPORTIONALITY);
+			robus->MotorRightSpeed += round((MOTOR_TARGET_SPEED - robus->MotorRightEncoderLast) *
+										INSTANT_PROPORTIONALITY + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorRightEncoderTotal) * LONG_PROPORTIONALITY);
+			return 2;
+		}
+	}
+	return 0;
+}
+
