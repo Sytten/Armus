@@ -1,0 +1,35 @@
+/*
+ * sensorDetection.cpp
+ *
+ *  Created on: 2015-10-03
+ *      Author: Jeep
+ */
+
+#include "sensorDetection.h"
+
+char sensors_IRDetection()
+{
+	char returnValue = 0;
+
+	int temp = IR_Detect(IR_FRONT);
+	returnValue |= temp << 6;
+
+	temp = IR_Detect(IR_RIGHT);
+	returnValue |= temp << 4;
+
+	temp = IR_Detect(IR_BACK);
+	returnValue |= temp << 2;
+
+	temp = IR_Detect(IR_LEFT);
+	returnValue |= temp << 6;
+
+	return returnValue;
+
+}
+
+bool doesIRDetect(char sensorValues, char position)
+{
+	return ((sensorValues >> position) & 1);
+}
+
+

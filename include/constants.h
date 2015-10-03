@@ -13,6 +13,9 @@
 
 #define PI_VAL 3.1416
 
+#define READING_CYCLE_DELAY_MS 100
+
+
 /*****Wheel specifications*****/
 #define WHEEL_DIAMETER 7.5
 #define HOLES_QTY 64
@@ -24,10 +27,7 @@
 #define WHEEL_AXE_CIRC (WHEEL_AXE_DIAM_MODIFIED * PI_VAL)
 
 /*****Spin function*****/
-#define SPIN_LEFT 0
-#define SPIN_RIGHT 1
 #define MOTOR_DEFAULT_SPEED 55
-#define READING_CYCLE_DELAY 100
 #define MAX_PRECISION 2
 
 /*****TURN FUNCTION*****/

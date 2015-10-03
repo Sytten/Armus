@@ -8,22 +8,46 @@
 ============================================================================
 */
 
-
 #include "motorControl.h"
+#include "stateMachine.h"
 
-bool spinXDegrees(int direction, float degree)
+float holesForTurn(int degree)
 {
+	return holesForDistance((float)TURN_AXIS_CIRC * ((float)degree / float(360.0)));
+}
 
+float holesForSpin(int degree)
+{
+	return holesForDistance((float)WHEEL_AXE_CIRC * ((float)degree / float(360.0)));
+}
+
+float holesForDistance(float centimeters)
+{
+	return centimeters / (float)WHEEL_CIRC * (float)HOLES_QTY;
+}
+
+float distanceForHoles(float holesQty)
+{
+	return ((float)WHEEL_CIRC/(float)HOLES_QTY) * holesQty;
+}
+
+float distanceForDegreeSpin (float degree)
+{
+	return (degree/(float)360) * WHEEL_AXE_CIRC;
+}
+
+bool spin(int direction, float degree)
+{
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Distance que les roues doivent tourner pour faire une rotation de X degree
-	float distanceToTravel = distanceForDegree(degree) ;		// Définition de la distance d'un degrée.
+	//Quantite de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	float holesToTravel = holesForDistance(distanceForDegreeSpin(degree));		// D�finition de la distance d'un degr�e.
 
-	// Définition des valeurs des distances parcourues Temporaire.
-	float leftTravel = 0;
-	float rightTravel = 0;
+	// Definition des valeurs des distances parcourues Temporaire.
+	int holesLeft = 0;
+	int holesRight = 0;
 
 	// Variable des encodeurs pour se souvenir des distances.
 	int encoderValLeft = 0;
@@ -33,9 +57,9 @@ bool spinXDegrees(int direction, float degree)
 	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
 	int speedMotorRight = MOTOR_DEFAULT_SPEED;
 
-	float averageDistance = 0;
+	float holesAverage = 0;
 
-	// On réinitialise les moteurs a 0.
+	// On r�initialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
@@ -44,10 +68,9 @@ bool spinXDegrees(int direction, float degree)
 	ENCODER_Read(ENCODER_RIGHT);
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
-	LCD_Printf("\n# distancetodo :%f cm\n",distanceToTravel);
-	// On comptabilise la distance parcouru pour un deg.
-	while(leftTravel <= distanceToTravel &&  rightTravel <= distanceToTravel)
-	//while(averageDistance <= distanceToTravel)
+
+	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
+	//while(holesAverage < holesToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -59,60 +82,101 @@ bool spinXDegrees(int direction, float degree)
 			MOTOR_SetSpeed (MOTOR_LEFT,speedMotorLeft);
 			MOTOR_SetSpeed (MOTOR_RIGHT,speedMotorRight * -1);
 		}
-
 		currentMS = SYSTEM_ReadTimerMSeconds();
 
 		//Si le delai d'execution est depasse
-		if(currentMS >= lastMS + READING_CYCLE_DELAY)
+		if(currentMS >= lastMS + READING_CYCLE_DELAY_MS)
 		{
-			encoderValLeft += ENCODER_Read(ENCODER_LEFT);
-			encoderValRight += ENCODER_Read(ENCODER_RIGHT);
+			encoderValLeft = ENCODER_Read(ENCODER_LEFT);
+			encoderValRight = ENCODER_Read(ENCODER_RIGHT);
 
 			//LCD_Printf("#gauche :%d\n",encoderValLeft);
 			//LCD_Printf("#droite :%d\n",encoderValRight);
 
-			leftTravel = travelledDistance((float)encoderValLeft);
-			rightTravel = travelledDistance((float)encoderValRight);
+			holesLeft += encoderValLeft;
+			holesRight += encoderValRight;
 
+			//holesAverage = (holesLeft + holesRight) / 2;
+
+			/**
 			if(leftTravel > rightTravel)
 				speedMotorLeft++;
 			else if(leftTravel < rightTravel)
 				speedMotorRight++;
+			**/
 
-			if(leftTravel >= distanceToTravel)
+			if(holesLeft >= holesToTravel)
 				MOTOR_SetSpeed(MOTOR_LEFT,0);
-			else if(rightTravel >= distanceToTravel)
+			else if(holesRight >= holesToTravel)
 				MOTOR_SetSpeed(MOTOR_RIGHT,0);
 
 			//LCD_Printf("#gauche :%d\n",encoderValLeft);
 			//LCD_Printf("#droite :%d\n",encoderValRight);
 
-			LCD_Printf("#dist_gauche : %f cm\n", leftTravel);
-			LCD_Printf("#dist_droite : %f cm\n", rightTravel);
+			LCD_Printf("#dist_gauche : %f fentes\n", holesLeft);
+			LCD_Printf("#dist_droite : %f fentes\n", holesRight);
 
 			lastMS = currentMS;
 		}
-		averageDistance = (rightTravel + leftTravel) * 0.5;
-	}
-	LCD_Printf("\n#distancetodo :%f cm\n",distanceToTravel);
-	LCD_Printf("#dist_gauche f : %f cm\n", leftTravel);
-	LCD_Printf("#dist_droite f : %f cm\n", rightTravel);
 
-	// On arrete les moteurs a 0.
+	}
+	return 0;
+}
+
+bool turn(int direction, float degree)
+{
+	//Variables de timing pour ralentir les lectures d'encodeur
+	float lastMS = 0;
+	float currentMS = 0;
+
+	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	float holesToTravel = holesForTurn(degree);
+	LCD_Printf("%d HOLES : ", holesToTravel);
+	// D�finition des valeurs des distances parcourues Temporaire.
+	int holesTravelled = 0;
+	int wheel;
+	int encoder;
+
+	// Vitesse initial des moteurs par default
+	int speedMotor = MOTOR_DEFAULT_SPEED;
+
+	if(SPIN_LEFT == direction)
+	{
+		wheel = MOTOR_RIGHT;
+		encoder = ENCODER_RIGHT;
+	}
+	else
+	{
+		wheel = MOTOR_LEFT;
+		encoder = ENCODER_LEFT;
+	}
+
+	// On r�initialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
-	return true;
-}
+	// On lit la valeur de chaque encodeurs.
+	ENCODER_Read(ENCODER_LEFT);
+	ENCODER_Read(ENCODER_RIGHT);
 
-float travelledDistance(float holesQty)
-{
-	return ((float)WHEEL_CIRC/(float)HOLES_QTY) * holesQty;
-}
+	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
 
-float distanceForDegree (float degree)
-{
-	return (degree/(float)360) * WHEEL_AXE_CIRC;
+	while(holesTravelled < holesToTravel)
+	{
+		currentMS = SYSTEM_ReadTimerMSeconds();
+		MOTOR_SetSpeed(wheel, speedMotor);
+		//Si le delai d'execution est depasse
+		if(currentMS >= lastMS + READING_CYCLE_DELAY_MS)
+		{
+			holesTravelled += ENCODER_Read(encoder);
+
+			lastMS = currentMS;
+		}
+
+	}
+
+	MOTOR_SetSpeed(wheel, 0);
+	return 0;
 }
 
 /**********************************************************************/
@@ -195,160 +259,5 @@ bool roll(int distance)
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
 
 	return true;
-}
-
-
-float holesForDistance(float distanceCM)
-{
-	return distanceCM / (float)WHEEL_CIRC * (float)HOLES_QTY;
-}
-
-int spinXDegreesByHoles(int direction, float degree)
-{
-	//Variables de timing pour ralentir les lectures d'encodeur
-	float lastMS = 0;
-	float currentMS = 0;
-
-	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
-	float holesToTravel = holesForDistance(distanceForDegree(degree));		// D�finition de la distance d'un degr�e.
-
-	// D�finition des valeurs des distances parcourues Temporaire.
-	int holesLeft = 0;
-	int holesRight = 0;
-
-	// Variable des encodeurs pour se souvenir des distances.
-	int encoderValLeft = 0;
-	int encoderValRight = 0;
-
-	// Vitesse initial des moteurs par default
-	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
-	int speedMotorRight = MOTOR_DEFAULT_SPEED;
-
-	float holesAverage = 0;
-
-	// On r�initialise les moteurs a 0.
-	MOTOR_SetSpeed (MOTOR_LEFT,0);
-	MOTOR_SetSpeed (MOTOR_RIGHT,0);
-
-	// On lit la valeur de chaque encodeurs.
-	ENCODER_Read(ENCODER_LEFT);
-	ENCODER_Read(ENCODER_RIGHT);
-
-	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
-
-	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
-	//while(holesAverage < holesToTravel)
-	{
-		if (direction == SPIN_LEFT)
-		{
-			MOTOR_SetSpeed (MOTOR_LEFT,speedMotorLeft * -1);
-			MOTOR_SetSpeed (MOTOR_RIGHT,speedMotorRight);
-		}
-		else
-		{
-			MOTOR_SetSpeed (MOTOR_LEFT,speedMotorLeft);
-			MOTOR_SetSpeed (MOTOR_RIGHT,speedMotorRight * -1);
-		}
-		currentMS = SYSTEM_ReadTimerMSeconds();
-
-		//Si le delai d'execution est depasse
-		if(currentMS >= lastMS + READING_CYCLE_DELAY)
-		{
-			encoderValLeft = ENCODER_Read(ENCODER_LEFT);
-			encoderValRight = ENCODER_Read(ENCODER_RIGHT);
-
-			//LCD_Printf("#gauche :%d\n",encoderValLeft);
-			//LCD_Printf("#droite :%d\n",encoderValRight);
-
-			holesLeft += encoderValLeft;
-			holesRight += encoderValRight;
-
-			//holesAverage = (holesLeft + holesRight) / 2;
-
-			/**
-			if(leftTravel > rightTravel)
-				speedMotorLeft++;
-			else if(leftTravel < rightTravel)
-				speedMotorRight++;
-			**/
-
-			if(holesLeft >= holesToTravel)
-				MOTOR_SetSpeed(MOTOR_LEFT,0);
-			else if(holesRight >= holesToTravel)
-				MOTOR_SetSpeed(MOTOR_RIGHT,0);
-
-			//LCD_Printf("#gauche :%d\n",encoderValLeft);
-			//LCD_Printf("#droite :%d\n",encoderValRight);
-
-			LCD_Printf("#dist_gauche : %f fentes\n", holesLeft);
-			LCD_Printf("#dist_droite : %f fentes\n", holesRight);
-
-			lastMS = currentMS;
-		}
-
-	}
-	return 0;
-}
-
-bool turn(int direction, float degree)
-{
-	//Variables de timing pour ralentir les lectures d'encodeur
-	float lastMS = 0;
-	float currentMS = 0;
-
-	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
-	float holesToTravel = holesForTurn(degree);
-	LCD_Printf("%d HOLES : ", holesToTravel);
-	// D�finition des valeurs des distances parcourues Temporaire.
-	int holesTravelled = 0;
-	int wheel;
-	int encoder;
-
-	// Vitesse initial des moteurs par default
-	int speedMotor = MOTOR_DEFAULT_SPEED;
-
-	if(SPIN_LEFT == direction)
-	{
-		wheel = MOTOR_RIGHT;
-		encoder = ENCODER_RIGHT;
-	}
-	else
-	{
-		wheel = MOTOR_LEFT;
-		encoder = ENCODER_LEFT;
-	}
-
-	// On r�initialise les moteurs a 0.
-	MOTOR_SetSpeed (MOTOR_LEFT,0);
-	MOTOR_SetSpeed (MOTOR_RIGHT,0);
-
-	// On lit la valeur de chaque encodeurs.
-	ENCODER_Read(ENCODER_LEFT);
-	ENCODER_Read(ENCODER_RIGHT);
-
-	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
-
-	while(holesTravelled < holesToTravel)
-	{
-		currentMS = SYSTEM_ReadTimerMSeconds();
-		MOTOR_SetSpeed(wheel, speedMotor);
-		//Si le delai d'execution est depasse
-		if(currentMS >= lastMS + READING_CYCLE_DELAY)
-		{
-			holesTravelled += ENCODER_Read(encoder);
-
-			lastMS = currentMS;
-		}
-
-	}
-
-	MOTOR_SetSpeed(wheel, 0);
-	return 0;
-}
-
-float holesForTurn(int degree)
-{
-	 float dist = (float)TURN_AXIS_CIRC * ((float)degree / float(360.0));
-	 return holesForDistance(dist);
 }
 

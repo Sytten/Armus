@@ -9,6 +9,7 @@
 
 #include <libarmus.h>
 #include "motorControl.h"
+#include "stateMachine.h"
 
 int main()
 {
@@ -17,27 +18,27 @@ int main()
 		if(DIGITALIO_Read(BMP_FRONT))
 		{
 			roll(223);
-			spinXDegrees(SPIN_LEFT, 90);
+			spin(SPIN_LEFT, 90);
 			roll(48);
-			spinXDegrees(SPIN_RIGHT, 90);
+			spin(SPIN_RIGHT, 90);
 			roll(45);
-			spinXDegrees(SPIN_RIGHT, 90);
+			spin(SPIN_RIGHT, 90);
 			roll(48);
-			spinXDegrees(SPIN_LEFT, 90);
+			spin(SPIN_LEFT, 90);
 			roll(32);
-			spinXDegrees(SPIN_RIGHT, 45);
+			spin(SPIN_RIGHT, 45);
 			roll(77);
-			spinXDegrees(SPIN_LEFT, 90);
+			spin(SPIN_LEFT, 90);
 			roll(63);
-			spinXDegrees(SPIN_RIGHT, 45);
+			spin(SPIN_RIGHT, 45);
 			roll(50);
-			spinXDegrees(SPIN_RIGHT, 12.5);
+			spin(SPIN_RIGHT, 12.5);
 			roll(80);
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
 			roll(210);
-			turn(SPIN_LEFT, 90);
+			turn(SPIN_LEFT, (float)90);
 			roll(35);
 			turn(SPIN_RIGHT, 90);
 			roll(30);
