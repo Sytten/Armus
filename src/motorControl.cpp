@@ -119,8 +119,8 @@ float distanceForDegree (float degree)
 
 bool roll(int distance)
 {
-	int rightSpeed = LEFT_STARTING_SPEED;
-	int leftSpeed = RIGHT_STARTING_SPEED;
+	int rightSpeed = RIGHT_STARTING_SPEED;
+	int leftSpeed = LEFT_STARTING_SPEED;
 
 	int leftEncoder = 0;
 	int rightEncoder = 0;
@@ -128,7 +128,7 @@ bool roll(int distance)
 	int totalTicks = distance/WHEEL_CIRC*HOLES_QTY;
 	int doneRightTicks = 0;
 	int doneLeftTicks= 0;
-	int reads = 0;
+	int expectedTicks = 0;
 
 	//Clear encoders
 	ENCODER_Read(ENCODER_LEFT);
@@ -149,18 +149,18 @@ bool roll(int distance)
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
-			LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
+			//LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
-			++reads;
+			expectedTicks += MOTOR_TARGET_SPEED/5;
 
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
 
-			leftSpeed += round((MOTOR_TARGET_SPEED/5-leftEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY/5);
-			rightSpeed += round((MOTOR_TARGET_SPEED/5-rightEncoder)*INSTANT_PROPORTIONALITY/5+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY/5);
+			leftSpeed += round((MOTOR_TARGET_SPEED/5-leftEncoder)*INSTANT_PROPORTIONALITY/5+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY/5);
+			rightSpeed += round((MOTOR_TARGET_SPEED/5-rightEncoder)*INSTANT_PROPORTIONALITY/5+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY/5);
 			LCD_Printf("LeftSpeed: %d\t RightSpeed: %d\n", leftSpeed, rightSpeed);
 		}
 
@@ -173,19 +173,19 @@ bool roll(int distance)
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
-			LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
+			//LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
-			++reads;
+			expectedTicks += MOTOR_TARGET_SPEED;
 
-			LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
-			LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
+			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, expectedTicks-doneLeftTicks);
+			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, expectedTicks-doneRightTicks);
 
-			leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneLeftTicks)*LONG_PROPORTIONALITY);
-			rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(reads*MOTOR_TARGET_SPEED-doneRightTicks)*LONG_PROPORTIONALITY);
-			LCD_Printf("Left: %d\t Right: %d\n*******\n", leftSpeed, rightSpeed);
+			leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY);
+			rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY);
+			LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
 		}
 
 	}
@@ -351,4 +351,8 @@ float holesForTurn(int degree)
 	 float dist = (float)TURN_AXIS_CIRC * ((float)degree / float(360.0));
 	 return holesForDistance(dist);
 }
+
+
+
+
 
