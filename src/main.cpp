@@ -54,11 +54,11 @@ void robot6()
 	turn(SPIN_LEFT, 90, &wheelError);
 	roll(20);
 	turn(SPIN_RIGHT, 45, &wheelError);
-	roll(37);
-	turn(SPIN_LEFT, 87, &wheelError);
+	roll(35);
+	turn(SPIN_LEFT, 90, &wheelError);
 	roll(63);
 	turn(SPIN_RIGHT, 40, &wheelError);
-	roll(45);
+	roll(43);
 	turn(SPIN_RIGHT, 15, &wheelError);
 	roll(80);
 
