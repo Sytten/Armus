@@ -12,7 +12,7 @@
 #define CONSTANTS_H_
 
 #define PI_VAL 3.1416
-#define ROBOT4
+#define ROBOT6
 
 /*****Wheel specifications*****/
 #define WHEEL_DIAMETER 7.5
@@ -50,6 +50,12 @@
 #define LONG_PROPORTIONALITY 0.5 //0.5
 #define MOTOR_TARGET_SPEED 35
 #define MOTOR_DIVISOR 1
+
+struct CorrectionData
+{
+	float LeftError;
+	float RightError;
+};
 
 #endif /* CONSTANTS_H_ */
 

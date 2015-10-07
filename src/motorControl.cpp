@@ -290,7 +290,7 @@ int spinXDegreesByHoles(int direction, float degree)
 	return 0;
 }
 
-bool turn(int direction, float degree)
+bool turn(int direction, float degree, struct CorrectionData * error)
 {
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
@@ -311,11 +311,13 @@ bool turn(int direction, float degree)
 	{
 		wheel = MOTOR_RIGHT;
 		encoder = ENCODER_RIGHT;
+		holesToTravel += (error->RightError - error->LeftError);
 	}
 	else
 	{
 		wheel = MOTOR_LEFT;
 		encoder = ENCODER_LEFT;
+		holesToTravel += (error->LeftError - error->RightError);
 	}
 
 	// On r�initialise les moteurs a 0.
@@ -341,6 +343,11 @@ bool turn(int direction, float degree)
 		}
 
 	}
+
+	if(SPIN_LEFT == direction)
+		error->LeftError = holesTravelled - holesToTravel;
+	else
+		error->RightError = holesTravelled - holesToTravel;
 
 	MOTOR_SetSpeed(wheel, 0);
 	return 0;
