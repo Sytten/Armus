@@ -27,7 +27,7 @@
 /*****Spin function*****/
 #define SPIN_LEFT 0
 #define SPIN_RIGHT 1
-#define MOTOR_DEFAULT_SPEED 65
+#define MOTOR_DEFAULT_SPEED 55
 #define READING_CYCLE_DELAY 100
 #define MAX_PRECISION 2
 

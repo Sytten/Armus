@@ -296,16 +296,18 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	//Quantite de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
 	float holesToTravel = holesForTurn(degree);
 	LCD_Printf("%d HOLES : ", holesToTravel);
-	// D�finition des valeurs des distances parcourues Temporaire.
+	// Definition des valeurs des distances parcourues Temporaire.
 	int holesTravelled = 0;
 	int wheel;
 	int encoder;
 
 	// Vitesse initial des moteurs par default
 	int speedMotor = MOTOR_DEFAULT_SPEED;
+
+	LCD_ClearAndPrint("Correct G : %f  D : %f", error->LeftError, error->RightError);
 
 	if(SPIN_LEFT == direction)
 	{

@@ -50,19 +50,19 @@ void robot6()
 	turn(SPIN_RIGHT, 90, &wheelError);
 	roll(30);
 	turn(SPIN_RIGHT, 90, &wheelError);
-	roll(35);
+	roll(30);
 	turn(SPIN_LEFT, 90, &wheelError);
-	roll(18);
+	roll(20);
 	turn(SPIN_RIGHT, 45, &wheelError);
 	roll(37);
-	turn(SPIN_LEFT, 85, &wheelError);
+	turn(SPIN_LEFT, 87, &wheelError);
 	roll(63);
 	turn(SPIN_RIGHT, 40, &wheelError);
 	roll(45);
 	turn(SPIN_RIGHT, 15, &wheelError);
 	roll(80);
 
-	spinXDegrees(SPIN_LEFT, 182);
+	spinXDegrees(SPIN_LEFT, 190);
 	roll(80);
 	turn(SPIN_LEFT, 12, &wheelError);
 	roll(45);
