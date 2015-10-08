@@ -1,9 +1,9 @@
 /*
 ============================================================================
  Name : main.cpp
- Author : fuge2701 & fouj1807
+ Authors : fuge2701 & fouj1807
  Version : V0.1
- Description : Test program
+ Description : Main program
 ============================================================================
 */
 
@@ -32,7 +32,7 @@ int main()
 
 void robot6()
 {
-	struct CorrectionData wheelError;
+	CorrectionData wheelError;
 
 	wheelError.RightError = 0;
 	wheelError.LeftError = 0;
@@ -78,46 +78,46 @@ void robot6()
 
 void robot4()
 {
-	struct CorrectionData wheelError;
+	CorrectionData wheelError;
 
 	wheelError.RightError = 0;
 	wheelError.LeftError = 0;
 
 	roll(210);
 	turn(SPIN_LEFT, 90, &wheelError);
+	roll(34);
+	turn(SPIN_RIGHT, 90, &wheelError);
+	roll(35);
+	turn(SPIN_RIGHT, 90, &wheelError);
 	roll(30);
-	turn(SPIN_RIGHT, 92, &wheelError);
-	roll(30);
-	turn(SPIN_RIGHT, 93, &wheelError);
-	roll(38);
 	turn(SPIN_LEFT, 90, &wheelError);
 	roll(20);
 	turn(SPIN_RIGHT, 50, &wheelError);
-	roll(40);
+	roll(38);
 	turn(SPIN_LEFT, 85, &wheelError);
-	roll(68);
+	roll(62);
 	turn(SPIN_RIGHT, 45, &wheelError);
-	roll(45);
-	turn(SPIN_RIGHT, 20, &wheelError);
+	roll(42);
+	turn(SPIN_RIGHT, 17, &wheelError);
 	roll(80);
 
-	spinXDegrees(SPIN_LEFT, 180);
-	roll(80);
-	turn(SPIN_LEFT, 12, &wheelError);
-	roll(45);
+	spinXDegreesByHoles(SPIN_LEFT, 177);
+	roll(84);
+	turn(SPIN_LEFT, 17, &wheelError);
+	roll(42);
 	turn(SPIN_LEFT, 48, &wheelError);
-	roll(58);
-	turn(SPIN_RIGHT, 85, &wheelError);
-	roll(37);
-	turn(SPIN_LEFT, 42, &wheelError);
-	roll(18);
+	roll(62);
 	turn(SPIN_RIGHT, 90, &wheelError);
-	roll(35);
-	turn(SPIN_LEFT, 90, &wheelError);
+	roll(40);
+	turn(SPIN_LEFT, 42, &wheelError);
+	roll(20);
+	turn(SPIN_RIGHT, 90, &wheelError);
 	roll(30);
 	turn(SPIN_LEFT, 90, &wheelError);
 	roll(35);
-	turn(SPIN_RIGHT, 92, &wheelError);
+	turn(SPIN_LEFT, 90, &wheelError);
+	roll(34);
+	turn(SPIN_RIGHT, 90, &wheelError);
 	roll(220);
 }
 

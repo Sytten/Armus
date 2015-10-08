@@ -154,7 +154,7 @@ bool roll(int distance)
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
-			expectedTicks += MOTOR_TARGET_SPEED/(5);
+			expectedTicks += MOTOR_TARGET_SPEED/2.5;
 
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
@@ -290,7 +290,7 @@ int spinXDegreesByHoles(int direction, float degree)
 	return 0;
 }
 
-bool turn(int direction, float degree, struct CorrectionData * error)
+bool turn(int direction, float degree, CorrectionData * error)
 {
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
