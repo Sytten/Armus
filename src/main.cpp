@@ -2,13 +2,14 @@
 ============================================================================
  Name : main.cpp
  Authors : fuge2701 & fouj1807
- Version : V0.1
+ Version : V0.2
+ Modified on: 2015-10-08
  Description : Main program
 ============================================================================
 */
 
 #include <libarmus.h>
-#include "motorControl.h"
+#include "MotorsControl/motorsControl.h"
 
 void robot6();
 void robot4();
@@ -19,7 +20,7 @@ int main()
 	{
 		if(DIGITALIO_Read(BMP_LEFT))
 		{
-			//robot4();
+			robot4();
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
