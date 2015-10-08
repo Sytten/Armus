@@ -347,9 +347,15 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 	}
 
 	if(SPIN_LEFT == direction)
+	{
 		error->LeftError = holesTravelled - holesToTravel;
+		error->RightError = 0;
+	}
 	else
+	{
 		error->RightError = holesTravelled - holesToTravel;
+		error->LeftError = 0;
+	}
 
 	MOTOR_SetSpeed(wheel, 0);
 	return 0;
