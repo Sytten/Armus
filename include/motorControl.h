@@ -22,6 +22,7 @@ float distanceForDegree (float degree);
 
 float holesForDistance(float distanceCM);
 bool spinXDegrees(int direction, float degree);
+int spinXDegreesByHoles(int direction, float degree);
 
 bool turn(int direction, float degree, struct CorrectionData * error);
 float holesForTurn(int degree);

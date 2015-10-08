@@ -15,25 +15,18 @@ void robot4();
 
 int main()
 {
-
-
 	while(1)
 	{
-
 		if(DIGITALIO_Read(BMP_LEFT))
 		{
-			robot4();
+			//robot4();
 		}
-
-
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
 			robot6();
 		}
-
 		THREAD_MSleep(100);
 	}
-
 	return 0;
 }
 
@@ -62,12 +55,12 @@ void robot6()
 	turn(SPIN_RIGHT, 15, &wheelError);
 	roll(80);
 
-	spinXDegrees(SPIN_LEFT, 190);
+	spinXDegreesByHoles(SPIN_LEFT, 185);
 	roll(80);
 	turn(SPIN_LEFT, 12, &wheelError);
 	roll(45);
 	turn(SPIN_LEFT, 45, &wheelError);
-	roll(58);
+	roll(63);
 	turn(SPIN_RIGHT, 85, &wheelError);
 	roll(37);
 	turn(SPIN_LEFT, 45, &wheelError);
