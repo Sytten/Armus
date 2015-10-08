@@ -17,18 +17,19 @@
 #include "constants.h"
 
 //Spin
-bool spinXDegreesCM(int direction, float degree);
 float travelledDistance(float holesQty);
 float distanceForDegree (float degree);
 
 float holesForDistance(float distanceCM);
 bool spinXDegrees(int direction, float degree);
+int spinXDegreesByHoles(int direction, float degree);
 
-bool turn(int direction, float degree);
+bool turn(int direction, float degree, struct CorrectionData * error);
 float holesForTurn(int degree);
 
 //Roll
 bool roll(int distance);
+
 
 #endif /* MOTORCONTROL_H_ */
 

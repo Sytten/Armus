@@ -12,7 +12,7 @@
 #define CONSTANTS_H_
 
 #define PI_VAL 3.1416
-#define ROBOT4
+#define ROBOT6
 
 /*****Wheel specifications*****/
 #define WHEEL_DIAMETER 7.5
@@ -27,8 +27,8 @@
 /*****Spin function*****/
 #define SPIN_LEFT 0
 #define SPIN_RIGHT 1
-#define MOTOR_DEFAULT_SPEED 65
-#define READING_CYCLE_DELAY 100
+#define MOTOR_DEFAULT_SPEED 55
+#define READING_CYCLE_DELAY 25
 #define MAX_PRECISION 2
 
 /*****TURN FUNCTION*****/
@@ -46,10 +46,15 @@
 #define RIGHT_STARTING_SPEED 75 //Robot4:74 Robot6:75
 #endif
 
-#define INSTANT_PROPORTIONALITY 0.8 //0.8
-#define LONG_PROPORTIONALITY 0.5 //0.5
-#define MOTOR_TARGET_SPEED 35
-#define MOTOR_DIVISOR 1
+#define INSTANT_PROPORTIONALITY 0.4 //0.8
+#define LONG_PROPORTIONALITY 0.25 //0.5
+#define MOTOR_TARGET_SPEED 15
+
+struct CorrectionData
+{
+	float LeftError;
+	float RightError;
+};
 
 #endif /* CONSTANTS_H_ */
 

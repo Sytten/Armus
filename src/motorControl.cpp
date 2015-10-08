@@ -44,7 +44,7 @@ bool spinXDegrees(int direction, float degree)
 	ENCODER_Read(ENCODER_RIGHT);
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
-	LCD_Printf("\n# distancetodo :%f cm\n",distanceToTravel);
+	//LCD_Printf("\n# distancetodo :%f cm\n",distanceToTravel);
 	// On comptabilise la distance parcouru pour un deg.
 	while(leftTravel <= distanceToTravel &&  rightTravel <= distanceToTravel)
 	//while(averageDistance <= distanceToTravel)
@@ -87,16 +87,16 @@ bool spinXDegrees(int direction, float degree)
 			//LCD_Printf("#gauche :%d\n",encoderValLeft);
 			//LCD_Printf("#droite :%d\n",encoderValRight);
 
-			LCD_Printf("#dist_gauche : %f cm\n", leftTravel);
-			LCD_Printf("#dist_droite : %f cm\n", rightTravel);
+			//LCD_Printf("#dist_gauche : %f cm\n", leftTravel);
+			//LCD_Printf("#dist_droite : %f cm\n", rightTravel);
 
 			lastMS = currentMS;
 		}
 		averageDistance = (rightTravel + leftTravel) * 0.5;
 	}
-	LCD_Printf("\n#distancetodo :%f cm\n",distanceToTravel);
-	LCD_Printf("#dist_gauche f : %f cm\n", leftTravel);
-	LCD_Printf("#dist_droite f : %f cm\n", rightTravel);
+	//LCD_Printf("\n#distancetodo :%f cm\n",distanceToTravel);
+	//LCD_Printf("#dist_gauche f : %f cm\n", leftTravel);
+	//LCD_Printf("#dist_droite f : %f cm\n", rightTravel);
 
 	// On arrete les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
@@ -134,7 +134,7 @@ bool roll(int distance)
 	ENCODER_Read(ENCODER_LEFT);
 	ENCODER_Read(ENCODER_RIGHT);
 
-	LCD_ClearAndPrint("Starting!\n");
+	//LCD_ClearAndPrint("Starting!\n");
 
 	//Roll until reached destination
 	while(doneRightTicks < totalTicks || doneLeftTicks < totalTicks)
@@ -145,23 +145,23 @@ bool roll(int distance)
 			MOTOR_SetSpeed(MOTOR_RIGHT, rightSpeed);
 			MOTOR_SetSpeed(MOTOR_LEFT, leftSpeed);
 
-			THREAD_MSleep(100 / MOTOR_DIVISOR);
+			THREAD_MSleep(100);
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
-			//LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
+			//LCD_ClearAndPrint("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
-			expectedTicks += MOTOR_TARGET_SPEED/(5*MOTOR_DIVISOR);
+			expectedTicks += MOTOR_TARGET_SPEED/2.5;
 
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
 
-			leftSpeed += round((MOTOR_TARGET_SPEED/(5*MOTOR_DIVISOR)-leftEncoder)*INSTANT_PROPORTIONALITY/(5*MOTOR_DIVISOR)+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY/(5*MOTOR_DIVISOR));
-			rightSpeed += round((MOTOR_TARGET_SPEED/(5*MOTOR_DIVISOR)-rightEncoder)*INSTANT_PROPORTIONALITY/(5*MOTOR_DIVISOR)+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY/(5*MOTOR_DIVISOR));
-			LCD_Printf("LeftSpeed: %d\t RightSpeed: %d\n", leftSpeed, rightSpeed);
+			leftSpeed += round((MOTOR_TARGET_SPEED/2.5-leftEncoder)*INSTANT_PROPORTIONALITY/2.5+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY/2.5);
+			rightSpeed += round((MOTOR_TARGET_SPEED/2.5-rightEncoder)*INSTANT_PROPORTIONALITY/2.5+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY/2.5);
+			//LCD_Printf("LeftSpeed: %d\t RightSpeed: %d\n", leftSpeed, rightSpeed);
 		}
 
 		else
@@ -169,7 +169,7 @@ bool roll(int distance)
 			MOTOR_SetSpeed(MOTOR_RIGHT, rightSpeed);
 			MOTOR_SetSpeed(MOTOR_LEFT, leftSpeed);
 
-			THREAD_MSleep(500 / MOTOR_DIVISOR);
+			THREAD_MSleep(250);
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
@@ -178,13 +178,13 @@ bool roll(int distance)
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
-			expectedTicks += MOTOR_TARGET_SPEED / MOTOR_DIVISOR;
+			expectedTicks += MOTOR_TARGET_SPEED;
 
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, expectedTicks-doneLeftTicks);
 			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, expectedTicks-doneRightTicks);
 
-			leftSpeed += round((MOTOR_TARGET_SPEED/MOTOR_DIVISOR-leftEncoder)*INSTANT_PROPORTIONALITY/MOTOR_DIVISOR+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY/MOTOR_DIVISOR);
-			rightSpeed += round((MOTOR_TARGET_SPEED/MOTOR_DIVISOR-rightEncoder)*INSTANT_PROPORTIONALITY/MOTOR_DIVISOR+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY/MOTOR_DIVISOR);
+			leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY);
+			rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY);
 			LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
 		}
 
@@ -280,8 +280,8 @@ int spinXDegreesByHoles(int direction, float degree)
 			//LCD_Printf("#gauche :%d\n",encoderValLeft);
 			//LCD_Printf("#droite :%d\n",encoderValRight);
 
-			LCD_Printf("#dist_gauche : %f fentes\n", holesLeft);
-			LCD_Printf("#dist_droite : %f fentes\n", holesRight);
+			//LCD_Printf("#dist_gauche : %f fentes\n", holesLeft);
+			//LCD_Printf("#dist_droite : %f fentes\n", holesRight);
 
 			lastMS = currentMS;
 		}
@@ -290,16 +290,16 @@ int spinXDegreesByHoles(int direction, float degree)
 	return 0;
 }
 
-bool turn(int direction, float degree)
+bool turn(int direction, float degree, CorrectionData * error)
 {
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	//Quantite de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
 	float holesToTravel = holesForTurn(degree);
-	LCD_Printf("%d HOLES : ", holesToTravel);
-	// D�finition des valeurs des distances parcourues Temporaire.
+	//LCD_Printf("%d HOLES : ", holesToTravel);
+	// Definition des valeurs des distances parcourues Temporaire.
 	int holesTravelled = 0;
 	int wheel;
 	int encoder;
@@ -307,15 +307,19 @@ bool turn(int direction, float degree)
 	// Vitesse initial des moteurs par default
 	int speedMotor = MOTOR_DEFAULT_SPEED;
 
+	//LCD_ClearAndPrint("Correct G : %f  D : %f", error->LeftError, error->RightError);
+
 	if(SPIN_LEFT == direction)
 	{
 		wheel = MOTOR_RIGHT;
 		encoder = ENCODER_RIGHT;
+		holesToTravel += (error->RightError - error->LeftError);
 	}
 	else
 	{
 		wheel = MOTOR_LEFT;
 		encoder = ENCODER_LEFT;
+		holesToTravel += (error->LeftError - error->RightError);
 	}
 
 	// On r�initialise les moteurs a 0.
@@ -340,6 +344,17 @@ bool turn(int direction, float degree)
 			lastMS = currentMS;
 		}
 
+	}
+
+	if(SPIN_LEFT == direction)
+	{
+		error->LeftError = holesTravelled - holesToTravel;
+		error->RightError = 0;
+	}
+	else
+	{
+		error->RightError = holesTravelled - holesToTravel;
+		error->LeftError = 0;
 	}
 
 	MOTOR_SetSpeed(wheel, 0);
