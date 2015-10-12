@@ -29,7 +29,8 @@ int run()
 
 			case StatesInit:
 				robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
-				robus.StateParameter = 0;
+				robus.StateDistance = 0;
+				robus.StateDegree = 0;
 				robus.NextState = StatesStop;
 				robus.IRSensorStates = 0;
 				robus.MotorLeftEncoderTotal  = robus.MotorRightEncoderTotal = 0;

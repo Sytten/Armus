@@ -39,7 +39,7 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 		holesToTravel += (error->LeftError - error->RightError);
 	}
 
-	// On rï¿½initialise les moteurs a 0.
+	// On réinitialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
@@ -92,9 +92,11 @@ int stateTurn(struct Machine * robus)
 			return FINISHED_TURNING;
 		}
 
+		robus->MotorRightSpeed = MOTOR_DEFAULT_SPEED;
+		robus->MotorLeftSpeed = 0;
 		return CHANGED_SPEED;
 	}
-	else
+	else if(robus->StateDirection == TURN_RIGHT)
 	{
 		if(robus->MotorLeftEncoderTotal >= wheelTicks)
 		{
@@ -103,7 +105,14 @@ int stateTurn(struct Machine * robus)
 			return FINISHED_TURNING;
 		}
 
+		robus->MotorLeftSpeed = MOTOR_DEFAULT_SPEED;
+		robus->MotorRightSpeed = 0;
 		return CHANGED_SPEED;
 	}
+	else
+	{
+		return FINISHED_TURNING;
+	}
+
 	return NOTHING_DONE;
 }
