@@ -9,7 +9,7 @@
 #define SENSORDETECTION_H_
 
 #include <libarmus.h>
-#include "constants.h"
+#include "MotorsControl/constants.h"
 
 #define IR_FRONT_LEFT 7
 #define IR_FRONT_RIGHT 6

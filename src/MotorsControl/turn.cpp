@@ -9,7 +9,7 @@
 */
 #include "MotorsControl/motorsControl.h"
 
-bool turn(int direction, float degree, CorrectionData * error)
+bool turn(int direction, float degree, struct CorrectionData * error)
 {
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
@@ -76,4 +76,34 @@ bool turn(int direction, float degree, CorrectionData * error)
 	MOTOR_SetSpeed(wheel, 0);
 
 	return true;
+}
+
+int stateTurn(struct Machine * robus)
+{
+	int currentMS = SYSTEM_ReadTimerMSeconds();
+	float wheelTicks = holesForTurn(robus->StateDegree);
+
+	if(robus->StateDirection == TURN_LEFT)
+	{
+		if(robus->MotorRightEncoderTotal >= wheelTicks)
+		{
+			robus->MotorLeftSpeed = 0;
+			robus->MotorRightSpeed = 0;
+			return FINISHED_TURNING;
+		}
+
+		return CHANGED_SPEED;
+	}
+	else
+	{
+		if(robus->MotorLeftEncoderTotal >= wheelTicks)
+		{
+			robus->MotorLeftSpeed = 0;
+			robus->MotorRightSpeed = 0;
+			return FINISHED_TURNING;
+		}
+
+		return CHANGED_SPEED;
+	}
+	return NOTHING_DONE;
 }

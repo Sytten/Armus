@@ -19,8 +19,14 @@ int run()
 
 		getSensorStatus(&robus);
 
+		/********STATE CHANGE LOGIC*********/
+		//TO DO
+		/******** END **********************/
+
+		//Execute state
 		switch (robus.CurrentState)
 		{
+
 			case StatesInit:
 				robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
 				robus.StateParameter = 0;
@@ -38,11 +44,11 @@ int run()
 			case StatesRoll:
 				returnedValue = (rollState(&robus));
 
-				if(returnedValue == 2)
+				if(returnedValue == CHANGED_SPEED)
 				{
 					robus.StateTicks++;
 				}
-				else if(returnedValue == 1)
+				else if(returnedValue == FINISHED_ROLLING)
 				{
 					robus.NextState == StatesStop;
 				}
@@ -89,6 +95,7 @@ int run()
 					robus.CurrentState = StatesInit;
 					break;
 			}
+
 			robus.MotorLeftEncoderTotal = robus.MotorRightEncoderTotal = 0;
 			MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
 			MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);

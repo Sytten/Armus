@@ -14,11 +14,16 @@
 #include <libarmus.h>
 #include <math.h>
 
-<<<<<<< HEAD:include/motorControl.h
 #include "stateMachine.h"
-#include "constants.h"
+#include "MotorsControl/constants.h"
+#include "MotorsControl/conversions.h"
 
-
+//Error correction
+struct CorrectionData
+{
+	float LeftError;
+	float RightError;
+};
 /**
  *	@brief Returns the number of wheel holes that represent a degree angle of rotation for a trun
  *	@param degree The number of degree of rotation
@@ -50,39 +55,20 @@ float distanceForHoles(float holesQty);
  */
 float distanceForDegreeSpin (float degree);
 
-bool spin(int direction, float degree);
-
 /**
  *
  */
-bool turn(int direction, float degree);
-=======
-#include "MotorsControl/constants.h"
-#include "MotorsControl/conversions.h"
-
-//Error correction
-struct CorrectionData
-{
-	float LeftError;
-	float RightError;
-};
+bool turn(int direction, float degree, struct CorrectionData * error);
 
 //Spin
 bool spinXDegrees(int direction, float degree);
 bool spinXDegreesByHoles(int direction, float degree);
 
-//Turn
-bool turn(int direction, float degree, struct CorrectionData * error);
->>>>>>> master:include/MotorsControl/motorsControl.h
 
 //Roll
 bool roll(int distance);
 
-<<<<<<< HEAD:include/motorControl.h
-bool rollState(struct Machine * robus);
+int rollState(struct Machine * robus);
 
-#endif /* MOTORCONTROL_H_ */
-=======
 #endif /* MOTORSCONTROL_H_ */
 
->>>>>>> master:include/MotorsControl/motorsControl.h
