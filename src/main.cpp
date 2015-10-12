@@ -20,7 +20,6 @@ int main()
 	{
 		if(DIGITALIO_Read(BMP_LEFT))
 		{
-<<<<<<< HEAD
 			roll(223);
 			spin(SPIN_LEFT, 90);
 			roll(48);
@@ -77,13 +76,11 @@ int main()
 			roll(35);
 			turn(SPIN_RIGHT, 90);
 			roll(220);
-=======
 			//robot4();
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
 			robot6();
->>>>>>> f336c15f6e3b88ea571735efe49f03b844beee5d
 		}
 		THREAD_MSleep(100);
 	}

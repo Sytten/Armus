@@ -29,10 +29,7 @@
 
 /*****Spin function*****/
 #define MOTOR_DEFAULT_SPEED 55
-<<<<<<< HEAD
-=======
 #define READING_CYCLE_DELAY 25
->>>>>>> f336c15f6e3b88ea571735efe49f03b844beee5d
 #define MAX_PRECISION 2
 
 /*****TURN FUNCTION*****/
