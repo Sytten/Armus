@@ -2,14 +2,19 @@
 ============================================================================
  Name : main.cpp
  Authors : fuge2701 & fouj1807
- Version : V0.1
+ Version : V0.2
+ Modified on: 2015-10-08
  Description : Main program
 ============================================================================
 */
 
 #include <libarmus.h>
+<<<<<<< HEAD
 #include "motorControl.h"
 #include "stateMachine.h"
+=======
+#include "MotorsControl/motorsControl.h"
+>>>>>>> master
 
 void robot6();
 void robot4();
@@ -40,6 +45,7 @@ int main()
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
+<<<<<<< HEAD
 			roll(210);
 			turn(SPIN_LEFT, (float)90);
 			roll(35);
@@ -77,6 +83,9 @@ int main()
 			turn(SPIN_RIGHT, 90);
 			roll(220);
 			//robot4();
+=======
+			robot4();
+>>>>>>> master
 		}
 		else if(DIGITALIO_Read(BMP_REAR))
 		{
