@@ -12,6 +12,7 @@
 #define CONSTANTS_H_
 
 #define PI_VAL 3.1416
+#define ROBOT6
 
 #define READING_CYCLE_DELAY_MS 100
 
@@ -28,6 +29,10 @@
 
 /*****Spin function*****/
 #define MOTOR_DEFAULT_SPEED 55
+<<<<<<< HEAD
+=======
+#define READING_CYCLE_DELAY 25
+>>>>>>> f336c15f6e3b88ea571735efe49f03b844beee5d
 #define MAX_PRECISION 2
 
 /*****TURN FUNCTION*****/
@@ -35,10 +40,25 @@
 #define TURN_AXIS_CIRC (TURN_AXIS_DIAMETER * PI_VAL)
 
 /*****Roll Function****/
-#define LEFT_STARTING_SPEED 50 //RobotB:49 RobotA:50
-#define RIGHT_STARTING_SPEED 49 //RobotB:50 RobotA:49
-#define INSTANT_PROPORTIONALITY 0.8
-#define LONG_PROPORTIONALITY 0.5
-#define MOTOR_TARGET_SPEED 20
+#ifdef ROBOT4
+#define LEFT_STARTING_SPEED 75 //Robot4:75 Robot6:74
+#define RIGHT_STARTING_SPEED 74 //Robot4:74 Robot6:75
+#endif
+
+#ifdef ROBOT6
+#define LEFT_STARTING_SPEED 74 //Robot4:75 Robot6:74
+#define RIGHT_STARTING_SPEED 75 //Robot4:74 Robot6:75
+#endif
+
+#define INSTANT_PROPORTIONALITY 0.4 //0.8
+#define LONG_PROPORTIONALITY 0.25 //0.5
+#define MOTOR_TARGET_SPEED 15
+
+struct CorrectionData
+{
+	float LeftError;
+	float RightError;
+};
 
 #endif /* CONSTANTS_H_ */
+
