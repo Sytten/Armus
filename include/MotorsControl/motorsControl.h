@@ -1,9 +1,8 @@
 /*
 ============================================================================
- Name : motorsControl.h
- Author : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-09-24
+ Name : motorsControl
+ Author : M.A.G.I.E Team
+ Modified on: 2015-10-14
  Description : Definition of the spin and roll functions
 ============================================================================
 */
@@ -14,9 +13,10 @@
 #include <libarmus.h>
 #include <math.h>
 
-#include "stateMachine.h"
 #include "MotorsControl/constants.h"
 #include "MotorsControl/conversions.h"
+
+struct Machine;
 
 //Error correction
 struct CorrectionData
@@ -68,7 +68,7 @@ bool spinXDegreesByHoles(int direction, float degree);
 //Roll
 bool roll(int distance);
 
-int rollState(struct Machine * robus);
+int rollState(Machine * robus);
 
 #endif /* MOTORSCONTROL_H_ */
 

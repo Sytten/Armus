@@ -1,8 +1,7 @@
 /*
 ============================================================================
- Name : conversions.h
- Author : fuge2701 & fouj1807
- Version : V0.2
+ Name : conversions
+ Author : M.A.G.I.E Team
  Modified on: 2015-10-08
  Description : Definition of the different conversion functions
 ============================================================================

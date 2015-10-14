@@ -1,39 +1,30 @@
 /*
- * stateMachine.h
- *
- *  Created on: 2015-10-03
- *      Author: Jeep
- */
+============================================================================
+ Name : stateMachine
+ Author : M.A.G.I.E Team
+ Modified on: 2015-10-14
+ Description : State machine definition, with the different states and the machine
+			   which contains all the necessary variables to monitor the robot and the env.
+============================================================================
+*/
 
 #ifndef STATEMACHINE_H_
 #define STATEMACHINE_H_
 
-/*****STATE MACHINE*****/
-/*****STATE ROLL*****/
-#define ROLL_FORWARD 1
-#define ROLL_BACKWARDS -1
-
+/*********CHANGE LOCATION*************/
+//Roll
 #define NOTHING_DONE 0
 #define FINISHED_ROLLING 1
 #define CHANGED_SPEED 2
 
-/*****STATE TURN SPIN*****/
-#define SPIN_LEFT 0
-#define SPIN_RIGHT 1
-#define TURN_LEFT 0
-#define TURN_RIGHT 1
-
+//Turn
 #define FINISHED_TURNING 1
-
-#define DEBUG_LEVEL 1
-#define DEBUG_USER 2
-#define DEBUG_CODE 1
-#define DEBUG_BASE 0
+/************************************/
 
 #include <libarmus.h>
-#include "MotorsControl/constants.h"
 #include "MotorsControl/motorsControl.h"
-#include "sensorDetection.h"
+#include "Sensors/IRDetection.h"
+#include "debug.h"
 
 enum States
 {
@@ -67,7 +58,5 @@ struct Machine
 int run();
 
 void getSensorStatus(struct Machine * robus);
-
-void Print_Debug_Data(const char * message, int level);
 
 #endif /* STATEMACHINE_H_ */

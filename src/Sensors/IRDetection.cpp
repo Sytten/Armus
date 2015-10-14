@@ -1,13 +1,6 @@
-/*
- * sensorDetection.cpp
- *
- *  Created on: 2015-10-03
- *      Author: Jeep
- */
+#include "Sensors/IRDetection.h"
 
-#include "sensorDetection.h"
-
-char sensors_IRDetection()
+char sensor_IRDetection()
 {
 	char returnValue = 0;
 

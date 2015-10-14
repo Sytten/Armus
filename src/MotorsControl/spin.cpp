@@ -1,12 +1,3 @@
-/*
-============================================================================
- Name : spin.cpp
- Author : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-10-08
- Description : Implementation of the spin functions
-============================================================================
-*/
 #include "MotorsControl/motorsControl.h"
 
 bool spinXDegrees(int direction, float degree)

@@ -1,17 +1,10 @@
-/*
- * stateMachine.cpp
- *
- *  Created on: 2015-10-03
- *      Author: Jeep
- */
-
 #include "stateMachine.h"
 
 int run()
 {
 	int returnedValue;
 
-	struct Machine robus;
+	Machine robus;
 	robus.CurrentState = StatesInit;
 
 	while(robus.CurrentState != StatesExit)
@@ -118,17 +111,10 @@ int run()
 
 void getSensorStatus(struct Machine * robus)
 {
-	robus->IRSensorStates = sensors_IRDetection();
+	robus->IRSensorStates = sensor_IRDetection();
 	robus->MotorLeftEncoderLast = ENCODER_Read(ENCODER_LEFT);
 	robus->MotorRightEncoderLast = ENCODER_Read(ENCODER_RIGHT);
 	robus->MotorLeftEncoderTotal += robus->MotorLeftEncoderLast;
 	robus->MotorRightEncoderTotal += robus->MotorRightEncoderLast;
-}
-
-void Print_Debug_Data(const char * message, int level)
-{
-	if((level >= DEBUG_LEVEL && DEBUG_LEVEL != DEBUG_BASE)
-			|| (level == DEBUG_BASE && DEBUG_LEVEL == DEBUG_BASE))
-		LCD_Printf(message);
 }
 

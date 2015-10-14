@@ -1,13 +1,5 @@
-/*
-============================================================================
- Name : turn.cpp
- Authors : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-10-08
- Description : Implementation of the turn function
-============================================================================
-*/
 #include "MotorsControl/motorsControl.h"
+#include "stateMachine.h"
 
 bool turn(int direction, float degree, struct CorrectionData * error)
 {
@@ -39,7 +31,7 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 		holesToTravel += (error->LeftError - error->RightError);
 	}
 
-	// On réinitialise les moteurs a 0.
+	// On rï¿½initialise les moteurs a 0.
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
