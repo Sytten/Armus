@@ -1,12 +1,3 @@
-/*
-============================================================================
- Name : conversions.h
- Author : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-10-08
- Description : Implementation of the different conversion functions
-============================================================================
-*/
 #include "MotorsControl/conversions.h"
 
 float holesForTurn(int degree)

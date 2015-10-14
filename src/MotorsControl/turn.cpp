@@ -1,15 +1,7 @@
-/*
-============================================================================
- Name : turn.cpp
- Authors : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-10-08
- Description : Implementation of the turn function
-============================================================================
-*/
 #include "MotorsControl/motorsControl.h"
+#include "stateMachine.h"
 
-bool turn(int direction, float degree, CorrectionData * error)
+bool turn(int direction, float degree, struct CorrectionData * error)
 {
 	//Variables de timing pour ralentir les lectures d'encodeur
 	float lastMS = 0;
@@ -76,4 +68,43 @@ bool turn(int direction, float degree, CorrectionData * error)
 	MOTOR_SetSpeed(wheel, 0);
 
 	return true;
+}
+
+int stateTurn(struct Machine * robus)
+{
+	int currentMS = SYSTEM_ReadTimerMSeconds();
+	float wheelTicks = holesForTurn(robus->StateDegree);
+
+	if(robus->StateDirection == TURN_LEFT)
+	{
+		if(robus->MotorRightEncoderTotal >= wheelTicks)
+		{
+			robus->MotorLeftSpeed = 0;
+			robus->MotorRightSpeed = 0;
+			return FINISHED_TURNING;
+		}
+
+		robus->MotorRightSpeed = MOTOR_DEFAULT_SPEED;
+		robus->MotorLeftSpeed = 0;
+		return CHANGED_SPEED;
+	}
+	else if(robus->StateDirection == TURN_RIGHT)
+	{
+		if(robus->MotorLeftEncoderTotal >= wheelTicks)
+		{
+			robus->MotorLeftSpeed = 0;
+			robus->MotorRightSpeed = 0;
+			return FINISHED_TURNING;
+		}
+
+		robus->MotorLeftSpeed = MOTOR_DEFAULT_SPEED;
+		robus->MotorRightSpeed = 0;
+		return CHANGED_SPEED;
+	}
+	else
+	{
+		return FINISHED_TURNING;
+	}
+
+	return NOTHING_DONE;
 }

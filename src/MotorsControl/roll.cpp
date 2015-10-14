@@ -1,13 +1,5 @@
-/*
-============================================================================
- Name : roll.cpp
- Author : fuge2701 & fouj1807
- Version : V0.2
- Modified on: 2015-10-08
- Description : Implementation of the roll function
-============================================================================
-*/
 #include "MotorsControl/motorsControl.h"
+#include "stateMachine.h"
 
 bool roll(int distance)
 {
@@ -83,4 +75,43 @@ bool roll(int distance)
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
 
 	return true;
+}
+
+int rollState(Machine * robus)
+{
+	int currentMS = SYSTEM_ReadTimerMSeconds();
+	int wheelTicks = robus->StateDistance / WHEEL_CIRC * HOLES_QTY;
+
+	if(robus->MotorRightEncoderTotal >= wheelTicks
+			|| robus->MotorLeftEncoderTotal >= wheelTicks)
+	{
+		robus->MotorLeftSpeed = 0;
+		robus->MotorRightSpeed = 0;
+		return FINISHED_ROLLING;
+	}
+	else if(currentMS >= robus->StateLastMs + ROLL_READING_CYCLE_DELAY)
+	{
+		if(wheelTicks - robus->MotorRightEncoderTotal < MOTOR_TARGET_SPEED
+				|| wheelTicks - robus->MotorLeftEncoderTotal < MOTOR_TARGET_SPEED )
+		{
+			//THREAD_MSleep(100);
+			robus->MotorLeftSpeed  += round((MOTOR_TARGET_SPEED / 5 - robus->MotorLeftEncoderLast)
+													* INSTANT_PROPORTIONALITY / 5 +	(robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorLeftEncoderTotal) * LONG_PROPORTIONALITY / 5);
+			robus->MotorRightSpeed += round((MOTOR_TARGET_SPEED / 5 - robus->MotorRightEncoderLast)
+													* INSTANT_PROPORTIONALITY / 5 + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorRightEncoderTotal) * LONG_PROPORTIONALITY / 5);
+			robus->StateLastMs += ROLL_READING_CYCLE_DELAY;
+			return CHANGED_SPEED;
+		}
+		else if(currentMS >= robus->StateLastMs + (ROLL_READING_CYCLE_DELAY * 5))
+		{
+			//THREAD_MSleep(500);
+			robus->MotorLeftSpeed += round(((MOTOR_TARGET_SPEED - robus->MotorLeftEncoderLast) *
+										INSTANT_PROPORTIONALITY + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorLeftEncoderTotal) * LONG_PROPORTIONALITY));
+			robus->MotorRightSpeed += round(((MOTOR_TARGET_SPEED - robus->MotorRightEncoderLast) *
+										INSTANT_PROPORTIONALITY + (robus->StateTicks * MOTOR_TARGET_SPEED - robus->MotorRightEncoderTotal) * LONG_PROPORTIONALITY));
+			robus->StateLastMs += ROLL_READING_CYCLE_DELAY;
+			return CHANGED_SPEED;
+		}
+	}
+	return NOTHING_DONE;
 }
