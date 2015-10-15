@@ -1,104 +1,39 @@
 #include "stateMachine.h"
 
-int run()
+Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_collision(false), IRSensorStates(0)
 {
-	int returnedValue;
+}
 
-	Machine robus;
-	robus.CurrentState = StatesInit;
-
-	while(robus.CurrentState != StatesExit)
+int Robot::run()
+{
+	while(m_currentState != Exit)
 	{
-
-		getSensorStatus(&robus);
-
-		/********STATE CHANGE LOGIC*********/
-		//TO DO
-		/******** END **********************/
-
-		//Execute state
-		switch (robus.CurrentState)
+		switch (m_currentState)
 		{
 
-			case StatesInit:
-				robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
-				robus.StateDistance = 0;
-				robus.StateDegree = 0;
-				robus.NextState = StatesStop;
-				robus.IRSensorStates = 0;
-				robus.MotorLeftEncoderTotal  = robus.MotorRightEncoderTotal = 0;
-				robus.StateTicks = 0;
+			case Initial:
+				initialization();
 				break;
-			case StatesStop:
-				break;
-			case StatesTurn:
-				break;
-			case StatesSpin:
-				break;
-			case StatesRoll:
-				returnedValue = (rollState(&robus));
-
-				if(returnedValue == CHANGED_SPEED)
-				{
-					robus.StateTicks++;
-				}
-				else if(returnedValue == FINISHED_ROLLING)
-				{
-					robus.NextState == StatesStop;
-				}
-
-				MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
-				MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
-				break;
-			case StatesEnd:
+			case TowardTarget:
 				break;
 			default:
-				MOTOR_SetSpeed(MOTOR_LEFT, 0);
-				MOTOR_SetSpeed(MOTOR_RIGHT, 0);
-				LCD_ClearAndPrint("Error in state execution");
-				THREAD_MSleep(5000);
+				Print_Debug_Data("Error in state execution",DEBUG_CODE);
+				m_currentState = Exit;
 				return 0;
 		}
 
-		MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
-		MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
-
-		if(robus.NextState != robus.CurrentState)
+		if(m_nextState != m_currentState)
 		{
-			robus.MotorLeftSpeed = robus.MotorRightSpeed = 0;
-			switch (robus.NextState)
+			switch (m_nextState)
 			{
-				case StatesStop:
-					break;
-				case StatesTurn:
-					break;
-				case StatesSpin:
-					break;
-				case StatesEnd:
-					break;
-				case StatesRoll:
-					robus.MotorLeftSpeed = RIGHT_STARTING_SPEED;
-					robus.MotorRightSpeed = LEFT_STARTING_SPEED;
-					MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
-					MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
+				case Stop:
 					break;
 				default:
-
 					Print_Debug_Data("Error in state changing",DEBUG_CODE);
 					THREAD_MSleep(5000);
-					robus.CurrentState = StatesInit;
+					m_currentState = Exit;
 					break;
 			}
-
-			robus.MotorLeftEncoderTotal = robus.MotorRightEncoderTotal = 0;
-			MOTOR_SetSpeed(MOTOR_LEFT, robus.MotorLeftSpeed);
-			MOTOR_SetSpeed(MOTOR_RIGHT, robus.MotorRightSpeed);
-
-			ENCODER_Read(ENCODER_LEFT);
-			ENCODER_Read(ENCODER_RIGHT);
-
-			robus.StateTicks = robus.StateLastMs = 0;
-			robus.CurrentState = robus.NextState;
 		}
 
 	}
@@ -109,12 +44,31 @@ int run()
 	return 1;
 }
 
-void getSensorStatus(struct Machine * robus)
+void Robot::initialization()
 {
-	robus->IRSensorStates = sensor_IRDetection();
-	robus->MotorLeftEncoderLast = ENCODER_Read(ENCODER_LEFT);
-	robus->MotorRightEncoderLast = ENCODER_Read(ENCODER_RIGHT);
-	robus->MotorLeftEncoderTotal += robus->MotorLeftEncoderLast;
-	robus->MotorRightEncoderTotal += robus->MotorRightEncoderLast;
+	int sound = 0, noise = 0;
+	while(1)
+	{
+		for(int i = 0; i < 20; i++)
+		{
+			sound += ANALOG_Read(1);
+			noise += ANALOG_Read(2);
+		}
+
+		if (sound/20-noise/20 > 50)
+		{
+			m_currentState = TowardTarget;
+			return;
+		}
+
+		THREAD_MSleep(500);
+		sound = noise = 0;
+
+	}
+}
+
+void Robot::getSensorStatus()
+{
+	IRSensorStates = sensor_IRDetection();
 }
 

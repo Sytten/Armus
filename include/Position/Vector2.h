@@ -1,0 +1,34 @@
+/*
+============================================================================
+ Name : Vector2
+ Author : M.A.G.I.E Team
+ Modified on: 2015-10-14
+ Description : Map the different targets available to our robots depending
+			   on is position.
+============================================================================
+*/
+
+#ifndef VECTOR2_H
+#define VECTOR2_H
+
+template <class T>
+
+class Vector2
+{
+	public:
+		Vector2(): x(0), y(0) {}
+		Vector2(T p_x, T p_y): x(p_x), y(p_y) {}
+		Vector2(Vector2 const& other): x(other.x), y(other.y) {}
+
+		Vector2& operator+=(Vector2 const& other){ x += other.x; y += other.y; return *this;}
+
+		T x;
+		T y;
+};
+
+template <class T> Vector2<T> operator+(Vector2<T> a, Vector2<T> const& b)
+{
+	return a += b;
+}
+
+#endif

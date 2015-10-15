@@ -77,7 +77,7 @@ bool roll(int distance)
 	return true;
 }
 
-int rollState(Machine * robus)
+/*int rollState(Robot * robus)
 {
 	int currentMS = SYSTEM_ReadTimerMSeconds();
 	int wheelTicks = robus->StateDistance / WHEEL_CIRC * HOLES_QTY;
@@ -114,4 +114,4 @@ int rollState(Machine * robus)
 		}
 	}
 	return NOTHING_DONE;
-}
+}*/

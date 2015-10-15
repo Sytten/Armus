@@ -16,7 +16,7 @@
 #include "MotorsControl/constants.h"
 #include "MotorsControl/conversions.h"
 
-struct Machine;
+class Robot;
 
 //Error correction
 struct CorrectionData
@@ -67,8 +67,6 @@ bool spinXDegreesByHoles(int direction, float degree);
 
 //Roll
 bool roll(int distance);
-
-int rollState(Machine * robus);
 
 #endif /* MOTORSCONTROL_H_ */
 

@@ -24,39 +24,45 @@
 #include <libarmus.h>
 #include "MotorsControl/motorsControl.h"
 #include "Sensors/IRDetection.h"
+#include "Position/Map.h"
+#include "Position/Vector2.h"
 #include "debug.h"
 
 enum States
 {
-	StatesInit = 0,
-	StatesStop,
-	StatesTurn,
-	StatesSpin,
-	StatesRoll,
-	StatesEnd,
-	StatesExit
+	Initial = 0,
+	TowardTarget,
+	Avoid,
+	Stop,
+	Stay,
+	Exit
 };
 
-struct Machine
+class Robot
 {
-	int MotorLeftSpeed;				//Motor left speed
-	int MotorRightSpeed;			//Motor right speed
-	enum States CurrentState;		//Current state machine state
-	enum States NextState;			//Next state machine state
-	float StateDistance;			//State parameter (speed, angle)
-	float StateDegree;
-	int StateDirection;				//Direction of the state (Forward, left, back, right)
-	char IRSensorStates;			//Char representing all IR sensor values
-	int MotorLeftEncoderTotal;		//Total number of read left encoder values since state change
-	int MotorRightEncoderTotal;		//Total number of read right encoder values since state change
-	int MotorLeftEncoderLast;		//Last number of read left encoder values
-	int MotorRightEncoderLast;		//Last number of read right encoder values
-	int StateTicks;					//Counts number of iterations in the same state
-	int StateLastMs;
+	public:
+		Robot();
+		int run();
+
+	private:
+		States m_currentState;
+		States m_nextState;
+
+		Map m_map;
+		Vector2<float> m_position;
+		float m_angle;
+
+		bool m_collision;
+		char IRSensorStates;
+
+	private:
+		void initialization();
+		void towardTarget();
+		void avoid();
+		void stop();
+		void stay();
+
+		void getSensorStatus();
 };
-
-int run();
-
-void getSensorStatus(struct Machine * robus);
 
 #endif /* STATEMACHINE_H_ */
