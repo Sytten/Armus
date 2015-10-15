@@ -59,6 +59,8 @@ class Robot
 		char IRSensorStates;
 		Listener m_listener;
 
+		THREAD m_listenerThread;
+
 	private:
 		void initialization();
 		void towardTarget();

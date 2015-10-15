@@ -23,6 +23,8 @@ class Listener
 		void listenForStartingSound(Behavior p_behavior);
 		void listenForStopingSound();
 
+		static void *listener_helper(void* p_listener) { ((Listener*)p_listener)->listenForStopingSound();}
+
 	private:
 		States *m_state;
 };

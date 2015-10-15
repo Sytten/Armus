@@ -13,8 +13,10 @@ int Robot::run()
 
 			case Initial:
 				initialization();
+				pthread_create(&m_listenerThread, NULL, &Listener::listener_helper, &m_listener);
 				break;
 			case TowardTarget:
+				towardTarget();
 				break;
 			default:
 				Print_Debug_Data("Error in state execution",DEBUG_CODE);
@@ -26,7 +28,7 @@ int Robot::run()
 		{
 			switch (m_nextState)
 			{
-				case Stop:
+				case Exit:
 					break;
 				default:
 					Print_Debug_Data("Error in state changing",DEBUG_CODE);
