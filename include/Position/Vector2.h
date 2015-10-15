@@ -2,7 +2,7 @@
 ============================================================================
  Name : Vector2
  Author : M.A.G.I.E Team
- Modified on: 2015-10-14
+ Modified on: 2015-10-15
  Description : Map the different targets available to our robots depending
 			   on is position.
 ============================================================================

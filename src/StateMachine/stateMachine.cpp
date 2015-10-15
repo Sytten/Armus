@@ -1,6 +1,6 @@
-#include "stateMachine.h"
+#include "StateMachine/stateMachine.h"
 
-Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0)
+Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0), m_listener(&m_nextState)
 {
 }
 
@@ -55,24 +55,7 @@ void Robot::initialization()
 	m_angle = m_map.initialAngle(m_color, m_goingLeft, m_behavior);
 
 	//Waiting for the starting sound
-	int sound = 0, noise = 0;
-	while(1)
-	{
-		for(int i = 0; i < 20; i++)
-		{
-			sound += ANALOG_Read(1);
-			noise += ANALOG_Read(2);
-		}
-
-		if (sound/20-noise/20 > 50)
-		{
-			m_currentState = TowardTarget;
-			return;
-		}
-
-		THREAD_MSleep(500);
-		sound = noise = 0;
-	}
+	m_listener.listenForStartingSound(m_behavior);
 }
 
 void Robot::initialMenu()

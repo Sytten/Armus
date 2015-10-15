@@ -1,5 +1,4 @@
 #include "MotorsControl/motorsControl.h"
-#include "stateMachine.h"
 
 bool turn(int direction, float degree, struct CorrectionData * error)
 {

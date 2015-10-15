@@ -2,7 +2,7 @@
 ============================================================================
  Name : stateMachine
  Author : M.A.G.I.E Team
- Modified on: 2015-10-14
+ Modified on: 2015-10-15
  Description : State machine definition, with the different states and the machine
 			   which contains all the necessary variables to monitor the robot and the env.
 ============================================================================
@@ -23,22 +23,15 @@
 
 #include <libarmus.h>
 #include <vector>
+
+#include "StateMachine/States.h"
 #include "MotorsControl/motorsControl.h"
 #include "Sensors/IRDetection.h"
+#include "Sensors/Listener.h"
 #include "Position/Map.h"
 #include "Position/Vector2.h"
 #include "debug.h"
 #include "Behavior.h"
-
-enum States
-{
-	Initial = 0,
-	TowardTarget,
-	Avoid,
-	Stop,
-	Stay,
-	Exit
-};
 
 class Robot
 {
@@ -61,6 +54,7 @@ class Robot
 
 		bool m_collision;
 		char IRSensorStates;
+		Listener m_listener;
 
 	private:
 		void initialization();
