@@ -25,7 +25,7 @@ struct CorrectionData
 	float RightError;
 };
 /**
- *	@brief Returns the number of wheel holes that represent a degree angle of rotation for a trun
+ *	@brief Returns the number of wheel holes that represent a degree angle of rotation for a turn
  *	@param degree The number of degree of rotation
  *	@return The number of encoder holes that make a degree angle rotation
  */
@@ -43,9 +43,9 @@ float holesForSpin(int degree);
  */
 float holesForDistance(float centimeters);
 /**
- *	@brief Evaluates the distance travelled with the number of encoder holes passed as parameter
+ *	@brief Evaluates the distance traveled with the number of encoder holes passed as parameter
  *	@param holesQty The number of encoder holes to evaluate the distance of
- *	@return The distance in centimeters that would be travelled by holesQty number of encoder holes
+ *	@return The distance in centimeters that would be traveled by holesQty number of encoder holes
  */
 float distanceForHoles(float holesQty);
 /**
@@ -54,6 +54,12 @@ float distanceForHoles(float holesQty);
  *	@return
  */
 float distanceForDegreeSpin (float degree);
+/**
+ *	@brief Returns the degree angle equivalent to the number of wheel holes
+ *	@param holesQty The number of encoder holes from which we will evaluate the degree
+ *	@return The degree that represent the number of encoder holes
+ */
+float turnForHoles(int holesQty);
 
 /**
  *

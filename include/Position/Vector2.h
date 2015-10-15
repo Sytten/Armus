@@ -11,6 +11,8 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
+#include <math.h>
+
 template <class T>
 
 class Vector2
@@ -21,6 +23,10 @@ class Vector2
 		Vector2(Vector2 const& other): x(other.x), y(other.y) {}
 
 		Vector2& operator+=(Vector2 const& other){ x += other.x; y += other.y; return *this;}
+		Vector2& operator-=(Vector2 const& other){ x -= other.x; y -= other.y; return *this;}
+
+		T length() const { return sqrt(x*x + y*y);}
+		T angle() const { return atan2(y,x) * 180.0 / 3.1416; }
 
 		T x;
 		T y;
@@ -29,6 +35,11 @@ class Vector2
 template <class T> Vector2<T> operator+(Vector2<T> a, Vector2<T> const& b)
 {
 	return a += b;
+}
+
+template <class T> Vector2<T> operator-(Vector2<T> a, Vector2<T> const& b)
+{
+	return a -= b;
 }
 
 template <class T> bool operator==(Vector2<T> const& a, Vector2<T> const& b)

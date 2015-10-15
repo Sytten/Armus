@@ -17,3 +17,11 @@ Vector2<float> vectorToCartesian(float p_distance, float p_angle)
 	return coordinates;
 }
 
+bool near(Vector2<float> p_1, Vector2<float> p_2)
+{
+	if(sqrtDistance(p_1, p_2) < 4)
+		return true;
+	else
+		return false;
+}
+

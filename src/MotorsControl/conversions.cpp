@@ -21,3 +21,9 @@ float distanceForDegree (float degree)
 	return (degree/(float)360) * WHEEL_AXE_CIRC;
 }
 
+float turnForHoles(int holesQty)
+{
+	 float dist = travelledDistance(holesQty);
+	 return (dist/WHEEL_AXE_CIRC) * (float)360;
+}
+

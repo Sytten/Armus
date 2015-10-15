@@ -23,6 +23,7 @@
 
 #include <libarmus.h>
 #include <vector>
+#include <math.h>
 
 #include "StateMachine/States.h"
 #include "MotorsControl/motorsControl.h"
@@ -30,6 +31,7 @@
 #include "Sensors/Listener.h"
 #include "Position/Map.h"
 #include "Position/Vector2.h"
+#include "Position/Angle.h"
 #include "debug.h"
 #include "Behavior.h"
 
@@ -48,6 +50,7 @@ class Robot
 		float m_angle;
 
 		std::vector<Target> m_targets;
+		int m_currentTarget;
 		Behavior m_behavior;
 		Color m_color;
 		bool m_goingLeft;

@@ -1,6 +1,6 @@
 #include "StateMachine/stateMachine.h"
 
-Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0), m_listener(&m_nextState)
+Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_currentTarget(0), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0), m_listener(&m_nextState )
 {
 }
 
@@ -56,6 +56,41 @@ void Robot::initialization()
 
 	//Waiting for the starting sound
 	m_listener.listenForStartingSound(m_behavior);
+}
+
+void Robot::towardTarget()
+{
+	if(m_currentTarget != -1)
+	{
+		float angleToTurn = rotationAngle(m_angle, (m_targets[m_currentTarget].position-m_position).angle()); //rotationAngle(Vector2<float>(1*cos(m_angle), 1*sin(m_angle)), m_targets[m_currenTarget].position);
+		float rollDistance = sqrtDistance(m_position, m_targets[m_currentTarget].position);
+		Vector2<float> move;
+		CorrectionData error;
+
+		//Turn the robot and update its angle
+		if(angleToTurn > 0)
+		{
+			turn(TURN_RIGHT, angleToTurn, &error);
+			m_angle -= angleToTurn + turnForHoles(error.RightError);
+		}
+		else if(angleToTurn < -0)
+		{
+			turn(TURN_LEFT, -angleToTurn, &error);
+			m_angle += angleToTurn + turnForHoles(error.LeftError);
+		}
+
+		//Move the robot and update its position
+		roll(rollDistance);
+
+		m_position.x += rollDistance*cos(m_angle);
+		m_position.y += rollDistance*sin(m_angle);
+
+		if(near(m_position, m_targets[m_currentTarget].position))
+			m_currentTarget++;
+
+		if(m_currentTarget > m_targets.size())
+			m_currentTarget = -1;
+	}
 }
 
 void Robot::initialMenu()
