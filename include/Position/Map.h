@@ -44,13 +44,14 @@ class Map
 			Vector2<float> position;
 			float angle;
 			Color color;
+			Behavior behavior;
 		};
 
 	public:
 		Map();
-		std::vector<Target> raceTargets(Color p_startingColor, bool p_is_left, Behavior p_behavior);
-		Vector2<float> initialPosition(Color p_startingColor, bool p_is_left, Behavior p_behavior);
-		float initialAngle(Color p_startingColor, bool p_is_left, Behavior p_behavior);
+		std::vector<Target> raceTargets(Color p_startingColor, bool p_goingLeft, Behavior p_behavior);
+		Vector2<float> initialPosition(Color p_startingColor, bool p_goingLeft, Behavior p_behavior);
+		float initialAngle(Color p_startingColor, bool p_goingLeft, Behavior p_behavior);
 
 	private:
 		std::vector<Target> m_targets;

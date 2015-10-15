@@ -22,11 +22,13 @@
 /************************************/
 
 #include <libarmus.h>
+#include <vector>
 #include "MotorsControl/motorsControl.h"
 #include "Sensors/IRDetection.h"
 #include "Position/Map.h"
 #include "Position/Vector2.h"
 #include "debug.h"
+#include "Behavior.h"
 
 enum States
 {
@@ -52,6 +54,11 @@ class Robot
 		Vector2<float> m_position;
 		float m_angle;
 
+		std::vector<Target> m_targets;
+		Behavior m_behavior;
+		Color m_color;
+		bool m_goingLeft;
+
 		bool m_collision;
 		char IRSensorStates;
 
@@ -61,6 +68,8 @@ class Robot
 		void avoid();
 		void stop();
 		void stay();
+
+		void initialMenu();
 
 		void getSensorStatus();
 };

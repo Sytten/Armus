@@ -31,4 +31,9 @@ template <class T> Vector2<T> operator+(Vector2<T> a, Vector2<T> const& b)
 	return a += b;
 }
 
+template <class T> bool operator==(Vector2<T> const& a, Vector2<T> const& b)
+{
+	return (a.x == b.x && a.y == b.y);
+}
+
 #endif
