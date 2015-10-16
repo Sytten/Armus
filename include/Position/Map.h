@@ -15,7 +15,7 @@
 #include "Position/Vector2.h"
 #include "Position/Distance.h"
 #include "Behavior.h"
-#include "Sensors/Color.h"
+#include "Sensors/Colors.h"
 
 struct Target
 {

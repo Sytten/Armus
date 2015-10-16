@@ -29,6 +29,7 @@
 #include "MotorsControl/motorsControl.h"
 #include "Sensors/IRDetection.h"
 #include "Sensors/Listener.h"
+#include "Sensors/Colors.h"
 #include "Position/Map.h"
 #include "Position/Vector2.h"
 #include "Position/Angle.h"
