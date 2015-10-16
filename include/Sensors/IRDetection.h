@@ -23,8 +23,13 @@
 #define IR_LEFT_LEFT 1
 #define IR_LEFT_RIGHT 0
 
+#define MINIMUM_DISTANCE 10
+#define MULTIPLICATOR 0.1
+
 char sensor_IRDetection();
 
 bool doesIRDetect(char position);
+
+float getExternalIR(int pinNumber);
 
 #endif /* IRDETECTION_H_ */

@@ -14,7 +14,7 @@ char sensor_IRDetection()
 	returnValue |= temp << 2;
 
 	temp = IR_Detect(IR_LEFT);
-	returnValue |= temp << 6;
+	returnValue |= temp << 0;
 
 	return returnValue;
 
@@ -25,4 +25,8 @@ bool doesIRDetect(char sensorValues, char position)
 	return ((sensorValues >> position) & 1);
 }
 
+float getExternalIR(int pinNumber)
+{
+	return ((float)(500-ANALOG_Read(pinNumber)) * MULTIPLICATOR) + 10;
+}
 
