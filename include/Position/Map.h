@@ -2,7 +2,7 @@
 ============================================================================
  Name : Map
  Author : M.A.G.I.E Team
- Modified on: 2015-10-15
+ Modified on: 2015-10-16
  Description : Map the different targets available to our robots depending
 			   on is position and inform him about its initial location.
 ============================================================================
@@ -15,16 +15,7 @@
 #include "Position/Vector2.h"
 #include "Position/Distance.h"
 #include "Behavior.h"
-
-enum Color
-{
-	Blue = 0,
-	Green,
-	Yellow,
-	Purple,
-	Grey,
-	Other
-};
+#include "Sensors/Color.h"
 
 struct Target
 {

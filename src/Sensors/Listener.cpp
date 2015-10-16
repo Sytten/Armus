@@ -3,6 +3,7 @@
 void Listener::listenForStartingSound(Behavior p_behavior)
 {
 	int sound = 0, noise = 0;
+	bool heardOnce = false;
 	int iterations = 0;
 	float lastTime = SYSTEM_ReadTimerMSeconds();
 	float currentTime = 0;
@@ -22,7 +23,15 @@ void Listener::listenForStartingSound(Behavior p_behavior)
 
 		if (sound/iterations-noise/iterations > 50)
 		{
-			(*m_state) = Exit; //TowardTarget
+			if(p_behavior == Sumo)
+				(*m_state) = TowardTarget;
+			else if(p_behavior == Ninja)
+			{
+				if(heardOnce)
+					(*m_state) = TowardTarget;
+				else
+					heardOnce = true;
+			}
 			return;
 		}
 

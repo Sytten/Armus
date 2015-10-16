@@ -2,7 +2,7 @@
 ============================================================================
  Name : stateMachine
  Author : M.A.G.I.E Team
- Modified on: 2015-10-15
+ Modified on: 2015-10-16
  Description : State machine definition, with the different states and the machine
 			   which contains all the necessary variables to monitor the robot and the env.
 ============================================================================

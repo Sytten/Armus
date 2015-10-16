@@ -2,7 +2,7 @@
 ============================================================================
  Name : debug
  Author : M.A.G.I.E Team
- Modified on: 2015-10-15
+ Modified on: 2015-10-16
  Description : The debug functions allow the user to print error messages or
 			   write them in a log file.
 ============================================================================
