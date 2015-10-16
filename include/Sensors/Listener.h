@@ -10,8 +10,10 @@
 #ifndef LISTENER_H_
 #define LISTENER_H_
 
-#include <libarmus.h>
+#define STARTING_SOUND_LENGTH 2000
+#define STOPING_SOUND_LENGTH 5000
 
+#include <libarmus.h>
 #include "StateMachine/States.h"
 #include "Behavior.h"
 

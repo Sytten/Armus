@@ -29,6 +29,8 @@ int Robot::run()
 			switch (m_nextState)
 			{
 				case Exit:
+					m_currentState = Exit;
+					LCD_ClearAndPrint("BYE!");
 					break;
 				default:
 					Print_Debug_Data("Error in state changing",DEBUG_CODE);
@@ -57,6 +59,7 @@ void Robot::initialization()
 	m_angle = m_map.initialAngle(m_color, m_goingLeft, m_behavior);
 
 	//Waiting for the starting sound
+	LCD_ClearAndPrint("Starting sound check");
 	m_listener.listenForStartingSound(m_behavior);
 }
 
@@ -127,8 +130,10 @@ void Robot::initialMenu()
 				m_color = Purple;
 				internalConfirmed = true;
 			}
+			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;
+		THREAD_MSleep(500);
 
 		LCD_ClearAndPrint("Si j'etais le ninja, je devrais aller vers la droite ou la gauche?\n");
 		LCD_Printf("Bumper droit pour la droite\n");
@@ -144,8 +149,10 @@ void Robot::initialMenu()
 				m_goingLeft = true;
 				internalConfirmed = true;
 			}
+			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;
+		THREAD_MSleep(500);
 
 		LCD_ClearAndPrint("Quel est mon role?\n");
 		LCD_Printf("Bumper droit pour le sumo\n");
@@ -161,8 +168,10 @@ void Robot::initialMenu()
 				m_behavior = Ninja;
 				internalConfirmed = true;
 			}
+			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;
+		THREAD_MSleep(500);
 
 		LCD_ClearAndPrint("Voici le choix!\n");
 		if (m_color == Blue)
@@ -179,6 +188,11 @@ void Robot::initialMenu()
 		else
 			LCD_Printf("Je pars vers la droite\n");
 
+		if (m_behavior == Sumo)
+			LCD_Printf("Je suis un sumo\n");
+		else
+			LCD_Printf("Je suis un ninja\n");
+
 		LCD_Printf("C'est ok?\n");
 		LCD_Printf("Oui, bumper droit\n");
 		LCD_Printf("NON! bumper gauche\n");
@@ -193,10 +207,10 @@ void Robot::initialMenu()
 				internalConfirmed = true;
 				confirmed = false;
 			}
+			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;
-
-		THREAD_MSleep(1000);
+		THREAD_MSleep(500);
 	}
 }
 

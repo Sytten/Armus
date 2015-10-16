@@ -3,44 +3,60 @@
 void Listener::listenForStartingSound(Behavior p_behavior)
 {
 	int sound = 0, noise = 0;
+	int iterations = 0;
+	float lastTime = SYSTEM_ReadTimerMSeconds();
+	float currentTime = 0;
 	while(1)
 	{
-		for(int i = 0; i < 20; i++)
+		while((lastTime+STARTING_SOUND_LENGTH) > currentTime)
 		{
 			sound += ANALOG_Read(1);
 			noise += ANALOG_Read(2);
-		}
 
-		if (sound/20-noise/20 > 50)
+			iterations++;
+
+			THREAD_MSleep(100);
+			currentTime = SYSTEM_ReadTimerMSeconds();
+		}
+		lastTime = currentTime;
+
+		if (sound/iterations-noise/iterations > 50)
 		{
-			(*m_state) = TowardTarget;
+			(*m_state) = Exit; //TowardTarget
 			return;
 		}
 
-		THREAD_MSleep(500);
-		sound = noise = 0;
+		sound = noise = iterations = 0;
 	}
 }
 
 void Listener::listenForStopingSound()
 {
 	int sound = 0, noise = 0;
+	int iterations = 0;
+	float lastTime = SYSTEM_ReadTimerMSeconds();
+	float currentTime = 0;
 	while(1)
 	{
-		for(int i = 0; i < 20; i++)
+		while((lastTime+STOPING_SOUND_LENGTH) > currentTime)
 		{
 			sound += ANALOG_Read(1);
 			noise += ANALOG_Read(2);
-		}
 
-		if (sound/20-noise/20 > 50)
+			iterations++;
+
+			THREAD_MSleep(100);
+			currentTime = SYSTEM_ReadTimerMSeconds();
+		}
+		lastTime = currentTime;
+
+		if (sound/iterations-noise/iterations > 50)
 		{
 			(*m_state) = Exit;
 			return;
 		}
 
-		THREAD_MSleep(500);
-		sound = noise = 0;
+		sound = noise = iterations = 0;
 	}
 }
 
