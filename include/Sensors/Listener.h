@@ -10,8 +10,8 @@
 #ifndef LISTENER_H_
 #define LISTENER_H_
 
-#define STARTING_SOUND_LENGTH 2000
-#define STOPING_SOUND_LENGTH 5000
+#define STARTING_SOUND_LENGTH 1000
+#define STOPING_SOUND_LENGTH 2000
 
 #include <libarmus.h>
 #include <pthread.h>

@@ -55,9 +55,10 @@ std::vector<Target> Map::raceTargets(Color p_startingColor, bool p_goingLeft, Be
 				closestTarget = m_targets[i];
 			}
 		}
+		targets.push_back(Target(closestTarget.position.x + (targets[0].position.x-closestTarget.position.x)/2, closestTarget.position.y + (targets[0].position.y-closestTarget.position.y)/2, Other));
 		targets.push_back(closestTarget);
 
-		closestTarget.position = position + vectorToCartesian(91.44, angle);
+		closestTarget.position = position + vectorToCartesian(60, angle);
 		closestTarget.color = Other;
 		targets.push_back(closestTarget);
 	}

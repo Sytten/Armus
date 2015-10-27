@@ -14,9 +14,8 @@ enum States
 {
 	Initial = 0,
 	TowardTarget,
-	Avoid,
-	Stop,
 	Stay,
+	FollowLine,
 	Exit
 };
 

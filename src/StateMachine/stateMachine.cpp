@@ -1,6 +1,6 @@
 #include "StateMachine/stateMachine.h"
 
-Robot::Robot(): m_currentState(Initial), m_nextState(Stop), m_currentTarget(0), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0), m_listener(&m_nextState )
+Robot::Robot(): m_currentState(Initial), m_nextState(Stay), m_firstTime(true), m_currentTarget(0), m_behavior(Sumo), m_color(Other), m_collision(false), IRSensorStates(0), m_listener(&m_nextState )
 {
 }
 
@@ -10,13 +10,23 @@ int Robot::run()
 	{
 		switch (m_currentState)
 		{
-
 			case Initial:
 				initialization();
-				pthread_create(&m_listenerThread, NULL, &Listener::listener_helper, &m_listener);
+				BeginTime::globalTime = SYSTEM_ReadTimerMSeconds();
+				//pthread_create(&m_listenerThread, NULL, &Listener::listener_helper, &m_listener);
 				break;
 			case TowardTarget:
 				towardTarget();
+				break;
+			case FollowLine:
+				followLine();
+				break;
+			case Stay:
+				THREAD_MSleep(100);
+				if(SumoTimesUp())
+					m_nextState = Exit;
+				break;
+			case Exit:
 				break;
 			default:
 				Print_Debug_Data("Error in state execution",DEBUG_CODE);
@@ -36,9 +46,7 @@ int Robot::run()
 					m_currentState = TowardTarget;
 					break;
 				default:
-					Print_Debug_Data("Error in state changing",DEBUG_CODE);
-					THREAD_MSleep(5000);
-					m_currentState = Exit;
+					m_currentState = m_nextState;
 					break;
 			}
 		}
@@ -48,21 +56,37 @@ int Robot::run()
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
 	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
 
-	return 1;
+	return 0;
 }
 
 void Robot::initialization()
 {
 	//Get initial color and behavior from user
-	//initialMenu();
-	m_color = Blue;
-	m_behavior = Sumo;
-	m_goingLeft = false;
+	initialMenu();
 
 	//Get the targets and position depending on the color and behaviors of the robot
 	m_targets = m_map.raceTargets(m_color, m_goingLeft, m_behavior);
+
 	m_position = m_map.initialPosition(m_color, m_goingLeft, m_behavior);
 	m_angle = m_map.initialAngle(m_color, m_goingLeft, m_behavior);
+
+	if(m_behavior == Ninja)
+	{
+		float distance = SONAR_Detect(1);
+		LCD_ClearAndPrint("Distance:%d", distance);
+		if(distance > 0.1 && distance < 80.0)
+		{
+			if(m_goingLeft)
+				m_targets[m_targets.size()-1].position = m_position + vectorToCartesian(80, m_angle-30);
+			else
+				m_targets[m_targets.size()-1].position = m_position + vectorToCartesian(80, m_angle+30);
+
+			m_targets.erase(m_targets.begin() + 2);
+		}
+	}
+
+	m_currentTarget = m_targets.size()-1;
+
 
 	//Waiting for the starting sound
 	LCD_Printf("Starting sound check");
@@ -71,11 +95,12 @@ void Robot::initialization()
 
 void Robot::towardTarget()
 {
-	if(m_currentTarget != -1)
+	if(m_currentTarget != -1) //Check if one target is available at 0
 	{
 		LCD_ClearAndPrint("Target:%f,%f", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
 
-		float angleToTurn = rotationAngle(m_angle, (m_targets[m_currentTarget].position-m_position).angle()); //rotationAngle(Vector2<float>(1*cos(m_angle), 1*sin(m_angle)), m_targets[m_currenTarget].position);
+		float angleToTurn = rotationAngle(m_angle, (m_targets[m_currentTarget].position-m_position).angle());
+		LCD_ClearAndPrint("Angle to turn: %f", angleToTurn);
 		float rollDistance = sqrtDistance(m_position, m_targets[m_currentTarget].position);
 		Vector2<float> move;
 		CorrectionData error;
@@ -83,31 +108,57 @@ void Robot::towardTarget()
 		//Turn the robot and update its angle
 		if(angleToTurn > 0)
 		{
-			turn(TURN_RIGHT, angleToTurn, &error);
+			if(angleToTurn > 180)
+				spinXDegreesByHoles(TURN_LEFT, 360-angleToTurn);
+			else
+				spinXDegreesByHoles(TURN_RIGHT, angleToTurn);
 			m_angle -= angleToTurn + turnForHoles(error.RightError);
 		}
 		else if(angleToTurn < 0)
 		{
-			turn(TURN_LEFT, -angleToTurn, &error);
+			if(angleToTurn < -180)
+				spinXDegreesByHoles(TURN_RIGHT, 360+angleToTurn);
+			else
+				spinXDegreesByHoles(TURN_LEFT, -angleToTurn);
 			m_angle += -angleToTurn + turnForHoles(error.LeftError);
 		}
 
 		//Move the robot and update its position
-		roll(rollDistance);
+		if(!rollWithDetection(rollDistance, m_firstTime))
+			m_nextState = FollowLine;
 
 		m_position.x += rollDistance*cos(m_angle * PI_VAL / 180);
 		m_position.y += rollDistance*sin(m_angle * PI_VAL / 180);
 
-		LCD_Printf("Position: %f, %f\n", m_position.x, m_position.y);
+		/*LCD_Printf("Position: %f, %f\n", m_position.x, m_position.y);
 		LCD_Printf("Angle: %f", m_angle);
 		LCD_Printf("Target: %f, %f\n", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
-		LCD_Printf("Distance: %f\n", sqrtDistance(m_position, m_targets[m_currentTarget].position));
+		LCD_Printf("Distance: %f\n", sqrtDistance(m_position, m_targets[m_currentTarget].position));*/
 		if(near(m_position, m_targets[m_currentTarget].position))
-			m_currentTarget++;
+			m_currentTarget--;
 
-		if(m_currentTarget == m_targets.size())
-			m_currentTarget = -1;
+		if(m_currentTarget == -1)
+			m_nextState = Stay;
 	}
+}
+
+void Robot::followLine()
+{
+	/*bool stopping = false;
+
+	while(!stopping)
+	{
+		if(isCenterDetect())
+			stopping = true;
+
+		if(m_goingLeft)
+			spinXDegreesByHoles(SPIN_RIGHT, 6);
+		else
+			spinXDegreesByHoles(SPIN_LEFT, 6);
+	}
+
+	rollOnLine(200);
+	m_nextState = Exit;*/
 }
 
 void Robot::initialMenu()

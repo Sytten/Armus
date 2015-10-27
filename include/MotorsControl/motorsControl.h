@@ -13,8 +13,10 @@
 #include <libarmus.h>
 #include <math.h>
 
+#include "StateMachine/Timer.h"
 #include "MotorsControl/constants.h"
 #include "MotorsControl/conversions.h"
+#include "Sensors/LineDetection.h"
 
 class Robot;
 
@@ -73,6 +75,8 @@ bool spinXDegreesByHoles(int direction, float degree);
 
 //Roll
 bool roll(int distance);
+bool rollWithDetection(int distance, bool & firstDetection);
+bool rollOnLine(int distance);
 
 #endif /* MOTORSCONTROL_H_ */
 

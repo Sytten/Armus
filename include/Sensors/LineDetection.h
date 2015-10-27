@@ -21,5 +21,7 @@ bool isCenterDetect();
 bool isRightDetect();
 
 bool isCentered();
+bool detectNoLine();
+bool detectFull();
 
 #endif /* LINEDETECTION_H_ */

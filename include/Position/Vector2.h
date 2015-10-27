@@ -11,7 +11,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <math.h>
+#include <cmath>
 
 template <class T>
 
@@ -26,10 +26,32 @@ class Vector2
 		Vector2& operator-=(Vector2 const& other){ x -= other.x; y -= other.y; return *this;}
 
 		T length() const { return sqrt(x*x + y*y);}
-		T angle() const { T angle = atan2(y,x) * 180.0 / 3.1416;
-						  if(angle < 0)
-							  angle+=360;
+		T angle() { T angle = atan2(std::abs(y),std::abs(x)) * 180.0 / 3.1416;
+							if(angle < 0.01)
+							{
+								angle = 0;
+								y = 0;
+							}
+							if(angle > 89.9)
+							{
+								angle = 90;
+								x = 0;
+							}
+
+							if(x < 0 && y >= 0)
+								angle = 180 - angle;
+							else if(x <= 0 && y < 0)
+								angle += 180;
+							else if(x > 0 && y < 0)
+								angle += 270;
+
 						  return angle;  }
+		Vector2<T> abs() const { Vector2<T> p_vector(x,y);
+						if(p_vector.x < 0)
+							p_vector.x *= -1;
+						if(p_vector.y < 0)
+							p_vector.y *= -1;
+						return p_vector; }
 
 		T x;
 		T y;

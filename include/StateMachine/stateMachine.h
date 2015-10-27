@@ -26,6 +26,7 @@
 #include <math.h>
 
 #include "StateMachine/States.h"
+#include "StateMachine/Timer.h"
 #include "MotorsControl/motorsControl.h"
 #include "Sensors/IRDetection.h"
 #include "Sensors/Listener.h"
@@ -46,6 +47,9 @@ class Robot
 		States m_currentState;
 		States m_nextState;
 
+		float m_initalTime;
+		bool m_firstTime;
+
 		Map m_map;
 		Vector2<float> m_position;
 		float m_angle;
@@ -65,8 +69,7 @@ class Robot
 	private:
 		void initialization();
 		void towardTarget();
-		void avoid();
-		void stop();
+		void followLine();
 		void stay();
 
 		void initialMenu();

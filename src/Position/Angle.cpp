@@ -3,8 +3,9 @@
 float rotationAngle(Vector2<float> const& p_1, Vector2<float> const& p_2)
 {
 	float dot = p_1.x*p_2.x + p_1.y*p_2.y;
+	float det = p_1.x*p_2.y - p_1.y*p_2.x;
 
-	return acos(dot/(p_1.length() * p_2.length())) * 180.0 / 3.1416;
+	return atan2(det, dot) * 180.0 / 3.1416;
 }
 
 float rotationAngle(float const& p_angle1, float const& p_angle2)

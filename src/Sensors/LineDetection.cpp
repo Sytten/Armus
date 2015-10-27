@@ -20,3 +20,13 @@ bool isCentered()
 {
 	return (isCenterDetect() && !isLeftDetect() && !isRightDetect());
 }
+
+bool detectNoLine()
+{
+	return (!isCenterDetect() && !isLeftDetect() && !isRightDetect());
+}
+
+bool detectFull()
+{
+	return (isCenterDetect() && isLeftDetect() && isRightDetect());
+}

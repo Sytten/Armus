@@ -11,8 +11,8 @@ float sqrtDistance(Vector2<float> p_1, Vector2<float> p_2)
 Vector2<float> vectorToCartesian(float p_distance, float p_angle)
 {
 	Vector2<float> coordinates;
-		coordinates.x = cos(p_angle) * p_distance;
-		coordinates.y = sin(p_angle) * p_distance;
+		coordinates.x = cos(p_angle*3.1416/180) * p_distance;
+		coordinates.y = sin(p_angle*3.1416/180) * p_distance;
 
 	return coordinates;
 }
