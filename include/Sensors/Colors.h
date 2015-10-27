@@ -15,7 +15,7 @@ enum Color
 	Blue = 0,
 	Green,
 	Yellow,
-	Purple,
+	Pink,
 	Grey,
 	Other
 };

@@ -1,6 +1,6 @@
 /*
 ============================================================================
- Name : constants
+ Name : IR detection
  Author : M.A.G.I.E Team
  Modified on: 2015-10-14
  Description : The IR function check the inputs and return a single variable

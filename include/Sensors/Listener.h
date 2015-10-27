@@ -14,13 +14,14 @@
 #define STOPING_SOUND_LENGTH 5000
 
 #include <libarmus.h>
+#include <pthread.h>
 #include "StateMachine/States.h"
 #include "Behavior.h"
 
 class Listener
 {
 	public:
-		Listener(States *p_state):m_state(p_state){}
+		Listener(States *p_state):m_state(p_state){ pthread_mutex_init(&m_mutex, NULL);}
 
 		void listenForStartingSound(Behavior p_behavior);
 		void listenForStopingSound();
@@ -29,6 +30,7 @@ class Listener
 
 	private:
 		States *m_state;
+		pthread_mutex_t m_mutex;
 };
 
 #endif /* LISTENER_H_ */

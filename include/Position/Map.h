@@ -31,7 +31,7 @@ class Map
 	private:
 		struct StartingPoint
 		{
-			StartingPoint(float p_x, float p_y, float p_angle, Color p_color):position(p_x, p_y),angle(p_angle), color(p_color){}
+			StartingPoint(float p_x, float p_y, float p_angle, Color p_color, Behavior p_behavior):position(p_x, p_y),angle(p_angle), color(p_color), behavior(p_behavior){}
 			Vector2<float> position;
 			float angle;
 			Color color;

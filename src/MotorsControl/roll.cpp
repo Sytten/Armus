@@ -30,7 +30,7 @@ bool roll(int distance)
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
-			//LCD_ClearAndPrint("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
+			LCD_ClearAndPrint("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;

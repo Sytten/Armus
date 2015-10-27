@@ -2,11 +2,32 @@
 
 Map::Map()
 {
-	m_targets.push_back(Target(121.92, 0, Purple));
-	m_targets.push_back(Target(-121.92, 0, Green));
-	m_targets.push_back(Target(0, 121.92, Yellow));
-	m_targets.push_back(Target(0, -121.92, Blue));
+	m_targets.push_back(Target(63.91, 63.91, Pink));
+	m_targets.push_back(Target(-63.91, -63.91, Green));
+	m_targets.push_back(Target(-63.91, 63.91, Yellow));
+	m_targets.push_back(Target(63.91, -63.91, Blue));
 	m_targets.push_back(Target(0, 0, Grey));
+
+	m_initialPositions.push_back(StartingPoint(137, 21.3, 180, Yellow, Sumo));
+	m_initialPositions.push_back(StartingPoint(137, 51.8, 180, Yellow, Ninja));
+	m_initialPositions.push_back(StartingPoint(-25.4, -139.7, 90, Yellow, Sumo));
+	m_initialPositions.push_back(StartingPoint(-55.88, -139.7, 90, Yellow, Ninja));
+
+	m_initialPositions.push_back(StartingPoint(25.4, 137, 270, Blue, Sumo));
+	m_initialPositions.push_back(StartingPoint(55.88, 137, 270, Blue, Ninja));
+	m_initialPositions.push_back(StartingPoint(-139.7, -21.3, 0, Blue, Sumo));
+	m_initialPositions.push_back(StartingPoint(-139.7, -51.8, 0, Blue, Ninja));
+
+	m_initialPositions.push_back(StartingPoint(-25.4, 137, 270, Green, Sumo));
+	m_initialPositions.push_back(StartingPoint(-55.88, 137, 270, Green, Ninja));
+	m_initialPositions.push_back(StartingPoint(139.7, -21.3, 180, Green, Sumo));
+	m_initialPositions.push_back(StartingPoint(139.7, -51.8, 180, Green, Ninja));
+
+	m_initialPositions.push_back(StartingPoint(25.4, -137, 90, Pink, Sumo));
+	m_initialPositions.push_back(StartingPoint(55.88, -137, 90, Pink, Ninja));
+	m_initialPositions.push_back(StartingPoint(-137, 21.3, 0, Pink, Sumo));
+	m_initialPositions.push_back(StartingPoint(-137, 51.8, 0, Pink, Ninja));
+
 }
 
 std::vector<Target> Map::raceTargets(Color p_startingColor, bool p_goingLeft, Behavior p_behavior)
@@ -82,7 +103,7 @@ Vector2<float> Map::initialPosition(Color p_startingColor, bool p_goingLeft, Beh
 					return m_initialPositions[i].position;
 			}
 
-			if(p_startingColor == Purple)
+			if(p_startingColor == Pink)
 			{
 				if(!p_goingLeft && m_initialPositions[i].position.y < 0)
 					return m_initialPositions[i].position;

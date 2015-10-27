@@ -21,18 +21,25 @@ void Listener::listenForStartingSound(Behavior p_behavior)
 		}
 		lastTime = currentTime;
 
+		LCD_Printf("Sound: %d, Noise: %d\n", sound/iterations, noise/iterations);
+
 		if (sound/iterations-noise/iterations > 50)
 		{
 			if(p_behavior == Sumo)
+			{
 				(*m_state) = TowardTarget;
+				return;
+			}
 			else if(p_behavior == Ninja)
 			{
 				if(heardOnce)
+				{
 					(*m_state) = TowardTarget;
+					return;
+				}
 				else
 					heardOnce = true;
 			}
-			return;
 		}
 
 		sound = noise = iterations = 0;
@@ -61,7 +68,9 @@ void Listener::listenForStopingSound()
 
 		if (sound/iterations-noise/iterations > 50)
 		{
+			pthread_mutex_lock(&m_mutex);
 			(*m_state) = Exit;
+			pthread_mutex_unlock(&m_mutex);
 			return;
 		}
 

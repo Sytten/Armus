@@ -32,6 +32,9 @@ int Robot::run()
 					m_currentState = Exit;
 					LCD_ClearAndPrint("BYE!");
 					break;
+				case TowardTarget:
+					m_currentState = TowardTarget;
+					break;
 				default:
 					Print_Debug_Data("Error in state changing",DEBUG_CODE);
 					THREAD_MSleep(5000);
@@ -51,7 +54,10 @@ int Robot::run()
 void Robot::initialization()
 {
 	//Get initial color and behavior from user
-	initialMenu();
+	//initialMenu();
+	m_color = Blue;
+	m_behavior = Sumo;
+	m_goingLeft = false;
 
 	//Get the targets and position depending on the color and behaviors of the robot
 	m_targets = m_map.raceTargets(m_color, m_goingLeft, m_behavior);
@@ -59,7 +65,7 @@ void Robot::initialization()
 	m_angle = m_map.initialAngle(m_color, m_goingLeft, m_behavior);
 
 	//Waiting for the starting sound
-	LCD_ClearAndPrint("Starting sound check");
+	LCD_Printf("Starting sound check");
 	m_listener.listenForStartingSound(m_behavior);
 }
 
@@ -67,6 +73,8 @@ void Robot::towardTarget()
 {
 	if(m_currentTarget != -1)
 	{
+		LCD_ClearAndPrint("Target:%f,%f", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
+
 		float angleToTurn = rotationAngle(m_angle, (m_targets[m_currentTarget].position-m_position).angle()); //rotationAngle(Vector2<float>(1*cos(m_angle), 1*sin(m_angle)), m_targets[m_currenTarget].position);
 		float rollDistance = sqrtDistance(m_position, m_targets[m_currentTarget].position);
 		Vector2<float> move;
@@ -78,22 +86,26 @@ void Robot::towardTarget()
 			turn(TURN_RIGHT, angleToTurn, &error);
 			m_angle -= angleToTurn + turnForHoles(error.RightError);
 		}
-		else if(angleToTurn < -0)
+		else if(angleToTurn < 0)
 		{
 			turn(TURN_LEFT, -angleToTurn, &error);
-			m_angle += angleToTurn + turnForHoles(error.LeftError);
+			m_angle += -angleToTurn + turnForHoles(error.LeftError);
 		}
 
 		//Move the robot and update its position
 		roll(rollDistance);
 
-		m_position.x += rollDistance*cos(m_angle);
-		m_position.y += rollDistance*sin(m_angle);
+		m_position.x += rollDistance*cos(m_angle * PI_VAL / 180);
+		m_position.y += rollDistance*sin(m_angle * PI_VAL / 180);
 
+		LCD_Printf("Position: %f, %f\n", m_position.x, m_position.y);
+		LCD_Printf("Angle: %f", m_angle);
+		LCD_Printf("Target: %f, %f\n", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
+		LCD_Printf("Distance: %f\n", sqrtDistance(m_position, m_targets[m_currentTarget].position));
 		if(near(m_position, m_targets[m_currentTarget].position))
 			m_currentTarget++;
 
-		if(m_currentTarget > m_targets.size())
+		if(m_currentTarget == m_targets.size())
 			m_currentTarget = -1;
 	}
 }
@@ -110,7 +122,7 @@ void Robot::initialMenu()
 		LCD_Printf("Bumper arriere pour bleu\n");
 		LCD_Printf("Bumper avant pour vert\n");
 		LCD_Printf("Bumper droit pour jaune\n");
-		LCD_Printf("Bumper gauche pour mauve\n");
+		LCD_Printf("Bumper gauche pour rose\n");
 
 		while (!internalConfirmed)
 		{
@@ -127,7 +139,7 @@ void Robot::initialMenu()
 				internalConfirmed = true;
 			}
 			if(DIGITALIO_Read(BMP_LEFT)) {
-				m_color = Purple;
+				m_color = Pink;
 				internalConfirmed = true;
 			}
 			THREAD_MSleep(100);
@@ -180,8 +192,8 @@ void Robot::initialMenu()
 			LCD_Printf("La couleur est verte\n");
 		else if (m_color == Yellow)
 			LCD_Printf("La couleur est jaune\n");
-		else if (m_color == Purple)
-			LCD_Printf("La couleur est mauve\n");
+		else if (m_color == Pink)
+			LCD_Printf("La couleur est rose\n");
 
 		if (m_goingLeft)
 			LCD_Printf("Je pars vers la gauche\n");

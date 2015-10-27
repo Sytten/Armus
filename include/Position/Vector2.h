@@ -26,7 +26,10 @@ class Vector2
 		Vector2& operator-=(Vector2 const& other){ x -= other.x; y -= other.y; return *this;}
 
 		T length() const { return sqrt(x*x + y*y);}
-		T angle() const { return atan2(y,x) * 180.0 / 3.1416; }
+		T angle() const { T angle = atan2(y,x) * 180.0 / 3.1416;
+						  if(angle < 0)
+							  angle+=360;
+						  return angle;  }
 
 		T x;
 		T y;
