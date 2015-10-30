@@ -79,7 +79,7 @@ bool rollWithDetection(int distance, bool & firstDetection)
 
 			leftSpeed += round((MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY);
 			rightSpeed += round((MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY);
-			LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
+			//LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
 		}
 	}
 

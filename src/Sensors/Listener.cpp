@@ -7,6 +7,9 @@ void Listener::listenForStartingSound(Behavior p_behavior)
 	int iterations = 0;
 	float lastTime = SYSTEM_ReadTimerMSeconds();
 	float currentTime = 0;
+
+	float firstTimeHeard = 0;
+
 	while(1)
 	{
 		while((lastTime+STARTING_SOUND_LENGTH) > currentTime)
@@ -21,7 +24,13 @@ void Listener::listenForStartingSound(Behavior p_behavior)
 		}
 		lastTime = currentTime;
 
-		LCD_Printf("Sound: %d, Noise: %d\n", sound/iterations, noise/iterations);
+		//LCD_Printf("Sound: %d, Noise: %d\n", sound/iterations, noise/iterations);
+
+		if(firstTimeHeard + 60000 < SYSTEM_ReadTimerMSeconds() && firstTimeHeard != 0)
+		{
+			(*m_state) = TowardTarget;
+			return;
+		}
 
 		if (sound/iterations-noise/iterations > 50)
 		{
@@ -32,13 +41,10 @@ void Listener::listenForStartingSound(Behavior p_behavior)
 			}
 			else if(p_behavior == Ninja)
 			{
-				if(heardOnce)
-				{
-					(*m_state) = TowardTarget;
-					return;
-				}
-				else
-					heardOnce = true;
+				if(firstTimeHeard == 0)
+					firstTimeHeard = SYSTEM_ReadTimerMSeconds();
+
+				LCD_Printf("I heard a sound!!!!!!! :/)");
 			}
 		}
 

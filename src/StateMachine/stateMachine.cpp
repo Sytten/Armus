@@ -74,7 +74,7 @@ void Robot::initialization()
 	{
 		float distance = SONAR_Detect(1);
 		LCD_ClearAndPrint("Distance:%d", distance);
-		if(distance > 0.1 && distance < 80.0)
+		if(distance > 0.1 && distance < 60.0)
 		{
 			if(m_goingLeft)
 				m_targets[m_targets.size()-1].position = m_position + vectorToCartesian(80, m_angle-30);
@@ -97,7 +97,7 @@ void Robot::towardTarget()
 {
 	if(m_currentTarget != -1) //Check if one target is available at 0
 	{
-		LCD_ClearAndPrint("Target:%f,%f", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
+		//LCD_ClearAndPrint("Target:%f,%f", m_targets[m_currentTarget].position.x, m_targets[m_currentTarget].position.y);
 
 		float angleToTurn = rotationAngle(m_angle, (m_targets[m_currentTarget].position-m_position).angle());
 		LCD_ClearAndPrint("Angle to turn: %f", angleToTurn);
@@ -124,8 +124,7 @@ void Robot::towardTarget()
 		}
 
 		//Move the robot and update its position
-		if(!rollWithDetection(rollDistance, m_firstTime))
-			m_nextState = FollowLine;
+		rollWithDetection(rollDistance, m_firstTime);
 
 		m_position.x += rollDistance*cos(m_angle * PI_VAL / 180);
 		m_position.y += rollDistance*sin(m_angle * PI_VAL / 180);
