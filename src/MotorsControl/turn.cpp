@@ -1,5 +1,4 @@
 #include "MotorsControl/motorsControl.h"
-#include "stateMachine.h"
 
 bool turn(int direction, float degree, struct CorrectionData * error)
 {
@@ -70,7 +69,7 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 	return true;
 }
 
-int stateTurn(struct Machine * robus)
+/*int stateTurn(Robot * robus)
 {
 	int currentMS = SYSTEM_ReadTimerMSeconds();
 	float wheelTicks = holesForTurn(robus->StateDegree);
@@ -107,4 +106,4 @@ int stateTurn(struct Machine * robus)
 	}
 
 	return NOTHING_DONE;
-}
+}*/
