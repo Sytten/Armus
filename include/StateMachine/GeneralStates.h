@@ -3,20 +3,20 @@
  Name : States
  Author : M.A.G.I.E Team
  Modified on: 2015-10-15
- Description : List the different states of the robots
+ Description : List the different general states of the robots
 ============================================================================
 */
 
-#ifndef STATES_H_
-#define STATES_H_
+#ifndef GENERALSTATES_H_
+#define GENERALSTATES_H_
 
-enum States
+enum GeneralStates
 {
-	Initial = 0,
-	TowardTarget,
+	Wander = 0,
+	TowardPlayer,
+	Play,
 	Stay,
-	FollowLine,
 	Exit
 };
 
-#endif /* STATES_H_ */
+#endif /* GENERALSTATES_H_ */

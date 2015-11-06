@@ -10,11 +10,10 @@
 ============================================================================
 */
 
-#include "StateMachine/stateMachine.h"
+#include "StateMachine/StateMachine.h"
 
 int main()
 {
-	Robot robus;
-	return robus.run();
+	return run();
 }
 

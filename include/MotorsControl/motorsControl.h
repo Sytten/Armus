@@ -13,7 +13,6 @@
 #include <libarmus.h>
 #include <math.h>
 
-#include "StateMachine/Timer.h"
 #include "MotorsControl/constants.h"
 #include "MotorsControl/conversions.h"
 #include "Sensors/LineDetection.h"
