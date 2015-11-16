@@ -27,7 +27,8 @@ int run()
 				break;
 
 			case Stay:
-				THREAD_MSleep(500);
+				stay();
+				robotState = Wander;
 				break;
 
 			default: //In case something goes wrong in our code

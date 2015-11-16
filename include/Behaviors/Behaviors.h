@@ -6,14 +6,16 @@
  Description : Access the different general behaviors of the robots
 ============================================================================
 */
-
-#include "StateMachine/GameStates.h"
-
 #ifndef BEHAVIORS_H_
 #define BEHAVIORS_H_
+
+#include "StateMachine/GameStates.h"
+#include "Sensors/PianoNotes.h"
+#include "MotorsControl/motorsControl.h"
 
 void wander();
 void towardPlayer();
 void play();
+void stay();
 
 #endif /* BEHAVIORS_H_ */

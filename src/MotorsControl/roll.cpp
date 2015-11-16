@@ -1,4 +1,5 @@
 #include "MotorsControl/motorsControl.h"
+#include "MotorsControl/RollVariables.h"
 
 bool rollWithDetection(int distance, bool & firstDetection)
 {
@@ -151,6 +152,56 @@ bool roll(int distance)
 			rightSpeed += (MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY;
 			LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
 		}
+	}
+
+	//Stop robot
+	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
+	MOTOR_SetSpeed(MOTOR_LEFT, 0);
+
+	return true;
+}
+
+bool roll(RollVariables *data)
+{
+	static float lastMS = 0;
+
+	if(firstTime)
+	{
+		ENCODER_Read(ENCODER_LEFT);
+		ENCODER_Read(ENCODER_RIGHT);
+	}
+
+	if(!data->done)
+	{
+		int totalTicks = holesForDistance(data->distance);
+		int leftEncoder = 0;
+		int rightEncoder = 0;
+		float currentMS = SYSTEM_ReadTimerMSeconds();
+
+		if(data->doneRightTicks < totalTicks || data->doneLeftTicks < totalTicks)
+		{
+			if(currentMS >= lastMS + 250)
+			{
+				MOTOR_SetSpeed(MOTOR_RIGHT, rightSpeed);
+				MOTOR_SetSpeed(MOTOR_LEFT, leftSpeed);
+
+				THREAD_MSleep(250);
+
+				leftEncoder = ENCODER_Read(ENCODER_LEFT);
+				rightEncoder = ENCODER_Read(ENCODER_RIGHT);
+
+				data->doneRightTicks += rightEncoder;
+				data->doneLeftTicks += leftEncoder;
+				data->expectedTicks += MOTOR_TARGET_SPEED;
+
+				data->leftSpeed += (MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(data->expectedTicks-data->doneLeftTicks)*LONG_PROPORTIONALITY;
+				data->rightSpeed += (MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(data->expectedTicks-data->doneRightTicks)*LONG_PROPORTIONALITY;
+
+				lastMS = currentMS;
+			}
+		}
+		else
+			data->done = true;
 	}
 
 	//Stop robot
