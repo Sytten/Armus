@@ -2,7 +2,7 @@
 
 void play_sound(char playedNote[]) 	// note_appuyer est la logic de l'action.
 {
-	if(playedNote == "Do1")
+	/*if(playedNote == "Do1")
 	{
 		while (notes_appuyer == 1)
 			AUDIO_PlayFile(Do1);
@@ -49,5 +49,32 @@ void play_sound(char playedNote[]) 	// note_appuyer est la logic de l'action.
 				{
 					while (notes_appuyer == 1)
 						AUDIO_PlayFile(Do2);
-				}
+				}*/
+}
+
+int PlayNotes(/*Manque une struct*/)
+{
+	int returnedValue = 0;
+
+	//Boucle de démarrage des sons
+	for(int i = 7; i >= 0; i--)
+	{
+		//Démarrage du son et assignation du nouveau stream
+		//Modification des bool
+	}
+
+	return returnedValue;
+}
+
+int StopNotes(/*Manque une struct*/)
+{
+	int returnedValue = 0;
+
+	//Boucle de démarrage des sons
+	for(int i = 7; i >= 0; i--)
+	{
+		//Fermeture des sons et modification du bool
+	}
+
+	return returnedValue;
 }

@@ -3,17 +3,17 @@
 // Sound directory defining.
 
 //only for testing
-#define Do1 "son.wav"
+#define SOUND_DO1 "son.wav"
 
 
 //#define Do1 "do_16b.wav"  remove comment sign after testing is completed.
-#define Re "re_16b.wav"
-#define Mi "mi_16b.wav"
-#define Fa "fa_16b.wav"
-#define Sol "sol_16b.wav"
-#define La "la_16b.wav"
-#define Si "si_16b.wav"
-#define Do2 "do2_16b.wav"
+#define SOUND_RE "re_16b.wav"
+#define SOUND_MI "mi_16b.wav"
+#define SOUDN_FA "fa_16b.wav"
+#define SOUND_SOL "sol_16b.wav"
+#define SOUND_LA "la_16b.wav"
+#define SOUND_SI "si_16b.wav"
+#define SOUND_DO2 "do2_16b.wav"
 
 // values of notes.
 #define VAL_DO1 0
@@ -35,3 +35,9 @@
 
 // définition des fonctions
 void play_sound(int playedNote);
+
+int PlayNotes();
+
+int StopNotes();
+
+
