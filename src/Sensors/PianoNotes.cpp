@@ -38,7 +38,7 @@ bool isNotePressed(int note, char noteValues)
 }
 
 
-void setIsPressedStreams(PianoStreams * stream)
+void CheckPressedKeys(PianoStreams * stream)
 {
 	char readValue = readMux(9, 10, 15, 16);
 

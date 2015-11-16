@@ -4,8 +4,6 @@ int PlayNotes(PianoStreams * piano)
 {
 	int returnedValue = 0;
 
-	AUDIO_SetVolume(100);
-
 	//Boucle de démarrage des sons
 	for(int i = 7; i >= 0; i--)
 	{
@@ -31,9 +29,9 @@ int StopNotes(PianoStreams* piano)
 	for(int i = 7; i >= 0; i--)
 	{
 		//Fermeture des sons et modification du bool
-		if (piano->streams[i].keyPressed == false && piano->streams[i].streamPlaying == true)
+		if (piano->streams[i].keyPressed == false
+					&& piano->streams[i].streamPlaying == true)
 		{
-
 			piano->streams[i].streamID = 0;
 		}
 	}
@@ -41,3 +39,15 @@ int StopNotes(PianoStreams* piano)
 	return returnedValue;
 }
 
+int CheckStreamIsPlaying(PianoStreams * piano)
+{
+	int returnedValue = 0;
+
+	for(int i = 7; i >= 0; i--)
+	{
+		if(piano->streams[i].streamID != 0)
+			piano->streams[i].streamPlaying = AUDIO_IsPlaybackDone(piano->streams[i].streamID);
+	}
+
+	return returnedValue;
+}

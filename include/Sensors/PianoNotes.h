@@ -24,6 +24,6 @@ bool isNotePressed(int note, char noteValues);
 /***
  *
  */
-void setIsPressedStreams(PianoStreams * stream);
+void CheckPressedKeys(PianoStreams * stream);
 
 #endif /* PIANONOTES_H_ */

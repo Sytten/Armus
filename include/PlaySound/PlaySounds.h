@@ -8,5 +8,7 @@ int PlayNotes(PianoStreams * piano);
 
 int StopNotes(PianoStreams * piano);
 
+int CheckStreamIsPlaying(PianoStreams * piano);
+
 
 
