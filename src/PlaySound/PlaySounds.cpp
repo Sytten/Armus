@@ -41,7 +41,3 @@ int StopNotes(PianoStreams* piano)
 	return returnedValue;
 }
 
-int defineNote()
-{
-
-}
