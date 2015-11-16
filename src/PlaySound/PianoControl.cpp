@@ -1,5 +1,7 @@
-#include "PianoControl.h"
-#include "Notes.h"
+#include "PlaySound/PianoControl.h"
+#include "PlaySound/PianoStreams.h"
+#include "Sensors/PianoNotes.h"
+#include "PlaySound/Notes.h"
 
 bool updatePianoStreams()
 {
@@ -16,6 +18,16 @@ bool updatePianoStreams()
 
 	temps_streams.size = 8;
 	temps_streams.streams = temp_notes;
+
+	char noteContainer = 0;
+
+	while(1)
+	{
+		noteContainer = readMux(9, 10, 15, 16);
+
+
+
+	}
 
 	return true;
 }

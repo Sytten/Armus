@@ -11,14 +11,14 @@
 #define NOTES_H_
 
 //Path to notes.
-#define DO1 "do_16b.wav"
-#define RE "re_16b.wav"
-#define MI "mi_16b.wav"
-#define FA "fa_16b.wav"
-#define SOL "sol_16b.wav"
-#define LA "la_16b.wav"
-#define SI "si_16b.wav"
-#define DO2 "do2_16b.wav"
+#define PATH_DO1 "do_16b.wav"
+#define PATH_RE "re_16b.wav"
+#define PATH_MI "mi_16b.wav"
+#define PATH_FA "fa_16b.wav"
+#define PATH_SOL "sol_16b.wav"
+#define PATH_LA "la_16b.wav"
+#define PATH_SI "si_16b.wav"
+#define PATH_DO2 "do2_16b.wav"
 
 // Mux values of notes.
 #define VAL_DO1 0

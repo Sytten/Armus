@@ -3,6 +3,7 @@
 
 
 #include <libarmus.h>
+#include "PlaySound/PianoStreams.h"
 
 /***
  * Fonction qui lit les valeurs des 2 canaux 4 bit des 74HC4052
@@ -19,5 +20,10 @@ char readMux(int z2, int z1, int s1, int s0);
  * @param noteValues char 8bit représentant les 8 notes
  */
 bool isNotePressed(int note, char noteValues);
+
+/***
+ *
+ */
+void setIsPressedStreams(PianoStreams * stream);
 
 #endif /* PIANONOTES_H_ */

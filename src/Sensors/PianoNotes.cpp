@@ -4,7 +4,7 @@
  *  Created on: 2015-11-05
  *      Author: Jeep
  */
-#include "PianoNotes.h"
+#include "Sensors/PianoNotes.h"
 
 char readMux(int z2, int z1, int s1, int s0)
 {
@@ -35,4 +35,10 @@ bool isNotePressed(int note, char noteValues)
 	}
 
 	return returnedValue;
+}
+
+
+void setIsPressedStreams(PianoStreams * stream)
+{
+
 }

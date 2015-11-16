@@ -1,5 +1,5 @@
-#include "Notes.h"
-#include "ControlNote.h"
+#include "PlaySound/Notes.h"
+#include "PlaySound/ControlNote.h"
 
 unsigned int PlayNote(int notes)
 {
@@ -8,35 +8,35 @@ unsigned int PlayNote(int notes)
 	switch(notes)
 	{
 		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(DO1);
+			returnValue = AUDIO_PlayFile(PATH_DO1);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(RE);
+		case VAL_RE:
+			returnValue = AUDIO_PlayFile(PATH_RE);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(MI);
+		case VAL_MI:
+			returnValue = AUDIO_PlayFile(PATH_MI);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(FA);
+		case VAL_FA:
+			returnValue = AUDIO_PlayFile(PATH_FA);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(SOL);
+		case VAL_SOL:
+			returnValue = AUDIO_PlayFile(PATH_SOL);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(LA);
+		case VAL_LA:
+			returnValue = AUDIO_PlayFile(PATH_LA);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(SI);
+		case VAL_SI:
+			returnValue = AUDIO_PlayFile(PATH_SI);
 			break;
-		case VAL_DO1:
-			returnValue = AUDIO_PlayFile(DO2);
+		case VAL_DO2:
+			returnValue = AUDIO_PlayFile(PATH_DO2);
 			break;
 	}
 	return returnValue;
 
 }
 
-unsigned int StopNote(unsigned int ID)
+void StopNote(unsigned int ID)
 {
 	AUDIO_StopPlayback(ID);
 }

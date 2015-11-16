@@ -1,6 +1,6 @@
-#include "PlaySounds.h"
+#include "PlaySound/PlaySounds.h"
 
-int PlayNotes(PianoStreams* piano)
+int PlayNotes(PianoStreams * piano)
 {
 	int returnedValue = 0;
 
