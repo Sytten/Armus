@@ -1,8 +1,7 @@
 #include <libarmus.h>
-#include "PianoStreams.h"
-#include "PianoControl.h"
-#include "ControlNote.h"
-#include "Notes.h"
+#include "PlaySound/PianoStreams.h"
+#include "PlaySound/ControlNote.h"
+#include "PlaySound/Notes.h"
 
 int PlayNotes(PianoStreams * piano);
 

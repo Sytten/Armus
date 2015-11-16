@@ -10,7 +10,14 @@
 #ifndef GAMES_H_
 #define GAMES_H_
 
-void free();
+#include "PlaySound/PianoStreams.h"
+#include "PlaySound/PlaySounds.h"
+#include "Sensors/PianoNotes.h"
+#include "PlaySound/Notes.h"
+
+#define PIANO_SIZE 8
+
+bool FreePlay();
 void memory();
 void repeat();
 
