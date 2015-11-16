@@ -4,9 +4,9 @@
 #include "ControlNote.h"
 #include "Notes.h"
 
-int PlayNotes();
+int PlayNotes(PianoStreams * piano);
 
-int StopNotes();
+int StopNotes(PianoStreams * piano);
 
 
 

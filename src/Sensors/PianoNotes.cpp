@@ -40,5 +40,11 @@ bool isNotePressed(int note, char noteValues)
 
 void setIsPressedStreams(PianoStreams * stream)
 {
+	char readValue = readMux(9, 10, 15, 16);
+
+	for(int i = 0; i < 8; i++)
+	{
+		stream->streams[i].keyPressed = isNotePressed(i, readValue);
+	}
 
 }
