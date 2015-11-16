@@ -6,10 +6,8 @@
 
 #define PIANO_SIZE 8
 
-bool updatePianoStreams()
+bool FreePlay()
 {
-
-
 	PianoStreams pianoStreams;
 
 	pianoStreams.size = PIANO_SIZE;
@@ -36,6 +34,7 @@ bool updatePianoStreams()
 		CheckStreamIsPlaying(&pianoStreams);
 		StopNotes(&pianoStreams);
 		PlayNotes(&pianoStreams);
+		//Ajouter check bouton pour quitter mode de jeu
 	}
 
 	return true;

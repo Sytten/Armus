@@ -10,6 +10,6 @@
 #ifndef PIANOCONTROL_H_
 #define PIANOCONTROL_H_
 
-bool updatePianoStreams();
+bool FreePlay();
 
 #endif /* PIANOCONTROL_H_ */
