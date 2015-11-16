@@ -11,27 +11,22 @@
 #ifndef PIANOSTREAMS_H
 #define PIANOSTREAMS_H
 
-#include "PlaySound/Notes.h"
+#include "Notes.h"
 
 struct Stream
 {
-	bool keyPressed = false;
-	bool streamPlaying = false;
-	int note = 0;
-	int streamID = 0;
+	bool keyPressed;
+	bool streamPlaying;
+	int note;
+	int streamID;
 };
 
 struct PianoStreams
 {
-	Stream streams[8] = {{false, false, VAL_DO1, 0},
-						 {false, false, VAL_RE, 0},
-						 {false, false, VAL_MI, 0},
-						 {false, false, VAL_FA, 0},
-						 {false, false, VAL_SOL, 0},
-						 {false, false, VAL_LA, 0},
-						 {false, false, VAL_SI, 0},
-						 {false, false, VAL_DO2, 0}};
-	int size = 8;
+	Stream *streams;
+	int size;
 };
 
 #endif
+
+
