@@ -28,8 +28,8 @@ bool FreePlay()
 		CheckPressedKeys(&pianoStreams);
 		CheckStreamIsPlaying(&pianoStreams);
 		StopNotes(&pianoStreams);
-		PlayNotes(&pianoStreams);
-		//Ajouter check bouton pour quitter mode de jeu
+		PlayNotes(&pianoStreams)
+		//Ajouter check bouton pour quitter mode de jeu // j'avais mis BMP_LEFT. (spino)
 	}
 
 	return true;
