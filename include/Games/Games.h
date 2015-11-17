@@ -17,7 +17,7 @@
 
 #define PIANO_SIZE 8
 
-bool FreePlay();
+bool freePlay();
 void memory();
 void repeat();
 

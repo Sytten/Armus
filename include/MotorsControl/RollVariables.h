@@ -13,17 +13,17 @@
 
 struct RollVariables
 {
-	int distance = 0;
+	int distance;
 
-	int rightSpeed =  RIGHT_STARTING_SPEED;
-	int leftSpeed = LEFT_STARTING_SPEED;
+	int rightSpeed;
+	int leftSpeed;
 
-	int doneRightTicks = 0;
-	int doneLeftTicks = 0;
-	int expectedTicks = 0;
+	int doneRightTicks;
+	int doneLeftTicks;
+	int expectedTicks;
 
-	bool firstTime = true;
-	bool done = false;
+	bool firstTime;
+	bool done;
 };
 
 #endif /* ROLLVARIABLES_H_ */

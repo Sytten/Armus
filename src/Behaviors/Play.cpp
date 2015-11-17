@@ -2,7 +2,7 @@
 
 void play()
 {
-
+	freePlay();
 }
 
 

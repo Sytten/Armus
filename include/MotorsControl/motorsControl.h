@@ -15,8 +15,8 @@
 
 #include "MotorsControl/constants.h"
 #include "MotorsControl/conversions.h"
+#include "MotorsControl/RollVariables.h"
 #include "Sensors/LineDetection.h"
-
 
 //Error correction
 struct CorrectionData
@@ -35,8 +35,8 @@ bool spinXDegreesByHoles(int direction, float degree);
 
 //Roll
 bool roll(int distance);
+bool roll(RollVariables *data);
 bool rollWithDetection(int distance, bool & firstDetection);
-bool rollOnLine(int distance);
 
 #endif /* MOTORSCONTROL_H_ */
 

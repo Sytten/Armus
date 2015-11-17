@@ -18,7 +18,7 @@ void Log_Debug_data(string message, int level)
 	{
 		if((level >= DEBUG_LEVEL && DEBUG_LEVEL != DEBUG_BASE)
 					|| (level == DEBUG_BASE && DEBUG_LEVEL == DEBUG_BASE))
-			debugFile << message << endl;
+			debugFile << message << std::endl;
 
 		debugFile.close();
 	}

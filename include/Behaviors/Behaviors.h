@@ -10,6 +10,7 @@
 #define BEHAVIORS_H_
 
 #include "StateMachine/GameStates.h"
+#include "Games/Games.h"
 #include "Sensors/PianoNotes.h"
 #include "MotorsControl/motorsControl.h"
 

@@ -165,10 +165,17 @@ bool roll(RollVariables *data)
 {
 	static float lastMS = 0;
 
-	if(firstTime)
+	if(data->firstTime)
 	{
 		ENCODER_Read(ENCODER_LEFT);
 		ENCODER_Read(ENCODER_RIGHT);
+		data->doneLeftTicks = 0;
+		data->doneRightTicks = 0;
+		data->expectedTicks = 0;
+		data->leftSpeed = LEFT_STARTING_SPEED;
+		data->rightSpeed = RIGHT_STARTING_SPEED;
+		data->done = false;
+		data->firstTime = false;
 	}
 
 	if(!data->done)
@@ -182,8 +189,8 @@ bool roll(RollVariables *data)
 		{
 			if(currentMS >= lastMS + 250)
 			{
-				MOTOR_SetSpeed(MOTOR_RIGHT, rightSpeed);
-				MOTOR_SetSpeed(MOTOR_LEFT, leftSpeed);
+				MOTOR_SetSpeed(MOTOR_RIGHT, data->rightSpeed);
+				MOTOR_SetSpeed(MOTOR_LEFT, data->leftSpeed);
 
 				THREAD_MSleep(250);
 

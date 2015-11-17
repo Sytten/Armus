@@ -1,5 +1,4 @@
 #include "Behaviors/Behaviors.h"
-#include "MotorsControl/RollVariables.h"
 
 void wander()
 {
@@ -9,10 +8,11 @@ void wander()
 	char notes;
 	RollVariables rollData;
 		rollData.distance = 1000000;
+		rollData.firstTime = true;
 
 	while(!finished)
 	{
-		if(AUDIO_IsPlaybackDone(soundID));
+		if(AUDIO_IsPlaybackDone(soundID))
 			soundID = AUDIO_PlayFile("do_16b.wav");
 
 		if(isLeftDetect() && !isRightDetect())
@@ -22,8 +22,7 @@ void wander()
 		else if(isCenterDetect())
 			spinXDegreesByHoles(SPIN_LEFT, 180);
 
-		roll(&data);
-
+		roll(&rollData);
 		distanceToPlayer = SONAR_Detect(1);
 		if(distanceToPlayer > 0.1 && distanceToPlayer < 40.0)
 			finished = true;

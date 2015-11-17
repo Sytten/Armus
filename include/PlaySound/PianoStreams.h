@@ -17,6 +17,7 @@ struct Stream
 {
 	bool keyPressed;
 	bool streamPlaying;
+	bool firstTime;
 	int note;
 	int streamID;
 };
