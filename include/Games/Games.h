@@ -21,4 +21,12 @@ bool freePlay();
 void memory();
 void repeat();
 
+//Directory path for repeat mode.
+
+
+// songs to be played by kids.
+void claireFontaine();
+void HymeDeLaJoie();
+void starwars();
+
 #endif /* GAMES_H_ */

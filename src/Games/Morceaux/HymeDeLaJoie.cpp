@@ -1,0 +1,63 @@
+#include <libarmus.h>
+#include "//fonciton de LED"
+
+void hymeDeLaJoie()
+{
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedMi('v');;
+	THREAD_MSleep(1667);
+	LedFa('v');
+	THREAD_MSleep(1667);
+	LedSol('v');
+	THREAD_MSleep(1667);
+	LedSol('v');
+	THREAD_MSleep(1667);
+	LedFa('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedRe('v');
+	THREAD_MSleep(1667);
+	LedDo('v');
+	THREAD_MSleep(1667);
+	LedDo('v');
+	THREAD_MSleep(1667);
+	LedRe('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedMe('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedFa('v');
+	THREAD_MSleep(1667);
+	LedSol('v');
+	THREAD_MSleep(1667);
+	LedSol('v');
+	THREAD_MSleep(1667);
+	LedFa('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedRe('v');
+	THREAD_MSleep(1667);
+	LedDo('v');
+	THREAD_MSleep(1667);
+	LedDo('v');
+	THREAD_MSleep(1667);
+	LedRe('v');
+	THREAD_MSleep(1667);
+	LedMi('v');
+	THREAD_MSleep(1667);
+	LedRe('v');
+	THREAD_MSleep(1667);
+	LedDo('v');
+	THREAD_MSleep(1667);
+
+}
