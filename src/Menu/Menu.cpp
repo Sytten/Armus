@@ -1,6 +1,6 @@
 #include "Menu/Menu.h"
 
-void menu(int *jeux)
+int menu(int jeux)
 {
 	bool confirmed = false;
 	bool internalConfirmed = false;
@@ -64,5 +64,7 @@ void menu(int *jeux)
 		internalConfirmed = false;
 		THREAD_MSleep(500);
 	}
+
+	return jeux;
 
 }

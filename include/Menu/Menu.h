@@ -7,8 +7,8 @@
 #define MEMORY 1;
 #define LEARN 2;
 
+#include <libarmus.h>
 
-void menu(int *jeux);
-
+int menu(int jeux);
 
 #endif /* MENU_H_ */
