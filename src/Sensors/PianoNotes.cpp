@@ -46,7 +46,10 @@ void CheckPressedKeys(PianoStreams * stream)
 	{
 
 		if (stream->streams[i].keyPressed == false && isNotePressed(i,readValue) == true)
+		{
 			stream->streams[i].firstTime = true;
+			stream->streams[i].timeKeyReleased = -1;
+		}
 
 		stream->streams[i].keyPressed = isNotePressed(i, readValue);
 	}

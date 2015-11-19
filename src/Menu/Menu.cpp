@@ -7,9 +7,9 @@ void menu(int *jeux)
 
 	while(!confirmed){
 
-		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de mémorisation, le deuxième permet d'apprendre la musique et le dernier est un mode libre\n");
+		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de mÃ©morisation, le deuxiÃ¨me permet d'apprendre la musique et le dernier est un mode libre\n");
 		LCD_Printf("Clique sur le premier bouton pour tester ta memoire\n"); // bumper front
-		LCD_Printf("Clique sur le deuxième bouton pour apprendre une chanson au piano\n"); // bumper rear
+		LCD_Printf("Clique sur le deuxiÃ¨me bouton pour apprendre une chanson au piano\n"); // bumper rear
 		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
 
 
@@ -33,16 +33,16 @@ void menu(int *jeux)
 		internalConfirmed = false;
 		THREAD_MSleep(500);
 
-		LCD_ClearAndPrint("Il reste seulement à confimer ton choix\n");
+		LCD_ClearAndPrint("Il reste seulement Ã  confimer ton choix\n");
 
 		if (jeux == 0)
-			LCD_ClearAndPrint("Tu désire jouer en mode libre\n");
+			LCD_ClearAndPrint("Tu dÃ©sire jouer en mode libre\n");
 
 		else if (jeux == 1)
-			LCD_ClearAndPrint("Tu désire pratiquer ta mémoire\n");
+			LCD_ClearAndPrint("Tu dÃ©sire pratiquer ta mÃ©moire\n");
 
 		else if (jeux == 2)
-			LCD_ClearAndPrint("Tu désire apprendre le piano\n");
+			LCD_ClearAndPrint("Tu dÃ©sire apprendre le piano\n");
 
 
 		LCD_Printf("C'est ok?\n");

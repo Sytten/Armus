@@ -18,6 +18,8 @@ struct Stream
 	bool keyPressed;
 	bool streamPlaying;
 	bool firstTime;
+	float timeKeyReleased;
+
 	int note;
 	int streamID;
 };
@@ -29,5 +31,3 @@ struct PianoStreams
 };
 
 #endif
-
-

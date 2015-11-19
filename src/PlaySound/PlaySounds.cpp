@@ -4,21 +4,17 @@ int PlayNotes(PianoStreams * piano)
 {
 	int returnedValue = 0;
 
-	//Boucle de démarrage des sons
+	//Boucle de dï¿½marrage des sons
 	for(int i = 7; i >= 0; i--)
 	{
-
-		//Démarrage du son et assignation du nouveau stream
-
-		unsigned int note = 0;
-
 		if(piano->streams[i].keyPressed == true && piano->streams[i].firstTime == true)
 		{
 			piano->streams[i].firstTime = false;
 
 			if(piano->streams[i].streamPlaying == true)
 				StopNote(piano->streams[i].streamID);
-
+			else
+				piano->streams[i].streamPlaying = true;
 
 			piano->streams[i].streamID = PlayNote(piano->streams[i].note);
 		}
@@ -31,17 +27,23 @@ int StopNotes(PianoStreams* piano)
 {
 	int returnedValue = 0;
 
-	//Boucle de démarrage des sons
+	//Boucle de fermeture des sons
 	for(int i = 7; i >= 0; i--)
 	{
 		//Fermeture des sons et modification du bool
 		if (piano->streams[i].keyPressed == false && piano->streams[i].streamPlaying == true)
 		{
-			LCD_Printf("j'ai arreter de jouer nigga!");
+			LCD_Printf("Starting closure\n Time: %f\n", piano->streams[i].timeKeyReleased);
 
-			StopNote(piano->streams[i].streamID);
-			piano->streams[i].streamPlaying = false;
-			piano->streams[i].streamID = 0;
+			if(piano->streams[i].timeKeyReleased < 0)
+				piano->streams[i].timeKeyReleased = SYSTEM_ReadTimerMSeconds();
+
+			else if(SYSTEM_ReadTimerMSeconds() > (piano->streams[i].timeKeyReleased + 500))
+			{
+				StopNote(piano->streams[i].streamID);
+				piano->streams[i].streamPlaying = false;
+				piano->streams[i].timeKeyReleased = -1;
+			}
 		}
 	}
 
@@ -58,7 +60,6 @@ int CheckStreamIsPlaying(PianoStreams * piano)
 		{
 			piano->streams[i].streamPlaying = !AUDIO_IsPlaybackDone(piano->streams[i].streamID);
 		}
-
 	}
 
 	return returnedValue;
