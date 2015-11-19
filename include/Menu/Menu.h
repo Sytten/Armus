@@ -11,5 +11,4 @@
 
 int menu(int jeux);
 
-
 #endif /* MENU_H_ */

@@ -15,6 +15,14 @@
 #include "Sensors/PianoNotes.h"
 #include "PlaySound/Notes.h"
 
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <libarmus.h>
+
+using namespace std;
+
 #define PIANO_SIZE 8
 
 bool freePlay();
@@ -22,7 +30,17 @@ void memory();
 void repeat();
 
 //Directory path for repeat mode.
+struct NoteSequenceData{
+	char note;
+	int delay;
+};
 
+struct SongSequenceData{
+	NoteSequenceData * noteSequences;
+	int size;
+};
+
+SongSequenceData readSongFile(const char* file_name);
 
 // songs to be played by kids.
 void claireFontaine();
