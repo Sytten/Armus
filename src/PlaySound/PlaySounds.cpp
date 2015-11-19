@@ -4,7 +4,7 @@ int PlayNotes(PianoStreams * piano)
 {
 	int returnedValue = 0;
 
-	//Boucle de dï¿½marrage des sons
+	//Boucle de démarrage des sons
 	for(int i = 7; i >= 0; i--)
 	{
 		if(piano->streams[i].keyPressed == true && piano->streams[i].firstTime == true)

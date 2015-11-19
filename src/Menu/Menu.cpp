@@ -1,7 +1,8 @@
 #include "Menu/Menu.h"
 
-int menu(int jeux)
+int menu()
 {
+	int jeux = -1;
 	bool confirmed = false;
 	bool internalConfirmed = false;
 

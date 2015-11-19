@@ -9,6 +9,6 @@
 
 #include <libarmus.h>
 
-int menu(int jeux);
+int menu();
 
 #endif /* MENU_H_ */
