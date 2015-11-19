@@ -6,7 +6,7 @@ void claireFontaine()
 	LedDo1('v');
 	THREAD_MSleep(1700);
 	LedDo1('v');
-	THREAD_MSleep(8500);
+	THREAD_MSleep(850);
 	LedMi('v');
 	THREAD_MSleep(850);
 	LedMi('v');
