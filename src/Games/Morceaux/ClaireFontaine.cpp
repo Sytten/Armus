@@ -1,11 +1,11 @@
 #include <libarmus.h>
-#include "//fontcion de LED"
+#include "LED/LED.h"
 
 void claireFontaine()
 {
-	LedDo1('v');
+	LedDo('v');
 	THREAD_MSleep(1667);
-	LedDo1('v');
+	LedDo('v');
 	THREAD_MSleep(8500);
 	LedMi('v');
 	THREAD_MSleep(850);
@@ -20,7 +20,7 @@ void claireFontaine()
 
 	LedDo('v');
 	THREAD_MSleep(1667);
-	LedDo1('v');
+	LedDo('v');
 	THREAD_MSleep(850);
 	LedMi('v');
 	THREAD_MSleep(850);

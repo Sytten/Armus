@@ -1,9 +1,9 @@
-#include <libarmus>
-#include"//fonction de  LED"
+#include <libarmus.h>
+#include "LED/LED.h"
 
 void starWars()
 {
-	LedDo1('v');
+	LedDo('v');
 	THREAD_MSleep(2000);
 	LedSol('v');
 	THREAD_MSleep(2000);

@@ -1,11 +1,9 @@
 
 
-#define como 9
-#define clko 10
-#define dato 11
+#define COMO 9
+#define CLKO 10
+#define DATO 11
 
-int rouge = 0;
-int vert = 0;
 
 void output2(void); // communication avec le PIC (16F1789)
 
