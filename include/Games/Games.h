@@ -16,17 +16,21 @@
 #include "PlaySound/Notes.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <libarmus.h>
+
+#define PATH_FLINSTONES "/media/usb0/ARMUS/flinstones.txt"
 
 using namespace std;
 
 #define PIANO_SIZE 8
 
 bool freePlay();
-void memory();
+bool sequence();
 void repeat();
 
 //Directory path for repeat mode.

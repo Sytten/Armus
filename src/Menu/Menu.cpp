@@ -17,15 +17,15 @@ int menu()
 		while (!internalConfirmed)
 		{
 			if(DIGITALIO_Read(BMP_REAR)) {
-				jeux = 1;
+				jeux = MEMORY;
 				internalConfirmed = true;
 			}
 			if(DIGITALIO_Read(BMP_FRONT)) {
-				jeux = 2;
+				jeux = LEARN;
 				internalConfirmed = true;
 			}
 			if(DIGITALIO_Read(BMP_RIGHT)) {
-				jeux = 0;
+				jeux = FREEPLAY;
 				internalConfirmed = true;
 			}
 
@@ -34,16 +34,16 @@ int menu()
 		internalConfirmed = false;
 		THREAD_MSleep(500);
 
-		LCD_ClearAndPrint("Il reste seulement à confimer ton choix\n");
+		LCD_ClearAndPrint("Il reste seulement a confimer ton choix\n");
 
 		if (jeux == 0)
-			LCD_ClearAndPrint("Tu désire jouer en mode libre\n");
+			LCD_ClearAndPrint("Tu desire jouer en mode libre\n");
 
 		else if (jeux == 1)
-			LCD_ClearAndPrint("Tu désire pratiquer ta mémoire\n");
+			LCD_ClearAndPrint("Tu desire pratiquer ta memoire\n");
 
 		else if (jeux == 2)
-			LCD_ClearAndPrint("Tu désire apprendre le piano\n");
+			LCD_ClearAndPrint("Tu desire apprendre le piano\n");
 
 
 		LCD_Printf("C'est ok?\n");

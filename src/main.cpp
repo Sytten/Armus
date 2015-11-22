@@ -12,27 +12,11 @@
 
 #include "StateMachine/StateMachine.h"
 
-#define PARAMETER_PATH "/media/usb0/ARMUS/flinstones.txt"
+
 
 int main()
 {
-	//return run();
-	SongSequenceData song = readSongFile(PARAMETER_PATH);
-	int streamID;
-	for(int i = 0; i < song.size; i++)
-	{
-		for(int j = 7; j >= 0; j--)
-		{
-			if(isNotePressed(j, song.noteSequences[i].note))
-			{
-				streamID = PlayNote(j);
-			}
-		}
-		THREAD_MSleep(song.noteSequences[i].delay);
-		StopNote(streamID);
-	}
+	return run();
 
-
-	return 0;
 }
 

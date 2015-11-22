@@ -9,7 +9,7 @@ void stay()
 
 	while(!finished)
 	{
-		if(AUDIO_IsPlaybackDone(soundID));
+		if(AUDIO_IsPlaybackDone(soundID))
 			soundID = AUDIO_PlayFile("do_16b.wav");
 
 		notes = readMux(9, 10, 15, 16);
