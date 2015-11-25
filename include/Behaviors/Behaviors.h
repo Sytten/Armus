@@ -14,9 +14,24 @@
 #include "Sensors/ReadMux.h"
 #include "MotorsControl/motorsControl.h"
 
+/**
+ * State in which the robot wanders around, waiting a player
+ */
 void wander();
+
+/**
+ * TODO
+ */
 void towardPlayer();
+
+/**
+ * State in which the games are played
+ */
 void play();
+
+/**
+ * State in which the robot is immobilized
+ */
 void stay();
 
 #endif /* BEHAVIORS_H_ */

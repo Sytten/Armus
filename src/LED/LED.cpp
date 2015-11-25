@@ -141,7 +141,7 @@ void output2(void){
 }
 
 void LedDo(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if ((rouge%2)== 1){
 			rouge = rouge - 1;
 		}
@@ -150,7 +150,7 @@ void LedDo(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if ((rouge%2)==0){
 			rouge = rouge + 1;
 		}
@@ -159,7 +159,7 @@ void LedDo(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if ((rouge%2)== 0){
 			rouge = rouge + 1;
 		}
@@ -168,7 +168,7 @@ void LedDo(char couleur){
 		}
 	}
 
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if ((rouge%2)== 1){
 			rouge = rouge - 1;
 		}
@@ -180,7 +180,7 @@ void LedDo(char couleur){
 }
 
 void LedRe(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>1)%2)== 1){
 			rouge = rouge - 2;
 		}
@@ -189,7 +189,7 @@ void LedRe(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>1)%2)==0){
 			rouge = rouge + 2;
 		}
@@ -198,7 +198,7 @@ void LedRe(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>1)%2)== 0){
 			rouge = rouge + 2;
 		}
@@ -206,7 +206,7 @@ void LedRe(char couleur){
 			vert = vert - 2;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>1)%2)== 1){
 			rouge = rouge - 2;
 		}
@@ -218,7 +218,7 @@ void LedRe(char couleur){
 }
 
 void LedMi(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>2)%2)== 1){
 			rouge = rouge - 4;
 		}
@@ -227,7 +227,7 @@ void LedMi(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>2)%2)==0){
 			rouge = rouge + 4;
 		}
@@ -236,7 +236,7 @@ void LedMi(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>2)%2)== 0){
 			rouge = rouge + 4;
 		}
@@ -244,7 +244,7 @@ void LedMi(char couleur){
 			vert = vert - 4;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>2)%2)== 1){
 			rouge = rouge - 4;
 		}
@@ -256,7 +256,7 @@ void LedMi(char couleur){
 }
 
 void LedFa(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>3)%2)== 1){
 			rouge = rouge - 8;
 		}
@@ -265,7 +265,7 @@ void LedFa(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>3)%2)==0){
 			rouge = rouge + 8;
 		}
@@ -274,7 +274,7 @@ void LedFa(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>3)%2)== 0){
 			rouge = rouge + 8;
 		}
@@ -282,7 +282,7 @@ void LedFa(char couleur){
 			vert = vert - 8;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>3)%2)== 1){
 			rouge = rouge - 8;
 		}
@@ -294,7 +294,7 @@ void LedFa(char couleur){
 }
 
 void LedSol(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>4)%2)== 1){
 			rouge = rouge - 16;
 		}
@@ -303,7 +303,7 @@ void LedSol(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>4)%2)==0){
 			rouge = rouge + 16;
 		}
@@ -312,7 +312,7 @@ void LedSol(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>4)%2)== 0){
 			rouge = rouge + 16;
 		}
@@ -320,7 +320,7 @@ void LedSol(char couleur){
 			vert = vert - 16;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>4)%2)== 1){
 			rouge = rouge - 16;
 		}
@@ -332,7 +332,7 @@ void LedSol(char couleur){
 }
 
 void LedLa(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>5)%2)== 1){
 			rouge = rouge - 32;
 		}
@@ -341,7 +341,7 @@ void LedLa(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>5)%2)==0){
 			rouge = rouge + 32;
 		}
@@ -350,7 +350,7 @@ void LedLa(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>5)%2)== 0){
 			rouge = rouge + 32;
 		}
@@ -358,7 +358,7 @@ void LedLa(char couleur){
 			vert = vert - 32;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>5)%2)== 1){
 			rouge = rouge - 32;
 		}
@@ -370,7 +370,7 @@ void LedLa(char couleur){
 }
 
 void LedSi(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>6)%2)== 1){
 			rouge = rouge - 64;
 		}
@@ -379,7 +379,7 @@ void LedSi(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>6)%2)==0){
 			rouge = rouge + 64;
 		}
@@ -388,7 +388,7 @@ void LedSi(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>6)%2)== 0){
 			rouge = rouge + 64;
 		}
@@ -396,7 +396,7 @@ void LedSi(char couleur){
 			vert = vert - 64;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>6)%2)== 1){
 			rouge = rouge - 64;
 		}
@@ -408,7 +408,7 @@ void LedSi(char couleur){
 }
 
 void LedDo2(char couleur){
-	if (couleur == 'v'){
+	if (couleur == VERT){
 		if (((rouge>>7)%2)== 1){
 			rouge = rouge - 128;
 		}
@@ -417,7 +417,7 @@ void LedDo2(char couleur){
 		}
 	}
 
-	if (couleur == 'j'){
+	if (couleur == JAUNE){
 		if (((rouge>>7)%2)==0){
 			rouge = rouge + 128;
 		}
@@ -426,7 +426,7 @@ void LedDo2(char couleur){
 		}
 	}
 
-	if (couleur == 'r'){
+	if (couleur == ROUGE){
 		if (((rouge>>7)%2)== 0){
 			rouge = rouge + 128;
 		}
@@ -434,7 +434,7 @@ void LedDo2(char couleur){
 			vert = vert - 128;
 		}
 	}
-	if (couleur == 'n'){
+	if (couleur == ETEINDRE){
 		if (((rouge>>7)%2)== 1){
 			rouge = rouge - 128;
 		}
@@ -447,6 +447,7 @@ void LedDo2(char couleur){
 
 void OpenLEDForNotes(char noteSequence)
 {
+	CloseAllLEDs();
 	for(int j = 7; j >= 0; j--)
 	{
 		if(isNotePressed(j, noteSequence))
@@ -454,32 +455,45 @@ void OpenLEDForNotes(char noteSequence)
 			switch(j)
 			{
 				case VAL_DO1:
-					LedDo('v');
+					LedDo(VERT);
 					break;
 				case VAL_RE:
-					LedRe('v');
+					LedRe(VERT);
 					break;
 				case VAL_MI:
-					LedMi('v');
+					LedMi(VERT);
 					break;
 				case VAL_FA:
-					LedFa('v');
+					LedFa(VERT);
 					break;
 				case VAL_SOL:
-					LedSol('v');
+					LedSol(VERT);
 					break;
 				case VAL_LA:
-					LedLa('v');
+					LedLa(VERT);
 					break;
 				case VAL_SI:
-					LedSi('v');
+					LedSi(VERT);
 					break;
 				case VAL_DO2:
 				default:
-					LedDo2('v');
+					LedDo2(VERT);
 					break;
 			}
 		}
 	}
+}
+
+void CloseAllLEDs()
+{
+	LedDo(ETEINDRE);
+	LedRe(ETEINDRE);
+	LedMi(ETEINDRE);
+	LedFa(ETEINDRE);
+
+	LedSol(ETEINDRE);
+	LedLa(ETEINDRE);
+	LedSi(ETEINDRE);
+	LedDo2(ETEINDRE);
 }
 
