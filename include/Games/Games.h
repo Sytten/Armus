@@ -12,7 +12,7 @@
 
 #include "PlaySound/PianoStreams.h"
 #include "PlaySound/PlaySounds.h"
-#include "Sensors/PianoNotes.h"
+#include "Sensors/ReadMux.h"
 #include "PlaySound/Notes.h"
 #include "LED/LED.h"
 

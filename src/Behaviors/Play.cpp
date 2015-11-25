@@ -16,7 +16,7 @@ void play()
 				sequence();
 				break;
 			case REPEAT:
-				repeat();
+				repeatSongSelection();
 				break;
 			case FREEPLAY:
 			default:

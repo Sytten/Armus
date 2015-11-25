@@ -9,6 +9,7 @@
 #define OUT -1
 
 #include <libarmus.h>
+#include "Sensors/ReadMux.h"
 
 int menu();
 
