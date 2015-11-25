@@ -3,9 +3,7 @@
 int run()
 {
 	//General variables we will need in our program
-	//GeneralStates robotState = Play;
-	//To test full functionality
-	GeneralStates robotState = Wander;
+	GeneralStates robotState = Play;
 
 	//Main state machine of the program, a state is just a way of behaving corresponding to some inputs that we decide
 	while(robotState != Exit)
@@ -25,13 +23,15 @@ int run()
 
 			case Play:
 				play();
-				robotState = Exit;
+				robotState = Wander;
 				break;
 
 			case Stay:
 				stay();
 				robotState = Wander;
 				break;
+
+
 
 			default: //In case something goes wrong in our code
 				Print_Debug_Data("Error in state execution",DEBUG_CODE);

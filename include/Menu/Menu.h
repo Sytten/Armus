@@ -6,6 +6,7 @@
 #define FREEPLAY 0
 #define SEQUENCE 1
 #define REPEAT 2
+#define OUT -1
 
 #include <libarmus.h>
 

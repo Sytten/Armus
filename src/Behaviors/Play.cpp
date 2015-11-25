@@ -3,23 +3,30 @@
 
 void play()
 {
-	int gameMode = menu();
+	bool presence = true;
 
-	switch(gameMode)
+	while (presence)
+
 	{
-		case SEQUENCE:
-			sequence();
-			break;
-		case REPEAT:
-			repeat();
-			break;
-		case FREEPLAY:
-		default:
-			freePlay();
-			break;
+		int gameMode = menu();
 
+		switch(gameMode)
+		{
+			case SEQUENCE:
+				sequence();
+				break;
+			case REPEAT:
+				repeat();
+				break;
+			case FREEPLAY:
+			default:
+				freePlay();
+				break;
+			case OUT:
+				presence = false;
+				break;
+		}
 	}
-	freePlay();
 }
 
 

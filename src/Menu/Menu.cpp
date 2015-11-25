@@ -5,28 +5,51 @@ int menu()
 	int jeux = -1;
 	bool confirmed = false;
 	bool internalConfirmed = false;
+	float timerOut1 = 0;
+	float timerOut2 = 0;
+	float timerOut = 0;
 
-	while(!confirmed){
+	while(!confirmed)
+	{
 
-		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de mémorisation, le deuxiÃ¨me permet d'apprendre la musique et le dernier est un mode libre\n");
+		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de memorisation, le deuxieme permet d'apprendre la musique et le dernier est un mode libre\n");
 		LCD_Printf("Clique sur le premier bouton pour tester ta memoire\n"); // bumper front
-		LCD_Printf("Clique sur le deuxième bouton pour apprendre une chanson au piano\n"); // bumper rear
+		LCD_Printf("Clique sur le deuxieme bouton pour apprendre une chanson au piano\n"); // bumper rear
 		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
 
 
 		while (!internalConfirmed)
 		{
-			if(DIGITALIO_Read(BMP_REAR)) {
+			if(DIGITALIO_Read(BMP_REAR))
+			{
 				jeux = SEQUENCE;
 				internalConfirmed = true;
 			}
-			if(DIGITALIO_Read(BMP_FRONT)) {
+			if(DIGITALIO_Read(BMP_FRONT))
+			{
 				jeux = REPEAT;
 				internalConfirmed = true;
 			}
-			if(DIGITALIO_Read(BMP_RIGHT)) {
+			if(DIGITALIO_Read(BMP_RIGHT))
+			{
 				jeux = FREEPLAY;
 				internalConfirmed = true;
+			}
+
+			if(internalConfirmed == false)
+			{
+				timerOut1 = SYSTEM_ReadTimerMSeconds();
+
+				if (readMux(9, 10, 15, 16) != 255)
+					timerOut2 = 0;
+
+				THREAD_MSleep(60000);
+
+				timerOut2 = SYSTEM_ReadTimerMSeconds();
+				timerOut = timerOut2 - timerOut1;
+
+				if(timerOut == 60000)
+					return OUT;
 			}
 
 			THREAD_MSleep(100);
