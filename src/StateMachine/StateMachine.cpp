@@ -3,7 +3,9 @@
 int run()
 {
 	//General variables we will need in our program
-	GeneralStates robotState = Play;
+	//GeneralStates robotState = Play;
+	//To test full functionality
+	GeneralStates robotState = Wander;
 
 	//Main state machine of the program, a state is just a way of behaving corresponding to some inputs that we decide
 	while(robotState != Exit)

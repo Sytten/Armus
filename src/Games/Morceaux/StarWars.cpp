@@ -1,7 +1,8 @@
 #include <libarmus.h>
 #include "LED/LED.h"
+#include "Games/Games.h"
 
-void starWars()
+void StarWars()
 {
 	LedDo('v');
 	THREAD_MSleep(2000);

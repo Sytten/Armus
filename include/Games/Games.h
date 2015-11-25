@@ -47,8 +47,8 @@ struct SongSequenceData{
 SongSequenceData readSongFile(const char* file_name);
 
 // songs to be played by kids.
-void claireFontaine();
-void HymeDeLaJoie();
-void starwars();
+void ClaireFontaine();
+void HymneALaJoie();
+void StarWars();
 
 #endif /* GAMES_H_ */

@@ -445,4 +445,41 @@ void LedDo2(char couleur){
 	output2();
 }
 
+void ChooseLEDForNotes(char noteSequence)
+{
+	for(int j = 7; j >= 0; j--)
+	{
+		if(isNotePressed(j, noteSequence))
+		{
+			switch(j)
+			{
+				case VAL_DO1:
+					LedDo('v');
+					break;
+				case VAL_RE:
+					LedRe('v');
+					break;
+				case VAL_MI:
+					LedMi('v');
+					break;
+				case VAL_FA:
+					LedFa('v');
+					break;
+				case VAL_SOL:
+					LedSol('v');
+					break;
+				case VAL_LA:
+					LedLa('v');
+					break;
+				case VAL_SI:
+					LedSi('v');
+					break;
+				case VAL_DO2:
+				default:
+					LedDo2('v');
+					break;
+			}
+		}
+	}
+}
 

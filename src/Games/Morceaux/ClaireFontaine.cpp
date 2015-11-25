@@ -1,7 +1,8 @@
 #include <libarmus.h>
 #include "LED/LED.h"
+#include "Games/Games.h"
 
-void claireFontaine()
+void ClaireFontaine()
 {
 	LedDo('v');
 	THREAD_MSleep(1667);

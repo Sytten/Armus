@@ -7,10 +7,10 @@ void play()
 
 	switch(gameMode)
 	{
-		case MEMORY:
+		case SEQUENCE:
 			sequence();
 			break;
-		case LEARN:
+		case REPEAT:
 			repeat();
 			break;
 		case FREEPLAY:

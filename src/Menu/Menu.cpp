@@ -8,20 +8,20 @@ int menu()
 
 	while(!confirmed){
 
-		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de mémorisation, le deuxième permet d'apprendre la musique et le dernier est un mode libre\n");
+		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de m�morisation, le deuxième permet d'apprendre la musique et le dernier est un mode libre\n");
 		LCD_Printf("Clique sur le premier bouton pour tester ta memoire\n"); // bumper front
-		LCD_Printf("Clique sur le deuxième bouton pour apprendre une chanson au piano\n"); // bumper rear
+		LCD_Printf("Clique sur le deuxi�me bouton pour apprendre une chanson au piano\n"); // bumper rear
 		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
 
 
 		while (!internalConfirmed)
 		{
 			if(DIGITALIO_Read(BMP_REAR)) {
-				jeux = MEMORY;
+				jeux = SEQUENCE;
 				internalConfirmed = true;
 			}
 			if(DIGITALIO_Read(BMP_FRONT)) {
-				jeux = LEARN;
+				jeux = REPEAT;
 				internalConfirmed = true;
 			}
 			if(DIGITALIO_Read(BMP_RIGHT)) {

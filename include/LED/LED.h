@@ -1,4 +1,4 @@
-
+#include "PlaySound/Notes.h"
 
 #define COMO 9
 #define CLKO 10
@@ -17,3 +17,5 @@ void LedSol(char);
 void LedLa(char);
 void LedSi(char);
 void LedDo2(char);
+
+void ChooseLEDForNotes(char noteSequence);

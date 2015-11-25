@@ -1,7 +1,8 @@
 #include <libarmus.h>
 #include "LED/LED.h"
+#include "Games/Games.h"
 
-void hymeDeLaJoie()
+void HymneALaJoie()
 {
 	LedMi('v');
 	THREAD_MSleep(600);
