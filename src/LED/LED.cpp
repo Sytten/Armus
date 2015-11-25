@@ -445,7 +445,7 @@ void LedDo2(char couleur){
 	output2();
 }
 
-void ChooseLEDForNotes(char noteSequence)
+void OpenLEDForNotes(char noteSequence)
 {
 	for(int j = 7; j >= 0; j--)
 	{

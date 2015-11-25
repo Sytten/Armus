@@ -7,7 +7,7 @@
 bool sequence()
 {
 	SongSequenceData song = readSongFile(PATH_FLINSTONES);
-
+	/*
 	PianoStreams pianoStreams;
 
 	pianoStreams.size = PIANO_SIZE;
@@ -22,12 +22,14 @@ bool sequence()
 									 {false, false, true, -1, VAL_DO2, 0}};
 
 	pianoStreams.streams = pianoNotes;
+*/
 
-	int streamID;
-	int currentNote = 0;
-	int tryCounts = 0;
-	bool wasCorrect = false;
-	char readValue;
+	int streamID;					//ID du stream de lecture du fichier .wav de la note
+	int currentNote = 0;			//Note de fin de la sequence. Sera incrémenté pour atteindre la fin du morceau et ainsi compléter la séquence
+	int tryCounts = 0;				//Compte le nombre d'essais faits par l'utilisateur
+	bool wasCorrect = false;		//Garde en mémoire si l'utilisateur a réussi à jouer la note
+	char readValue;					//Valeur de lecture du clavier
+
 
 	while(currentNote < song.size + NOTES_TO_SKIP - 1)
 	{
@@ -42,6 +44,7 @@ bool sequence()
 					streamID = PlayNote(j);
 				}
 			}
+			OpenLEDForNotes(song.noteSequences[i].note);
 			THREAD_MSleep(song.noteSequences[i].delay);
 			StopNote(streamID);
 		}

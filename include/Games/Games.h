@@ -14,6 +14,7 @@
 #include "PlaySound/PlaySounds.h"
 #include "Sensors/PianoNotes.h"
 #include "PlaySound/Notes.h"
+#include "LED/LED.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +25,9 @@
 #include <libarmus.h>
 
 #define PATH_FLINSTONES "/media/usb0/ARMUS/flinstones.txt"
+#define PATH_CLAIRE_FONTAINE "/media/usb0/ARMUS/clairefontaine.txt"
+#define PATH_STAR_WARS "/media/usb0/ARMUS/starwars.txt"
+#define PATH_HYMNE_A_LA_JOIE "/media/usb0/ARMUS/hymnealajoie.txt"
 
 using namespace std;
 
@@ -31,7 +35,8 @@ using namespace std;
 
 bool freePlay();
 bool sequence();
-void repeat();
+void repeatSongSelection();
+void repeat(char * path);
 
 //Directory path for repeat mode.
 struct NoteSequenceData{
@@ -39,6 +44,9 @@ struct NoteSequenceData{
 	int delay;
 };
 
+//Structure representant le fichier de musique lu
+//size est la taille en notes du morceau
+//noteSequences est un tableau contenant toutes les sequences de notes
 struct SongSequenceData{
 	NoteSequenceData * noteSequences;
 	int size;

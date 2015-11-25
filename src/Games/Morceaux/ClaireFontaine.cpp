@@ -4,6 +4,10 @@
 
 void ClaireFontaine()
 {
+
+
+
+	/*
 	LedDo('v');
 	THREAD_MSleep(1667);
 	LedDo('v');
@@ -53,5 +57,5 @@ void ClaireFontaine()
 	THREAD_MSleep(850);
 	LedRe('v');
 	THREAD_MSleep(1667);
-
+	*/
 }
