@@ -17,6 +17,7 @@ int menu()
 		LCD_Printf("Clique sur le deuxieme bouton pour apprendre une chanson au piano\n"); // bumper rear
 		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
 
+		timerOut1 = SYSTEM_ReadTimerMSeconds();
 
 		while (!internalConfirmed)
 		{
@@ -38,18 +39,20 @@ int menu()
 
 			if(internalConfirmed == false)
 			{
-				timerOut1 = SYSTEM_ReadTimerMSeconds();
 
 				if (readMux(9, 10, 15, 16) != 255)
-					timerOut2 = 0;
+				{
+					timerOut1 = SYSTEM_ReadTimerMSeconds();
+				}
+				else
+				{
+					timerOut2 = SYSTEM_ReadTimerMSeconds();
+					if(timerOut2 - timerOut1 == 60000)
+						return OUT;
+				}
 
-				THREAD_MSleep(60000);
 
-				timerOut2 = SYSTEM_ReadTimerMSeconds();
-				timerOut = timerOut2 - timerOut1;
 
-				if(timerOut == 60000)
-					return OUT;
 			}
 
 			THREAD_MSleep(100);
