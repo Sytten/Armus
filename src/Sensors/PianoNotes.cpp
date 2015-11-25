@@ -4,7 +4,7 @@
  *  Created on: 2015-11-05
  *      Author: Jeep
  */
-#include "Sensors/PianoNotes.h"
+#include "Sensors/ReadMux.h"
 
 char readMux(int z2, int z1, int s1, int s0)
 {
