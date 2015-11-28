@@ -486,14 +486,76 @@ void OpenLEDForNotes(char noteSequence)
 
 void CloseAllLEDs()
 {
-	LedDo(ETEINDRE);
-	LedRe(ETEINDRE);
-	LedMi(ETEINDRE);
-	LedFa(ETEINDRE);
+	if ((rouge%2)== 1){
+		rouge = rouge - 1;
+	}
+	if ((vert%2)== 1){
+		vert = vert - 1;
+	}
 
-	LedSol(ETEINDRE);
-	LedLa(ETEINDRE);
-	LedSi(ETEINDRE);
-	LedDo2(ETEINDRE);
+	/*****/
+
+	if (((rouge>>1)%2)== 1){
+		rouge = rouge - 2;
+	}
+	if (((vert>>1)%2)== 1){
+		vert = vert - 2;
+	}
+
+	/*****/
+
+	if (((rouge>>2)%2)== 1){
+		rouge = rouge - 4;
+	}
+	if (((vert>>2)%2)== 1){
+		vert = vert - 4;
+	}
+
+	/*****/
+
+	if (((rouge>>3)%2)== 1){
+		rouge = rouge - 8;
+	}
+	if (((vert>>3)%2)== 1){
+		vert = vert - 8;
+	}
+
+	/*****/
+
+	if (((rouge>>4)%2)== 1){
+		rouge = rouge - 16;
+	}
+	if (((vert>>4)%2)== 1){
+		vert = vert - 16;
+	}
+
+	/*****/
+
+	if (((rouge>>5)%2)== 1){
+		rouge = rouge - 32;
+	}
+	if (((vert>>5)%2)== 1){
+		vert = vert - 32;
+	}
+
+	/*****/
+
+	if (((rouge>>6)%2)== 1){
+		rouge = rouge - 64;
+	}
+	if (((vert>>6)%2)== 1){
+		vert = vert - 64;
+	}
+
+	/*****/
+
+	if (((rouge>>7)%2)== 1){
+		rouge = rouge - 128;
+	}
+	if (((vert>>7)%2)== 1){
+		vert = vert - 128;
+	}
+
+	output2();
 }
 

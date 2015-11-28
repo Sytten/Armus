@@ -10,10 +10,12 @@ void repeatSongSelection()
 			repeat(PATH_CLAIRE_FONTAINE);
 			break;
 		case 2:
-			repeat(PATH_HYMNE_A_LA_JOIE);
+			repeat(PATH_CLAIRE_FONTAINE);
+			//repeat(PATH_HYMNE_A_LA_JOIE);
 			break;
 		case 3:
-			repeat(PATH_STAR_WARS);
+			repeat(PATH_CLAIRE_FONTAINE);
+			//repeat(PATH_STAR_WARS);
 			break;
 		default:
 			break;
@@ -22,17 +24,17 @@ void repeatSongSelection()
 
 void repeat(char * path)
 {
-	SongSequenceData song = readSongFile(path);		//Song qui représente le fichier du morceau
+	SongSequenceData song = readSongFile(path);		//Song qui reprï¿½sente le fichier du morceau
 
 	char readValue;				//Valeur lue sur le multiplexeur
-	unsigned int streamID;		//Represente le ID du stream musical joué
-	float noteStartTime;		//float représentant le départ de la programmation
+	unsigned int streamID;		//Represente le ID du stream musical jouï¿½
+	float noteStartTime;		//float reprï¿½sentant le dï¿½part de la programmation
 
 
 	for(int i = 0; i < song.size; i++)
 	{
-		noteStartTime = SYSTEM_ReadTimerMSeconds();
 		OpenLEDForNotes(song.noteSequences[i].note);
+		noteStartTime = SYSTEM_ReadTimerMSeconds();
 		while(noteStartTime + song.noteSequences[i].delay > SYSTEM_ReadTimerMSeconds())
 		{
 			readValue = readMux(9, 10, 15, 16);
@@ -41,11 +43,12 @@ void repeat(char * path)
 			{
 				if(isNotePressed(j, readValue))
 				{
-					streamID = PlayNote(j);
+					LCD_Printf("Playing note");
+					//streamID = PlayNote(j);
 				}
 			}
 		}
-		StopNote(streamID);
+		//StopNote(streamID);
 	}
 }
 
