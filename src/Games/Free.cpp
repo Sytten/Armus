@@ -3,6 +3,8 @@
 
 bool freePlay()
 {
+	AUDIO_PlayFile(VOIX_FREE);
+
 	PianoStreams pianoStreams;
 
 	pianoStreams.size = PIANO_SIZE;

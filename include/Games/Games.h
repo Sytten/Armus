@@ -30,6 +30,11 @@
 #define PATH_STAR_WARS "/media/usb0/ARMUS/starwars.txt"
 #define PATH_HYMNE_A_LA_JOIE "/media/usb0/ARMUS/hymnealajoie.txt"
 
+//Voice of Free begining.
+#define VOIX_FREE "/media/usb0/ARMUS/Freeplay.WAV"
+#define VOIX_REPEAT "/media/usb0/ARMUS/Repeat.WAV"
+#define VOIX_SEQUENCE "/media/usb0/ARMUS/Sequence.WAV"
+
 using namespace std;
 
 #define PIANO_SIZE 8

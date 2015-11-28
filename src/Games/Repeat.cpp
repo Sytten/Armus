@@ -2,10 +2,13 @@
 
 void repeatSongSelection()
 {
+	AUDIO_PlayFile(VOIX_REPEAT);
+
 	srand(time(NULL));
 	int songSelect = rand()%3 + 1;
 
-	switch (songSelect) {
+	switch (songSelect)
+	{
 		case 1:
 			repeat(PATH_CLAIRE_FONTAINE);
 			break;
