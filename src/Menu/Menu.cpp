@@ -21,17 +21,17 @@ int menu()
 
 		while (!internalConfirmed)
 		{
-			if(DIGITALIO_Read(BMP_REAR))
+			if(DIGITALIO_Read(13))
 			{
 				jeux = SEQUENCE;
 				internalConfirmed = true;
 			}
-			if(DIGITALIO_Read(BMP_FRONT))
+			if(DIGITALIO_Read(12))
 			{
 				jeux = REPEAT;
 				internalConfirmed = true;
 			}
-			if(DIGITALIO_Read(BMP_RIGHT))
+			if(DIGITALIO_Read(11))
 			{
 				jeux = FREEPLAY;
 				internalConfirmed = true;
@@ -78,11 +78,11 @@ int menu()
 
 		while(!internalConfirmed)
 		{
-			if(DIGITALIO_Read(BMP_RIGHT)) {
+			if(DIGITALIO_Read(13)) {
 				internalConfirmed = true;
 				confirmed = true;
 			}
-			if(DIGITALIO_Read(BMP_LEFT)) {
+			if(DIGITALIO_Read(12)) {
 				internalConfirmed = true;
 				confirmed = false;
 			}
