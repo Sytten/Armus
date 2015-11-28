@@ -18,6 +18,8 @@ int menu()
 		LCD_Printf("Clique sur le deuxieme bouton pour apprendre une chanson au piano\n"); // bumper rear
 		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
 
+		AUDIO_PlayFile(VOIX_MENU);
+
 		timerOut1 = SYSTEM_ReadTimerMSeconds();
 
 		while (!internalConfirmed)
@@ -51,9 +53,6 @@ int menu()
 					if(timerOut2 - timerOut1 == 60000)
 						return OUT;
 				}
-
-
-
 			}
 
 			THREAD_MSleep(100);
@@ -79,14 +78,36 @@ int menu()
 
 		while(!internalConfirmed)
 		{
-			if(DIGITALIO_Read(13)) {
+			if(DIGITALIO_Read(13))
+			{
 				internalConfirmed = true;
 				confirmed = true;
 			}
-			if(DIGITALIO_Read(12)) {
+			if(DIGITALIO_Read(12))
+			{
 				internalConfirmed = true;
 				confirmed = false;
 			}
+
+			if(internalConfirmed == false)
+			{
+
+				if (readMux(9, 10, 15, 16) != 255)
+				{
+					timerOut1 = SYSTEM_ReadTimerMSeconds();
+				}
+
+				else if(DIGITALIO_Read(12)||DIGITALIO_Read(13))
+					timerOut1 = SYSTEM_ReadTimerMSeconds();
+
+				else
+				{
+					timerOut2 = SYSTEM_ReadTimerMSeconds();
+					if(timerOut2 - timerOut1 == 60000)
+						return OUT;
+				}
+			}
+
 			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;

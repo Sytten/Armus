@@ -2,7 +2,8 @@
 
 bool freePlay()
 {
-	AllLED(VERT);
+	AUDIO_PlayFile(VOIX_FREE);
+    AllLED(VERT);
 
 	PianoStream stream;
 
