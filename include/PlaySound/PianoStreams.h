@@ -30,6 +30,7 @@ struct PianoStreams
 	int size;
 
 	int testID;
+	int storedNote;
 };
 
 #endif

@@ -1,12 +1,15 @@
 #include "Games/Games.h"
-
+#include <iostream>
 
 bool freePlay()
 {
+	AllLED(VERT);
+
 	PianoStreams pianoStreams;
 
 	pianoStreams.size = PIANO_SIZE;
 	pianoStreams.testID = -1;
+	pianoStreams.storedNote = -1;
 
 	Stream pianoNotes[PIANO_SIZE] = {{false, false, true, -1, VAL_DO1, 0},
 									 {false, false, true, -1, VAL_RE, 0},
@@ -37,24 +40,31 @@ bool freePlay()
 							pianoStreams.streams[i].firstTime = false;
 
 							if(pianoStreams.testID != -1)
+							{
+								THREAD_MSleep(40);
 								StopNote(pianoStreams.testID);
+								cout << "Stopped\n";
+							}
 
 							pianoStreams.testID = PlayNote(pianoStreams.streams[i].note);
+							pianoStreams.storedNote = i;
+							cout << "Started\n";
 						}
 						break;
 					}
-					/*else
+					else
 					{
 						if(pianoStreams.storedNote == i && pianoStreams.testID != -1)
 						{
+							THREAD_MSleep(40);
 							StopNote(pianoStreams.testID);
 							pianoStreams.testID = -1;
 							pianoStreams.storedNote = -1;
 						}
-					}*/
+					}
 				}
 
-		THREAD_MSleep(50);
+		THREAD_MSleep(10);
 		if(DIGITALIO_Read(BMP_REAR))
 			break;
 		//Ajouter check bouton pour quitter mode de jeu // j'avais mis BMP_LEFT. (spino)

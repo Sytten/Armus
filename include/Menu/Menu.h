@@ -10,6 +10,7 @@
 
 #include <libarmus.h>
 #include "Sensors/ReadMux.h"
+#include "LED/LED.h"
 
 int menu();
 

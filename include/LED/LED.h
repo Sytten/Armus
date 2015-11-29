@@ -30,6 +30,6 @@ void LedDo2(char);
 void OpenLEDForNotes(char noteSequence);
 
 /**
- * Function that closes all LEDs
+ * Function to control all LED
  */
-void CloseAllLEDs();
+void AllLED(char couleur);

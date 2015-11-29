@@ -2,6 +2,7 @@
 
 int menu()
 {
+	AllLED(ETEINDRE);
 	int jeux = -1;
 	bool confirmed = false;
 	bool internalConfirmed = false;
