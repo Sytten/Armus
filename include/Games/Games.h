@@ -18,6 +18,7 @@
 #include <string>
 #include <libarmus.h>
 
+#include "StateMachine/GameStates.h"
 #include "Audio/AudioController.h"
 #include "Sensors/ReadMux.h"
 #include "Sensors/Buttons.h"
@@ -33,6 +34,8 @@
 #define VOIX_FREE "/media/usb0/ARMUS/Freeplay.WAV"
 #define VOIX_REPEAT "/media/usb0/ARMUS/Repeat.WAV"
 #define VOIX_SEQUENCE "/media/usb0/ARMUS/Sequence.WAV"
+#define VOIX_MENU "/media/usb0/ARMUS/MenuAntoine.WAV"
+#define EASTER_EGG "/media/usb0/ARMUS/Easteregg.WAV"
 
 using namespace std;
 

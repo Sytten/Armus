@@ -13,9 +13,10 @@
 enum GameStates
 {
 	Free = 0,
-	Memory,
+	Sequence,
 	Repeat,
-	None
+	Menu,
+	ExitGames
 };
 
 #endif /* GAMESTATES_H_ */
