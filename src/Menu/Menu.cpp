@@ -13,10 +13,10 @@ int menu()
 	while(!confirmed)
 	{
 
-		LCD_ClearAndPrint("Bonjour, je propose 3 modes de jeux! Le premier est un mode de memorisation, le deuxieme permet d'apprendre la musique et le dernier est un mode libre\n");
-		LCD_Printf("Clique sur le premier bouton pour tester ta memoire\n"); // bumper front
-		LCD_Printf("Clique sur le deuxieme bouton pour apprendre une chanson au piano\n"); // bumper rear
-		LCD_Printf("Clique sur le troisieme bouton pour jouer librement"); // bumper right
+		LCD_ClearAndPrint("Choisis ton mode de jeu!\n");
+		LCD_Printf("1- Teste ta memoire\n"); // bumper front
+		LCD_Printf("2- Apprends une chanson\n"); // bumper rear
+		LCD_Printf("3- Joue librement"); // bumper right
 
 		AUDIO_PlayFile(VOIX_MENU);
 
@@ -89,7 +89,7 @@ int menu()
 				confirmed = false;
 			}
 
-			if(internalConfirmed == false)
+			/*if(internalConfirmed == false)
 			{
 
 				if (readMux(9, 10, 15, 16) != 255)
@@ -106,7 +106,7 @@ int menu()
 					if(timerOut2 - timerOut1 == 60000)
 						return OUT;
 				}
-			}
+			}*/
 
 			THREAD_MSleep(100);
 		}

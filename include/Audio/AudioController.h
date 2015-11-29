@@ -30,6 +30,7 @@ struct PianoStream
 	int currentNote;
 };
 
-int PlayAndStopNotes(PianoStream * piano);
+bool PlayAndStopNotes(PianoStream * stream);
+bool ResetStream(PianoStream * stream);
 
 #endif /*AUDIOCONTROLLER_H_*/

@@ -3,6 +3,8 @@
 bool freePlay()
 {
 	AUDIO_PlayFile(VOIX_FREE);
+	LCD_ClearAndPrint("Amuse toi bien!");
+
     AllLED(VERT);
 
 	PianoStream stream;
@@ -19,10 +21,9 @@ bool freePlay()
 							  {false, true, VAL_LA},
 							  {false, true, VAL_SI},
 							  {false, true, VAL_DO2}};
-
 	stream.notes = notes;
 
-	AUDIO_SetVolume(20);
+	AUDIO_SetVolume(50);
 
 	while(1)
 	{

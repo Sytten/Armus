@@ -3,6 +3,14 @@
 void repeatSongSelection()
 {
 	AUDIO_PlayFile(VOIX_REPEAT);
+	LCD_ClearAndPrint("Bonne chance!\n");
+	LCD_Printf("1\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("2\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("3\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("GO!!!\n");
 
 	srand(time(NULL));
 	int songSelect = rand()%3 + 1;
@@ -25,33 +33,44 @@ void repeatSongSelection()
 
 void repeat(char * path)
 {
-	SongSequenceData song = readSongFile(path);		//Song qui repr�sente le fichier du morceau
+	PianoStream stream;
+
+	stream.size = PIANO_SIZE;
+	stream.streamID = -1;
+	stream.currentNote = -1;
+
+	Note notes[PIANO_SIZE] = {{false, true, VAL_DO1},
+							  {false, true, VAL_RE},
+							  {false, true, VAL_MI},
+							  {false, true, VAL_FA},
+							  {false, true, VAL_SOL},
+							  {false, true, VAL_LA},
+							  {false, true, VAL_SI},
+							  {false, true, VAL_DO2}};
+	stream.notes = notes;
+
+	AUDIO_SetVolume(50);
+
+	SongSequenceData song = readSongFile(path);		//Song qui represente le fichier du morceau
 
 	char readValue;				//Valeur lue sur le multiplexeur
-	unsigned int streamID;		//Represente le ID du stream musical jou�
-	float noteStartTime;		//float repr�sentant le d�part de la programmation
+	float noteStartTime;		//float representant le depart de la programmation
 
-
-	for(int i = 0; i < song.size; i++)
-	{
+	int i = 0;
 		OpenLEDForNotes(song.noteSequences[i].note);
 		noteStartTime = SYSTEM_ReadTimerMSeconds();
-		while(noteStartTime + song.noteSequences[i].delay > SYSTEM_ReadTimerMSeconds())
-		{
-			readValue = readMux(9, 10, 15, 16);
+	while(i < song.size)
+	{
+		CheckPressedKeys(&stream);
+		PlayAndStopNotes(&stream);
 
-			for(int j = 7; j >= 0; j--)
-			{
-				if(isNotePressed(j, readValue))
-				{
-					LCD_Printf("Playing note");
-					//streamID = PlayNote(j);
-				}
-			}
+		if(noteStartTime + song.noteSequences[i].delay > SYSTEM_ReadTimerMSeconds())
+		{
+			i++;
+			OpenLEDForNotes(song.noteSequences[i].note);
+			noteStartTime = SYSTEM_ReadTimerMSeconds();
 		}
-		//StopNote(streamID);
 	}
 }
-
 
 
