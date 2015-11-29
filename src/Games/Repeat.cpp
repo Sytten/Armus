@@ -10,12 +10,10 @@ void repeatSongSelection()
 			repeat(PATH_CLAIRE_FONTAINE);
 			break;
 		case 2:
-			repeat(PATH_CLAIRE_FONTAINE);
-			//repeat(PATH_HYMNE_A_LA_JOIE);
+			repeat(PATH_HYMNE_A_LA_JOIE);
 			break;
 		case 3:
-			repeat(PATH_CLAIRE_FONTAINE);
-			//repeat(PATH_STAR_WARS);
+			repeat(PATH_STAR_WARS);
 			break;
 		default:
 			break;
