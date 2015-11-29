@@ -10,12 +10,6 @@
 #ifndef GAMES_H_
 #define GAMES_H_
 
-#include "PlaySound/PianoStreams.h"
-#include "PlaySound/PlaySounds.h"
-#include "Sensors/ReadMux.h"
-#include "PlaySound/Notes.h"
-#include "LED/LED.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -24,16 +18,15 @@
 #include <string>
 #include <libarmus.h>
 
+#include "Audio/AudioController.h"
+#include "Sensors/ReadMux.h"
+#include "LED/LED.h"
+
 //Song file paths
 #define PATH_FLINSTONES "/media/usb0/ARMUS/flinstones.txt"
 #define PATH_CLAIRE_FONTAINE "/media/usb0/ARMUS/clairefontaine.txt"
 #define PATH_STAR_WARS "/media/usb0/ARMUS/starwars.txt"
 #define PATH_HYMNE_A_LA_JOIE "/media/usb0/ARMUS/hymnealajoie.txt"
-
-//Voice of Free begining.
-#define VOIX_FREE "/media/usb0/ARMUS/Freeplay.WAV"
-#define VOIX_REPEAT "/media/usb0/ARMUS/Repeat.WAV"
-#define VOIX_SEQUENCE "/media/usb0/ARMUS/Sequence.WAV"
 
 using namespace std;
 

@@ -1,4 +1,16 @@
-#include "PlaySound/Notes.h"
+/*
+============================================================================
+ Name : LED
+ Author : M.A.G.I.E Team
+ Modified on: 2015-11-29
+ Description : Simple API to control the LED on the keyboard
+============================================================================
+*/
+
+#ifndef LED_H_
+#define LED_H_
+
+#include "Audio/Notes.h"
 #include "Sensors/ReadMux.h"
 
 //Pins représentant les bus de communication avec le PIC16
@@ -30,6 +42,8 @@ void LedDo2(char);
 void OpenLEDForNotes(char noteSequence);
 
 /**
- * Function that closes all LEDs
+ * Function to control all LED
  */
-void CloseAllLEDs();
+void AllLED(char couleur);
+
+#endif

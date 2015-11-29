@@ -140,7 +140,9 @@ void output2(void){
 	DIGITALIO_Write(COMO,0);
 }
 
-void LedDo(char couleur){
+/*******************************************************************************/
+
+void p_ledDo(char couleur){
 	if (couleur == VERT){
 		if ((rouge%2)== 1){
 			rouge = rouge - 1;
@@ -176,10 +178,9 @@ void LedDo(char couleur){
 			vert = vert - 1;
 		}
 	}
-	output2();
 }
 
-void LedRe(char couleur){
+void p_ledRe(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>1)%2)== 1){
 			rouge = rouge - 2;
@@ -214,10 +215,9 @@ void LedRe(char couleur){
 			vert = vert - 2;
 		}
 	}
-	output2();
 }
 
-void LedMi(char couleur){
+void p_ledMi(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>2)%2)== 1){
 			rouge = rouge - 4;
@@ -252,10 +252,9 @@ void LedMi(char couleur){
 			vert = vert - 4;
 		}
 	}
-	output2();
 }
 
-void LedFa(char couleur){
+void p_ledFa(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>3)%2)== 1){
 			rouge = rouge - 8;
@@ -290,10 +289,9 @@ void LedFa(char couleur){
 			vert = vert - 8;
 		}
 	}
-	output2();
 }
 
-void LedSol(char couleur){
+void p_ledSol(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>4)%2)== 1){
 			rouge = rouge - 16;
@@ -328,10 +326,9 @@ void LedSol(char couleur){
 			vert = vert - 16;
 		}
 	}
-	output2();
 }
 
-void LedLa(char couleur){
+void p_ledLa(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>5)%2)== 1){
 			rouge = rouge - 32;
@@ -366,10 +363,9 @@ void LedLa(char couleur){
 			vert = vert - 32;
 		}
 	}
-	output2();
 }
 
-void LedSi(char couleur){
+void p_ledSi(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>6)%2)== 1){
 			rouge = rouge - 64;
@@ -404,10 +400,9 @@ void LedSi(char couleur){
 			vert = vert - 64;
 		}
 	}
-	output2();
 }
 
-void LedDo2(char couleur){
+void p_ledDo2(char couleur){
 	if (couleur == VERT){
 		if (((rouge>>7)%2)== 1){
 			rouge = rouge - 128;
@@ -442,12 +437,77 @@ void LedDo2(char couleur){
 			vert = vert - 128;
 		}
 	}
+}
+
+/*******************************************************************************/
+
+void LedDo(char couleur)
+{
+	p_ledDo(couleur);
 	output2();
 }
 
+void LedRe(char couleur)
+{
+	p_ledRe(couleur);
+	output2();
+}
+
+void LedMi(char couleur)
+{
+	p_ledMi(couleur);
+	output2();
+}
+
+void LedFa(char couleur)
+{
+	p_ledFa(couleur);
+	output2();
+}
+
+void LedSol(char couleur)
+{
+	p_ledSol(couleur);
+	output2();
+}
+
+void LedLa(char couleur)
+{
+	p_ledLa(couleur);
+	output2();
+}
+
+void LedSi(char couleur)
+{
+	p_ledSi(couleur);
+	output2();
+}
+
+void LedDo2(char couleur)
+{
+	p_ledDo2(couleur);
+	output2();
+}
+
+void AllLED(char couleur)
+{
+	p_ledDo(couleur);
+	p_ledRe(couleur);
+	p_ledMi(couleur);
+	p_ledFa(couleur);
+	p_ledSol(couleur);
+	p_ledLa(couleur);
+	p_ledSi(couleur);
+	p_ledDo2(couleur);
+
+	output2();
+}
+
+/*******************************************************************************/
+
 void OpenLEDForNotes(char noteSequence)
 {
-	CloseAllLEDs();
+	AllLED(ETEINDRE);
 	for(int j = 7; j >= 0; j--)
 	{
 		if(isNotePressed(j, noteSequence))
@@ -484,78 +544,5 @@ void OpenLEDForNotes(char noteSequence)
 	}
 }
 
-void CloseAllLEDs()
-{
-	if ((rouge%2)== 1){
-		rouge = rouge - 1;
-	}
-	if ((vert%2)== 1){
-		vert = vert - 1;
-	}
 
-	/*****/
-
-	if (((rouge>>1)%2)== 1){
-		rouge = rouge - 2;
-	}
-	if (((vert>>1)%2)== 1){
-		vert = vert - 2;
-	}
-
-	/*****/
-
-	if (((rouge>>2)%2)== 1){
-		rouge = rouge - 4;
-	}
-	if (((vert>>2)%2)== 1){
-		vert = vert - 4;
-	}
-
-	/*****/
-
-	if (((rouge>>3)%2)== 1){
-		rouge = rouge - 8;
-	}
-	if (((vert>>3)%2)== 1){
-		vert = vert - 8;
-	}
-
-	/*****/
-
-	if (((rouge>>4)%2)== 1){
-		rouge = rouge - 16;
-	}
-	if (((vert>>4)%2)== 1){
-		vert = vert - 16;
-	}
-
-	/*****/
-
-	if (((rouge>>5)%2)== 1){
-		rouge = rouge - 32;
-	}
-	if (((vert>>5)%2)== 1){
-		vert = vert - 32;
-	}
-
-	/*****/
-
-	if (((rouge>>6)%2)== 1){
-		rouge = rouge - 64;
-	}
-	if (((vert>>6)%2)== 1){
-		vert = vert - 64;
-	}
-
-	/*****/
-
-	if (((rouge>>7)%2)== 1){
-		rouge = rouge - 128;
-	}
-	if (((vert>>7)%2)== 1){
-		vert = vert - 128;
-	}
-
-	output2();
-}
 

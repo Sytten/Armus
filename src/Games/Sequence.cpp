@@ -6,8 +6,6 @@
 
 bool sequence()
 {
-	AUDIO_PlayFile(VOIX_SEQUENCE);
-
 	SongSequenceData song = readSongFile(PATH_FLINSTONES);
 	/*
 	PianoStreams pianoStreams;

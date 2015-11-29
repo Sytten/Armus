@@ -1,35 +1,34 @@
 #include "Games/Games.h"
 
-
 bool freePlay()
 {
-	AUDIO_PlayFile(VOIX_FREE);
+	AllLED(VERT);
 
-	PianoStreams pianoStreams;
+	PianoStream stream;
 
-	pianoStreams.size = PIANO_SIZE;
+	stream.size = PIANO_SIZE;
+	stream.streamID = -1;
+	stream.currentNote = -1;
 
-	Stream pianoNotes[PIANO_SIZE] = {{false, false, true, -1, VAL_DO1, 0},
-									 {false, false, true, -1, VAL_RE, 0},
-									 {false, false, true, -1, VAL_MI, 0},
-									 {false, false, true, -1, VAL_FA, 0},
-									 {false, false, true, -1, VAL_SOL, 0},
-									 {false, false, true, -1, VAL_LA, 0},
-									 {false, false, true, -1, VAL_SI, 0},
-									 {false, false, true, -1, VAL_DO2, 0}};
+	Note notes[PIANO_SIZE] = {{false, true, VAL_DO1},
+							  {false, true, VAL_RE},
+							  {false, true, VAL_MI},
+							  {false, true, VAL_FA},
+							  {false, true, VAL_SOL},
+							  {false, true, VAL_LA},
+							  {false, true, VAL_SI},
+							  {false, true, VAL_DO2}};
 
-	pianoStreams.streams = pianoNotes;
+	stream.notes = notes;
 
 	AUDIO_SetVolume(20);
 
 	while(1)
 	{
-		CheckPressedKeys(&pianoStreams);
-		CheckStreamIsPlaying(&pianoStreams);
-		StopNotes(&pianoStreams);
-		PlayNotes(&pianoStreams);
+		CheckPressedKeys(&stream);
+		PlayAndStopNotes(&stream);
 
-		THREAD_MSleep(50);
+		THREAD_MSleep(10);
 		if(DIGITALIO_Read(BMP_REAR))
 			break;
 		//Ajouter check bouton pour quitter mode de jeu // j'avais mis BMP_LEFT. (spino)
