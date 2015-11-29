@@ -3,7 +3,7 @@
 
 
 #include <libarmus.h>
-#include "PlaySound/PianoStreams.h"
+#include "Audio/AudioController.h"
 
 /***
  * Fonction qui lit les valeurs des 2 canaux 4 bit des 74HC4052
@@ -24,6 +24,6 @@ bool isNotePressed(int note, char noteValues);
 /***
  *
  */
-void CheckPressedKeys(PianoStreams * stream);
+void CheckPressedKeys(PianoStream * stream);
 
 #endif /* PIANONOTES_H_ */

@@ -10,12 +10,6 @@
 #ifndef GAMES_H_
 #define GAMES_H_
 
-#include "PlaySound/PianoStreams.h"
-#include "PlaySound/PlaySounds.h"
-#include "Sensors/ReadMux.h"
-#include "PlaySound/Notes.h"
-#include "LED/LED.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -23,6 +17,10 @@
 #include <fstream>
 #include <string>
 #include <libarmus.h>
+
+#include "Audio/AudioController.h"
+#include "Sensors/ReadMux.h"
+#include "LED/LED.h"
 
 //Song file paths
 #define PATH_FLINSTONES "/media/usb0/ARMUS/flinstones.txt"

@@ -38,20 +38,17 @@ bool isNotePressed(int note, char noteValues)
 }
 
 
-void CheckPressedKeys(PianoStreams * stream)
+void CheckPressedKeys(PianoStream * stream)
 {
 	char readValue = readMux(9, 10, 15, 16);
 
 	for(int i = 0; i < 8; i++)
 	{
 
-		if (stream->streams[i].keyPressed == false && isNotePressed(i,readValue) == true)
-		{
-			stream->streams[i].firstTime = true;
-			stream->streams[i].timeKeyReleased = -1;
-		}
+		if (stream->notes[i].keyPressed == false && isNotePressed(i,readValue) == true)
+			stream->notes[i].firstTime = true;
 
-		stream->streams[i].keyPressed = isNotePressed(i, readValue);
+		stream->notes[i].keyPressed = isNotePressed(i, readValue);
 	}
 
 }

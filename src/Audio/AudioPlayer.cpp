@@ -1,6 +1,4 @@
-#include "PlaySound/Notes.h"
-#include "PlaySound/ControlNote.h"
-#include "LED/LED.h"
+#include "Audio/AudioPlayer.h"
 
 unsigned int PlayNote(int notes)
 {
