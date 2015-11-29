@@ -28,6 +28,8 @@ struct PianoStreams
 {
 	Stream *streams;
 	int size;
+
+	int testID;
 };
 
 #endif

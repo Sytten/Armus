@@ -6,6 +6,7 @@ bool freePlay()
 	PianoStreams pianoStreams;
 
 	pianoStreams.size = PIANO_SIZE;
+	pianoStreams.testID = -1;
 
 	Stream pianoNotes[PIANO_SIZE] = {{false, false, true, -1, VAL_DO1, 0},
 									 {false, false, true, -1, VAL_RE, 0},
@@ -23,9 +24,35 @@ bool freePlay()
 	while(1)
 	{
 		CheckPressedKeys(&pianoStreams);
-		CheckStreamIsPlaying(&pianoStreams);
-		StopNotes(&pianoStreams);
-		PlayNotes(&pianoStreams);
+		//CheckStreamIsPlaying(&pianoStreams);
+		//StopNotes(&pianoStreams);
+		//PlayNotes(&pianoStreams);
+
+		for(int i = 7; i >= 0; i--)
+				{
+					if(pianoStreams.streams[i].keyPressed == true)
+					{
+						if(pianoStreams.streams[i].firstTime == true)
+						{
+							pianoStreams.streams[i].firstTime = false;
+
+							if(pianoStreams.testID != -1)
+								StopNote(pianoStreams.testID);
+
+							pianoStreams.testID = PlayNote(pianoStreams.streams[i].note);
+						}
+						break;
+					}
+					/*else
+					{
+						if(pianoStreams.storedNote == i && pianoStreams.testID != -1)
+						{
+							StopNote(pianoStreams.testID);
+							pianoStreams.testID = -1;
+							pianoStreams.storedNote = -1;
+						}
+					}*/
+				}
 
 		THREAD_MSleep(50);
 		if(DIGITALIO_Read(BMP_REAR))
