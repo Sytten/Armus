@@ -20,6 +20,7 @@
 
 #include "Audio/AudioController.h"
 #include "Sensors/ReadMux.h"
+#include "Sensors/Buttons.h"
 #include "LED/LED.h"
 
 //Song file paths

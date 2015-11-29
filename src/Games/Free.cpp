@@ -30,9 +30,8 @@ bool freePlay()
 		PlayAndStopNotes(&stream);
 
 		THREAD_MSleep(10);
-		if(DIGITALIO_Read(BMP_REAR))
+		if(ButtonStatus(1) == 1 || ButtonStatus(2) == 1 || ButtonStatus(3) == 1)
 			break;
-		//Ajouter check bouton pour quitter mode de jeu // j'avais mis BMP_LEFT. (spino)
 	}
 
 	return true;
