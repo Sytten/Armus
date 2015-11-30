@@ -55,8 +55,13 @@ bool sequence()
 			}
 			OpenLEDForNotes(song.noteSequences[i].note);
 			THREAD_MSleep(song.noteSequences[i].delay);
-			THREAD_MSleep(40);
-			StopNote(streamID);
+			THREAD_MSleep(50);
+			if(streamID != -1)
+			{
+				StopNote(streamID);
+				streamID = -1;
+			}
+
 		}
 		AllLED(ETEINDRE);
 
@@ -94,7 +99,7 @@ bool sequence()
 			THREAD_MSleep(song.noteSequences[i].delay);
 			if(stream.streamID != -1)
 			{
-				THREAD_MSleep(40);
+				THREAD_MSleep(50);
 				StopNote(stream.streamID);
 				stream.streamID = -1;
 				stream.currentNote = -1;
