@@ -80,7 +80,7 @@ GameStates playMenu()
 
 			THREAD_MSleep(100);
 		}
-
+		THREAD_MSleep(500);
 		internalConfirmed = false;
 		timerOut = SYSTEM_ReadTimerMSeconds();
 

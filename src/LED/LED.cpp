@@ -22,122 +22,137 @@ void output2(void){
 	int x = 0;
 
 	DIGITALIO_Write(COMO,1);
-	THREAD_MSleep(3);
 
 	x =  rouge %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  vert %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>1) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>1) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>2) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>2) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>3) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>3) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 
 	x =  (rouge>>4) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>4) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>5) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>5) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>6) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>6) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (rouge>>7) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	x =  (vert>>7) %2;
 	DIGITALIO_Write(DATO,x);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,1);
-	THREAD_MSleep(3);
 	DIGITALIO_Write(CLKO,0);
 
 	DIGITALIO_Write(COMO,0);
+}
+
+/*******************************************************************************/
+
+char readLEDStatus(int LED)
+{
+	if(LED > 7 || LED < 0)
+		return -1;
+
+	int x = (rouge>>LED) %2;
+	int y = (vert>>LED) %2;
+
+	if(x == 1 && y == 1)
+		return JAUNE;
+
+	else if(x == 1 && y == 0)
+		return ROUGE;
+
+	else if(x == 0 && y == 1)
+		return VERT;
+
+	else if(x == 0 && y == 0)
+		return ETEINDRE;
+	else
+		return -1;
+}
+
+char readLEDStatusInBuffer(int LED, int bufferVert, int bufferRouge)
+{
+	if(LED > 7 || LED < 0)
+		return -1;
+
+	int x = (bufferRouge>>LED) %2;
+	int y = (bufferVert>>LED) %2;
+
+	if(x == 1 && y == 1)
+		return JAUNE;
+
+	else if(x == 1 && y == 0)
+		return ROUGE;
+
+	else if(x == 0 && y == 1)
+		return VERT;
+
+	else if(x == 0 && y == 0)
+		return ETEINDRE;
+	else
+		return -1;
 }
 
 /*******************************************************************************/
@@ -439,6 +454,18 @@ void p_ledDo2(char couleur){
 	}
 }
 
+void p_allLED(char couleur)
+{
+	p_ledDo(couleur);
+	p_ledRe(couleur);
+	p_ledMi(couleur);
+	p_ledFa(couleur);
+	p_ledSol(couleur);
+	p_ledLa(couleur);
+	p_ledSi(couleur);
+	p_ledDo2(couleur);
+}
+
 /*******************************************************************************/
 
 void LedDo(char couleur)
@@ -491,14 +518,7 @@ void LedDo2(char couleur)
 
 void AllLED(char couleur)
 {
-	p_ledDo(couleur);
-	p_ledRe(couleur);
-	p_ledMi(couleur);
-	p_ledFa(couleur);
-	p_ledSol(couleur);
-	p_ledLa(couleur);
-	p_ledSi(couleur);
-	p_ledDo2(couleur);
+	p_allLED(couleur);
 
 	output2();
 }
@@ -507,7 +527,9 @@ void AllLED(char couleur)
 
 void OpenLEDForNotes(char noteSequence)
 {
-	AllLED(ETEINDRE);
+	int previousRouge = rouge;
+	int previousVert = vert;
+	p_allLED(ETEINDRE);
 	for(int j = 7; j >= 0; j--)
 	{
 		if(isNotePressed(j, noteSequence))
@@ -515,29 +537,71 @@ void OpenLEDForNotes(char noteSequence)
 			switch(j)
 			{
 				case VAL_DO1:
+					if(readLEDStatusInBuffer(VAL_DO1, previousVert, previousRouge) == VERT)
+					{
+						LedDo(JAUNE);
+						break;
+					}
 					LedDo(VERT);
 					break;
 				case VAL_RE:
+					if(readLEDStatusInBuffer(VAL_RE, previousVert, previousRouge) == VERT)
+					{
+						LedRe(JAUNE);
+						break;
+					}
 					LedRe(VERT);
 					break;
 				case VAL_MI:
+					if(readLEDStatusInBuffer(VAL_MI, previousVert, previousRouge) == VERT)
+					{
+						LedMi(JAUNE);
+						break;
+					}
 					LedMi(VERT);
 					break;
 				case VAL_FA:
+					if(readLEDStatusInBuffer(VAL_FA, previousVert, previousRouge) == VERT)
+					{
+						LedFa(JAUNE);
+						break;
+					}
 					LedFa(VERT);
 					break;
 				case VAL_SOL:
+					if(readLEDStatusInBuffer(VAL_SOL, previousVert, previousRouge) == VERT)
+					{
+						LedSol(JAUNE);
+						break;
+					}
 					LedSol(VERT);
 					break;
 				case VAL_LA:
+					if(readLEDStatusInBuffer(VAL_LA, previousVert, previousRouge) == VERT)
+					{
+						LedLa(JAUNE);
+						break;
+					}
 					LedLa(VERT);
 					break;
 				case VAL_SI:
+					if(readLEDStatusInBuffer(VAL_SI, previousVert, previousRouge) == VERT)
+					{
+						LedSi(JAUNE);
+						break;
+					}
 					LedSi(VERT);
 					break;
 				case VAL_DO2:
-				default:
+					if(readLEDStatusInBuffer(VAL_DO2, previousVert, previousRouge) == VERT)
+					{
+						LedDo2(JAUNE);
+						break;
+					}
 					LedDo2(VERT);
+					break;
+				default:
+					AllLED(ROUGE);
 					break;
 			}
 		}

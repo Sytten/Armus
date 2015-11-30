@@ -52,3 +52,17 @@ void CheckPressedKeys(PianoStream * stream)
 	}
 
 }
+
+char StreamToValue(PianoStream * stream)
+{
+	char returnedValue = 0;
+
+	for(int i = 0; i < 8; i++)
+	{
+		if(!stream->notes[i].keyPressed || (stream->notes[i].keyPressed && !stream->notes[i].firstTime))
+		{
+			returnedValue |= 1 << 7 - i;
+		}
+	}
+	return returnedValue;
+}

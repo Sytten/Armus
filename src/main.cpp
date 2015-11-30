@@ -16,6 +16,8 @@
 
 int main()
 {
+	srand(time(NULL));
+
 	return run();
 
 }
