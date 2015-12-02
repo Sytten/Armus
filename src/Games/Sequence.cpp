@@ -9,35 +9,42 @@ bool sequence()
 	AUDIO_PlayFile(VOIX_SEQUENCE);
 
 	SongSequenceData song = readSongFile(PATH_FLINSTONES);
-	/*
-	PianoStreams pianoStreams;
 
-	pianoStreams.size = PIANO_SIZE;
+	PianoStream stream;
 
-	Stream pianoNotes[PIANO_SIZE] = {{false, false, true, -1, VAL_DO1, 0},
-									 {false, false, true, -1, VAL_RE, 0},
-									 {false, false, true, -1, VAL_MI, 0},
-									 {false, false, true, -1, VAL_FA, 0},
-									 {false, false, true, -1, VAL_SOL, 0},
-									 {false, false, true, -1, VAL_LA, 0},
-									 {false, false, true, -1, VAL_SI, 0},
-									 {false, false, true, -1, VAL_DO2, 0}};
+	stream.size = PIANO_SIZE;
+	stream.streamID = -1;
+	stream.currentNote = -1;
 
-	pianoStreams.streams = pianoNotes;
-*/
+	Note notes[PIANO_SIZE] = {{false, true, VAL_DO1},
+							  {false, true, VAL_RE},
+							  {false, true, VAL_MI},
+							  {false, true, VAL_FA},
+							  {false, true, VAL_SOL},
+							  {false, true, VAL_LA},
+							  {false, true, VAL_SI},
+							  {false, true, VAL_DO2}};
+	stream.notes = notes;
 
-	int streamID;					//ID du stream de lecture du fichier .wav de la note
-	int currentNote = 0;			//Note de fin de la sequence. Sera incrémenté pour atteindre la fin du morceau et ainsi compléter la séquence
-	int tryCounts = 0;				//Compte le nombre d'essais faits par l'utilisateur
-	bool wasCorrect = false;		//Garde en mémoire si l'utilisateur a réussi à jouer la note
-	char readValue;					//Valeur de lecture du clavier
+	AUDIO_SetVolume(50);
 
+	int streamID = -1;
+	int currentNote = 1;
+	bool wasCorrect = false;
+	char readValue;
 
-	while(currentNote < song.size + NOTES_TO_SKIP - 1)
+	LCD_ClearAndPrint("Bonne chance!\n");
+	LCD_Printf("1\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("2\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("3\n");
+	THREAD_MSleep(1000);
+	LCD_Printf("GO!!!\n");
+
+	while(currentNote < song.size)
 	{
-		//jouer notes a repeter
-		for(int i = 0; i < song.size
-							&& i < currentNote + 3; i++)
+		for(int i = 0; i < song.size && i < currentNote; i++)
 		{
 			for(int j = 7; j >= 0; j--)
 			{
@@ -48,44 +55,78 @@ bool sequence()
 			}
 			OpenLEDForNotes(song.noteSequences[i].note);
 			THREAD_MSleep(song.noteSequences[i].delay);
-			StopNote(streamID);
+			THREAD_MSleep(50);
+			if(streamID != -1)
+			{
+				StopNote(streamID);
+				streamID = -1;
+			}
+
 		}
-		THREAD_MSleep(1000);
-		//attendre la répétition de la séquence
-		for(int i = 0; i < song.size
-									&& i < currentNote + 3; i++)
+		AllLED(ETEINDRE);
+
+		for(int i = 0; i < song.size && i < currentNote; i++)
 		{
 			wasCorrect = false;
-			while(!wasCorrect && tryCounts < WAIT_TRYS)
+			while(!wasCorrect)
 			{
+				CheckPressedKeys(&stream);
 
-				readValue = readMux(9, 10, 15, 16);
-				tryCounts++;
-				if(readValue == song.noteSequences[i].note)
+				if(StreamToValue(&stream) == song.noteSequences[i].note)
 				{
 					wasCorrect = true;
 					for(int j = 7; j >= 0; j--)
 					{
 						if(isNotePressed(j, song.noteSequences[i].note))
 						{
-							streamID = PlayNote(j);
+							stream.notes[j].firstTime = false;
+							stream.streamID = PlayNote(j);
+							stream.currentNote = j;
 						}
 					}
+					OpenLEDForNotes(song.noteSequences[i].note);
 				}
-				else if(tryCounts >= WAIT_TRYS)
+				else if(StreamToValue(&stream) != 255)
 				{
-					//wasCorrect = false;
-					return false;
+						AllLED(ROUGE);
+						LCD_ClearAndPrint("Meilleure chance la prochaine fois!");
+						THREAD_MSleep(2000);
+						return false;
 				}
+
 
 			}
 			THREAD_MSleep(song.noteSequences[i].delay);
-			StopNote(streamID);
+			if(stream.streamID != -1)
+			{
+				THREAD_MSleep(50);
+				StopNote(stream.streamID);
+				stream.streamID = -1;
+				stream.currentNote = -1;
+			}
 		}
-
-		//Incrémentation des notes
-		currentNote += NOTES_TO_SKIP;
+		AllLED(VERT);
+		THREAD_MSleep(500);
+		AllLED(ETEINDRE);
+		THREAD_MSleep(500);
+		currentNote++;
 	}
+
+	AllLED(VERT);
+	LCD_ClearAndPrint("Bravo, tu as reussi!");
+	THREAD_MSleep(500);
+	AllLED(ETEINDRE);
+	THREAD_MSleep(100);
+	AllLED(VERT);
+	THREAD_MSleep(500);
+	AllLED(ETEINDRE);
+	THREAD_MSleep(100);
+	AllLED(VERT);
+	THREAD_MSleep(500);
+	AllLED(ETEINDRE);
+	THREAD_MSleep(100);
+	AllLED(VERT);
+	THREAD_MSleep(500);
 
 	return true;
 }

@@ -12,7 +12,6 @@ void repeatSongSelection()
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
 
-	srand(time(NULL));
 	int songSelect = rand()%3 + 1;
 
 	switch (songSelect)
@@ -56,21 +55,20 @@ void repeat(char * path)
 	char readValue;				//Valeur lue sur le multiplexeur
 	float noteStartTime;		//float representant le depart de la programmation
 
-	int i = 0;
+	for(int i = 0; i < song.size; i++)
+	{
 		OpenLEDForNotes(song.noteSequences[i].note);
 		noteStartTime = SYSTEM_ReadTimerMSeconds();
-	while(i < song.size)
-	{
-		CheckPressedKeys(&stream);
-		PlayAndStopNotes(&stream);
 
-		if(noteStartTime + song.noteSequences[i].delay > SYSTEM_ReadTimerMSeconds())
+		while(noteStartTime + song.noteSequences[i].delay > SYSTEM_ReadTimerMSeconds())
 		{
-			i++;
-			OpenLEDForNotes(song.noteSequences[i].note);
-			noteStartTime = SYSTEM_ReadTimerMSeconds();
+			CheckPressedKeys(&stream);
+			PlayAndStopNotes(&stream);
 		}
 	}
+
+	ResetStream(&stream);
+	PlayAndStopNotes(&stream);
 }
 
 
