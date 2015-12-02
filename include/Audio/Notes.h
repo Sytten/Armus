@@ -10,7 +10,7 @@
 #ifndef NOTES_H_
 #define NOTES_H_
 
-//Path to notes.
+//Path to notes on the USB key.
 #define PATH_DO1 "Do1.wav"
 #define PATH_RE "Re.wav"
 #define PATH_MI "Mi.wav"
