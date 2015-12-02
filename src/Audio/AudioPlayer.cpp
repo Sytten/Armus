@@ -1,10 +1,10 @@
 #include "Audio/AudioPlayer.h"
-#include "LED/LED.h"
 
 unsigned int PlayNote(int notes)
 {
 	unsigned int returnValue = 0;
 
+	//Used to select the good audio file
 	switch(notes)
 	{
 		case VAL_DO1:
