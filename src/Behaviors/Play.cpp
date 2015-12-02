@@ -54,6 +54,9 @@ GameStates playMenu()
 		LCD_Printf("2- appuie sur le bouton du centre pour apprendre une piece de piano,\n"); // bumper rear
 		LCD_Printf("3- ou appuie sur le bouton de droite pour jouer librement du piano"); // bumper right
 
+		if(streamID != -1)
+			AUDIO_StopPlayback(streamID);
+
 		streamID = AUDIO_PlayFile(VOIX_MENU);
 
 		timerOut = SYSTEM_ReadTimerMSeconds();
@@ -77,7 +80,7 @@ GameStates playMenu()
 			}
 
 
-			if(SYSTEM_ReadTimerMSeconds() - timerOut == 60000)
+			if(SYSTEM_ReadTimerMSeconds() - timerOut >= 60000)
 				return ExitGames;
 
 			THREAD_MSleep(100);
@@ -93,7 +96,7 @@ GameStates playMenu()
 			LCD_ClearAndPrint("Voulais-tu vraiment le mode libre?\n");
 			AUDIO_PlayFile(VOIX_CONFIRMATION_FREE);
 			THREAD_MSleep(1500);
-			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+			streamID = AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
 		}
 		else if (game == Sequence)
 		{
@@ -101,8 +104,8 @@ GameStates playMenu()
 			streamID = -1;
 			LCD_ClearAndPrint("Voulais-tu vraiment le mode sequence?\n");
 			AUDIO_PlayFile(VOIX_CONFIRMATION_SEQUENCE);
-			THREAD_MSleep(1000);
-			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+			THREAD_MSleep(1500);
+			streamID = AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
 		}
 		else if (game == Repeat)
 		{
@@ -111,7 +114,7 @@ GameStates playMenu()
 			LCD_ClearAndPrint("Voulais-tu vraiment le mode jouer?");
 			AUDIO_PlayFile(VOIX_CONFIRMATION_REPEAT);
 			THREAD_MSleep(2000);
-			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+			streamID = AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
 		}
 
 		LCD_Printf("Appuie sur le bouton de gauche pour oui et le bouton du centre pour non\n");
@@ -131,13 +134,15 @@ GameStates playMenu()
 				confirmed = false;
 			}
 
-			if(SYSTEM_ReadTimerMSeconds() - timerOut == 60000)
-				return ExitGames;
+			if(SYSTEM_ReadTimerMSeconds() - timerOut >= 60000)
+							return ExitGames;
 
 			THREAD_MSleep(100);
 		}
 		internalConfirmed = false;
 	}
+
+
 
 	if(streamID != -1)
 		AUDIO_StopPlayback(streamID);

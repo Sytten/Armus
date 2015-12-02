@@ -6,7 +6,8 @@ bool freePlay()
 	AUDIO_PlayFile(VOIX_FREE);
 	LCD_ClearAndPrint("Je t'ecoute!\n");
 	LCD_ClearAndPrint("Appuie sur un des trois boutons pour revenir au menu.\n");
-	THREAD_MSleep(3000);;
+	THREAD_MSleep(3000);
+	LCD_PrintBmp(CHAPEAU);
 
 	PianoStream stream;
 
@@ -35,6 +36,9 @@ bool freePlay()
 		if(ButtonStatus(1) == 1 || ButtonStatus(2) == 1 || ButtonStatus(3) == 1)
 			break;
 	}
+
+	ResetStream(&stream);
+	PlayAndStopNotes(&stream);
 
 	return true;
 }

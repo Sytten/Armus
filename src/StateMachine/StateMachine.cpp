@@ -13,26 +13,20 @@ int run()
 		{
 			case Wander:
 				wander();
-				robotState = Play;
+				robotState = TowardPlayer;
 				break;
-
 			case TowardPlayer:
 				towardPlayer();
 				robotState = Play;
 				break;
-
 			case Play:
 				play();
 				robotState = Wander;
 				break;
-
 			case Stay:
 				stay();
 				robotState = Play;
 				break;
-
-
-
 			default: //In case something goes wrong in our code
 				Print_Debug_Data("Error in state execution",DEBUG_CODE);
 				robotState = Exit;

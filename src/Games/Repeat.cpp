@@ -12,6 +12,8 @@ void repeatSongSelection()
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
 
+	LCD_PrintBmp(CHAPEAU);
+
 	int songSelect = rand()%3 + 1;
 
 	switch (songSelect)

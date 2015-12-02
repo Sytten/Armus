@@ -14,6 +14,7 @@
 #include "Audio/AudioPlayer.h"
 #include "Audio/Notes.h"
 
+//Represents à pressed note
 struct Note
 {
 	bool keyPressed;

@@ -12,7 +12,7 @@ bool PlayAndStopNotes(PianoStream* stream)
 
 				if(stream->streamID != -1)
 				{
-					THREAD_MSleep(40);
+					THREAD_MSleep(100);
 					StopNote(stream->streamID);
 				}
 

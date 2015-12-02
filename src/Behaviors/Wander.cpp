@@ -16,8 +16,6 @@ void wander()
 
 	while(!finished)
 	{
-
-
 		if(AUDIO_IsPlaybackDone(soundID) && (timer + 3000 < SYSTEM_ReadTimerMSeconds()))
 		{
 			soundID = AUDIO_PlayFile(VOIX_WANDER);
@@ -38,9 +36,9 @@ void wander()
 		}*/
 
 		//roll(&rollData);
-		/*distanceToPlayer = SONAR_Detect(1);
-		if(distanceToPlayer > 0.1 && distanceToPlayer < 40.0)
-			finished = true;*/
+		distanceToPlayer = SONAR_Detect(1);
+		if(distanceToPlayer > 0.1 && distanceToPlayer < 50.0)
+			finished = true;
 
 		notes = readMux(9, 10, 15, 16);
 		if (notes != 255)

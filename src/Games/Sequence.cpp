@@ -42,6 +42,8 @@ bool sequence()
 	LCD_Printf("3\n");
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
+	THREAD_MSleep(1000);
+	LCD_PrintBmp(CHAPEAU);
 
 	while(currentNote < song.size)
 	{
