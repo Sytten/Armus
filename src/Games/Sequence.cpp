@@ -6,8 +6,6 @@
 
 bool sequence()
 {
-	AUDIO_PlayFile(VOIX_SEQUENCE);
-
 	SongSequenceData song = readSongFile(PATH_FLINSTONES);
 
 	PianoStream stream;
@@ -33,7 +31,10 @@ bool sequence()
 	bool wasCorrect = false;
 	char readValue;
 
-	LCD_ClearAndPrint("Bonne chance!\n");
+	LCD_ClearAndPrint("Rejoue la suite de notes!\n");
+	LCD_ClearAndPrint("Appuie sur un des trois boutons pour revenir au menu.\n");
+	AUDIO_PlayFile(VOIX_SEQUENCE);
+
 	LCD_Printf("1\n");
 	THREAD_MSleep(1000);
 	LCD_Printf("2\n");

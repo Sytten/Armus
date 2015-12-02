@@ -44,15 +44,17 @@ GameStates playMenu()
 	bool internalConfirmed = false;
 	float timerOut = 0;
 
+	int streamID = -1;
+
 	while(!confirmed)
 	{
 
 		LCD_ClearAndPrint("Choisis ton mode de jeu!\n");
-		LCD_Printf("1- Teste ta memoire\n"); // bumper front
-		LCD_Printf("2- Apprends une chanson\n"); // bumper rear
-		LCD_Printf("3- Joue librement"); // bumper right
+		LCD_Printf("1- Appuie sur le bouton de gauche pour tester ta memoire,\n"); // bumper front
+		LCD_Printf("2- appuie sur le bouton du centre pour apprendre une piece de piano,\n"); // bumper rear
+		LCD_Printf("3- ou appuie sur le bouton de droite pour jouer librement du piano"); // bumper right
 
-		AUDIO_PlayFile(VOIX_MENU);
+		streamID = AUDIO_PlayFile(VOIX_MENU);
 
 		timerOut = SYSTEM_ReadTimerMSeconds();
 
@@ -84,15 +86,35 @@ GameStates playMenu()
 		internalConfirmed = false;
 		timerOut = SYSTEM_ReadTimerMSeconds();
 
-		LCD_ClearAndPrint("Il reste seulement a confimer ton choix\n");
 		if (game == Free)
-			LCD_ClearAndPrint("Tu desire jouer en mode libre\n");
+		{
+			AUDIO_StopPlayback(streamID);
+			streamID = -1;
+			LCD_ClearAndPrint("Voulais-tu vraiment le mode libre?\n");
+			AUDIO_PlayFile(VOIX_CONFIRMATION_FREE);
+			THREAD_MSleep(1500);
+			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+		}
 		else if (game == Sequence)
-			LCD_ClearAndPrint("Tu desire pratiquer ta memoire\n");
+		{
+			AUDIO_StopPlayback(streamID);
+			streamID = -1;
+			LCD_ClearAndPrint("Voulais-tu vraiment le mode sequence?\n");
+			AUDIO_PlayFile(VOIX_CONFIRMATION_SEQUENCE);
+			THREAD_MSleep(1000);
+			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+		}
 		else if (game == Repeat)
-			LCD_ClearAndPrint("Tu desire apprendre une chansonn");
+		{
+			AUDIO_StopPlayback(streamID);
+			streamID = -1;
+			LCD_ClearAndPrint("Voulais-tu vraiment le mode jouer?");
+			AUDIO_PlayFile(VOIX_CONFIRMATION_REPEAT);
+			THREAD_MSleep(2000);
+			AUDIO_PlayFile(VOIX_CONFIRMATION_OUI);
+		}
 
-		LCD_Printf("C'est ok?\n");
+		LCD_Printf("Appuie sur le bouton de gauche pour oui et le bouton du centre pour non\n");
 		LCD_Printf("1- Oui\n");
 		LCD_Printf("2- Non\n");
 
@@ -116,6 +138,9 @@ GameStates playMenu()
 		}
 		internalConfirmed = false;
 	}
+
+	if(streamID != -1)
+		AUDIO_StopPlayback(streamID);
 
 	return game;
 }

@@ -2,10 +2,11 @@
 
 bool freePlay()
 {
-	AUDIO_PlayFile(VOIX_FREE);
-	LCD_ClearAndPrint("Amuse toi bien!");
-
     AllLED(VERT);
+	AUDIO_PlayFile(VOIX_FREE);
+	LCD_ClearAndPrint("Je t'ecoute!\n");
+	LCD_ClearAndPrint("Appuie sur un des trois boutons pour revenir au menu.\n");
+	THREAD_MSleep(3000);;
 
 	PianoStream stream;
 

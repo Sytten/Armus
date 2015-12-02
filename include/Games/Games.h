@@ -31,11 +31,19 @@
 #define PATH_HYMNE_A_LA_JOIE "/media/usb0/ARMUS/hymnealajoie.txt"
 
 //Voice of Free begining.
-#define VOIX_FREE "/media/usb0/ARMUS/Freeplay.WAV"
-#define VOIX_REPEAT "/media/usb0/ARMUS/Repeat.WAV"
-#define VOIX_SEQUENCE "/media/usb0/ARMUS/Sequence.WAV"
-#define VOIX_MENU "/media/usb0/ARMUS/MenuAntoine.WAV"
-#define EASTER_EGG "/media/usb0/ARMUS/Easteregg.WAV"
+#define VOIX_FREE "Freeplay.wav"
+#define VOIX_REPEAT "Repeat.wav"
+#define VOIX_SEQUENCE "Sequence.wav"
+#define VOIX_MENU "MenuAntoine.wav"
+#define VOIX_CONFIRMATION_FREE "Confirmefree.wav"
+#define VOIX_CONFIRMATION_SEQUENCE "Confirmesequence.wav"
+#define VOIX_CONFIRMATION_REPEAT "Confirmejouer.wav"
+#define VOIX_CONFIRMATION_OUI "Confirme_oui_non.wav"
+#define VOIX_WANDER "Wandervoice.wav"
+
+//images
+#define CHAPEAU "/media/usb0/ARMUS/chapeau.bmp"
+
 
 using namespace std;
 

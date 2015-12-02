@@ -17,6 +17,7 @@
 int main()
 {
 	srand(time(NULL));
+	LCD_SetMonitorMode(MONITOR_OFF);
 
 	return run();
 

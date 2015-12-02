@@ -13,7 +13,7 @@
 #include "Audio/Notes.h"
 #include "Sensors/ReadMux.h"
 
-//Pins représentant les bus de communication avec le PIC16
+//Pins reprï¿½sentant les bus de communication avec le PIC16
 #define COMO 9
 #define CLKO 10
 #define DATO 11
@@ -45,5 +45,7 @@ void OpenLEDForNotes(char noteSequence);
  * Function to control all LED
  */
 void AllLED(char couleur);
+
+void p_allLED(char couleur);
 
 #endif

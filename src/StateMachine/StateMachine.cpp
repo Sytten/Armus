@@ -3,7 +3,7 @@
 int run()
 {
 	//General variables we will need in our program
-	GeneralStates robotState = Play;
+	GeneralStates robotState = Wander;
 
 	//Main state machine of the program, a state is just a way of behaving corresponding to some inputs that we decide
 	while(robotState != Exit)
@@ -13,7 +13,7 @@ int run()
 		{
 			case Wander:
 				wander();
-				robotState = TowardPlayer;
+				robotState = Play;
 				break;
 
 			case TowardPlayer:
@@ -28,7 +28,7 @@ int run()
 
 			case Stay:
 				stay();
-				robotState = Wander;
+				robotState = Play;
 				break;
 
 
