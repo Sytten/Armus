@@ -6,7 +6,7 @@
 
 bool sequence()
 {
-	int songSelect = rand()%4 + 1;
+	int songSelect = rand()%3 + 1;
 	SongSequenceData song;
 	switch (songSelect)
 	{
@@ -17,9 +17,6 @@ bool sequence()
 			song = readSongFile(PATH_FLINSTONES);
 			break;
 		case 3:
-			song = readSongFile(PATH_STAR_WARS);
-			break;
-		case 4:
 			song = readSongFile(PATH_CONTEMPORAIN);
 			break;
 		default:
@@ -62,8 +59,11 @@ bool sequence()
 	LCD_Printf("GO!!!\n");
 	THREAD_MSleep(1000);
 
+	//While the current note is lower positioned than the song size
 	while(currentNote < song.size)
 	{
+		//Repeat for each song beneath the current note
+		//This plays the current sequence at which the player is, and shows on the LEDs what note it is
 		for(int i = 0; i < song.size && i < currentNote; i++)
 		{
 			for(int j = 7; j >= 0; j--)
@@ -85,6 +85,7 @@ bool sequence()
 		}
 		AllLED(ETEINDRE);
 
+		//Waits in iteration for all notes to be repeated by the player
 		for(int i = 0; i < song.size && i < currentNote; i++)
 		{
 			wasCorrect = false;

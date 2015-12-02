@@ -47,7 +47,6 @@
 //images
 #define CHAPEAU "/media/usb0/ARMUS/chapeau.bmp"
 
-
 using namespace std;
 
 #define PIANO_SIZE 8
@@ -55,7 +54,7 @@ using namespace std;
 /**
  * Freeplay game mode
  */
-bool freePlay();
+void freePlay();
 
 /**
  * Sequence repeating game mode
@@ -93,10 +92,5 @@ struct SongSequenceData{
  * @param file_name Name of the file to read. Absolute path is necessary
  */
 SongSequenceData readSongFile(const char* file_name);
-
-////DEPRECATED FONCTIONS
-void ClaireFontaine();
-void HymneALaJoie();
-void StarWars();
 
 #endif /* GAMES_H_ */

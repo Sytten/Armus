@@ -12,6 +12,7 @@ void repeatSongSelection()
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
 
+	//Random number to select the song to play
 	int songSelect = rand()%4 + 1;
 
 	switch (songSelect)
@@ -53,10 +54,10 @@ void repeat(const char * path)
 
 	AUDIO_SetVolume(50);
 
-	SongSequenceData song = readSongFile(path);		//Song qui represente le fichier du morceau
+	SongSequenceData song = readSongFile(path);		//Song which is a representation of the song to play
 
-	char readValue;				//Valeur lue sur le multiplexeur
-	float noteStartTime;		//float representant le depart de la programmation
+	char readValue;				//Mux read value for the piano notes
+	float noteStartTime;		//Represents the start of the note to keep up with time
 
 	for(int i = 0; i < song.size; i++)
 	{

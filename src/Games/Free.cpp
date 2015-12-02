@@ -1,6 +1,6 @@
 #include "Games/Games.h"
 
-bool freePlay()
+void freePlay()
 {
     AllLED(VERT);
 	AUDIO_PlayFile(VOIX_FREE);
@@ -26,6 +26,7 @@ bool freePlay()
 
 	AUDIO_SetVolume(50);
 
+	//Infinite loop until the buttons call break
 	while(1)
 	{
 		CheckPressedKeys(&stream);
@@ -36,9 +37,8 @@ bool freePlay()
 			break;
 	}
 
+	//Assure the piano has stopped playing sounds
 	ResetStream(&stream);
 	PlayAndStopNotes(&stream);
-
-	return true;
 }
 
