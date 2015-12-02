@@ -37,10 +37,11 @@ void play()
 	}
 }
 
-
 GameStates playMenu()
 {
+	//Closes all LEDs
 	AllLED(ETEINDRE);
+
 	GameStates game = Menu;
 	bool confirmed = false;
 	bool internalConfirmed = false;
@@ -50,7 +51,7 @@ GameStates playMenu()
 
 	while(!confirmed)
 	{
-
+		//Draw menu
 		LCD_ClearAndPrint("Choisis ton mode de jeu!\n");
 		LCD_Printf("1- Appuie sur le bouton de gauche pour tester ta memoire,\n"); // bumper front
 		LCD_Printf("2- appuie sur le bouton du centre pour apprendre une piece de piano,\n"); // bumper rear

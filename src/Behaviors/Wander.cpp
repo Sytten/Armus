@@ -8,12 +8,11 @@ void wander()
 	float distanceToPlayer = 0;
 	char notes;
 
-	/*RollVariables rollData;
-	rollData.distance = 1000000;
-	rollData.firstTime = true;*/
+	//Make the robot turn right
 	MOTOR_SetSpeed(MOTOR_LEFT, 70);
 	MOTOR_SetSpeed(MOTOR_RIGHT, 50);
 
+	//While a player has not been detected or the player has not touched a note
 	while(!finished)
 	{
 		if(AUDIO_IsPlaybackDone(soundID) && (timer + 3000 < SYSTEM_ReadTimerMSeconds()))
@@ -22,20 +21,6 @@ void wander()
 			timer = SYSTEM_ReadTimerMSeconds();
 		};
 
-		/*if(isLeftDetect() && !isRightDetect()){
-			spinXDegreesByHoles(SPIN_RIGHT, 100);
-			roll(20);
-		}
-		else if(isRightDetect() && !isLeftDetect()){
-			spinXDegreesByHoles(SPIN_LEFT, 100);
-			roll(20);
-		}
-		else if(isCenterDetect()){
-			spinXDegreesByHoles(SPIN_LEFT, 180);
-			roll(70);
-		}*/
-
-		//roll(&rollData);
 		distanceToPlayer = SONAR_Detect(1);
 		if(distanceToPlayer > 0.1 && distanceToPlayer < 50.0)
 			finished = true;
@@ -51,6 +36,8 @@ void wander()
 	}
 
 	AUDIO_StopPlayback(soundID);
+
+	//Stop the motors
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
 	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
 }
