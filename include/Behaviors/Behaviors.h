@@ -20,7 +20,7 @@
 void wander();
 
 /**
- * TODO
+ * State in which the robot turns to find the player who pressed his notes to indicate the will to play
  */
 void towardPlayer();
 
@@ -28,6 +28,11 @@ void towardPlayer();
  * State in which the games are played
  */
 void play();
+
+/**
+ * Game menu function, that returns a value to select the good game mode
+ */
+GameStates playMenu();
 
 /**
  * State in which the robot is immobilized

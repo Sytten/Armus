@@ -1,13 +1,14 @@
 #include "Behaviors/Behaviors.h"
 
-GameStates playMenu();
-
 void play()
 {
-	bool presence = true;
+	//Is a value that indicates if the robot hasn't had enoughe input to stay immobile
+	bool timeOut = false;
+	//Intitial game mode
 	GameStates gameMode = Menu;
 
-	while (presence)
+	//While the timeout is not attained
+	while (!timeOut)
 	{
 		switch(gameMode)
 		{
@@ -27,7 +28,7 @@ void play()
 				gameMode = Menu;
 				break;
 			case ExitGames:
-				presence = false;
+				timeOut = true;
 				break;
 			default:
 				gameMode = Menu;
@@ -35,6 +36,7 @@ void play()
 		}
 	}
 }
+
 
 GameStates playMenu()
 {

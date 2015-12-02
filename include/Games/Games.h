@@ -29,6 +29,9 @@
 #define PATH_CLAIRE_FONTAINE "/media/usb0/ARMUS/clairefontaine.txt"
 #define PATH_STAR_WARS "/media/usb0/ARMUS/starwars.txt"
 #define PATH_HYMNE_A_LA_JOIE "/media/usb0/ARMUS/hymnealajoie.txt"
+#define PATH_KOKIRI "/media/usb0/ARMUS/kokiri.txt"
+#define PATH_RENNE_NEZ_ROUGE "/media/usb0/ARMUS/renne_nez_rouge.txt"
+#define PATH_CONTEMPORAIN "/media/usb0/ARMUS/contemporain.txt"
 
 //Voice of Free begining.
 #define VOIX_FREE "Freeplay.wav"
@@ -67,7 +70,7 @@ void repeatSongSelection();
 /**
  * Repeat game mode
  */
-void repeat(char * path);
+void repeat(const char * path);
 
 /**
  * Structure that holds a note sequence and a time delay for the note

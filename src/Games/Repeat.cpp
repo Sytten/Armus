@@ -12,9 +12,7 @@ void repeatSongSelection()
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
 
-	LCD_PrintBmp(CHAPEAU);
-
-	int songSelect = rand()%3 + 1;
+	int songSelect = rand()%4 + 1;
 
 	switch (songSelect)
 	{
@@ -27,12 +25,15 @@ void repeatSongSelection()
 		case 3:
 			repeat(PATH_STAR_WARS);
 			break;
+		case 4:
+			repeat(PATH_RENNE_NEZ_ROUGE);
+			break;
 		default:
 			break;
 	}
 }
 
-void repeat(char * path)
+void repeat(const char * path)
 {
 	PianoStream stream;
 

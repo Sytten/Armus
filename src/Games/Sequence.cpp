@@ -6,7 +6,25 @@
 
 bool sequence()
 {
-	SongSequenceData song = readSongFile(PATH_FLINSTONES);
+	int songSelect = rand()%4 + 1;
+	SongSequenceData song;
+	switch (songSelect)
+	{
+		case 1:
+			song = readSongFile(PATH_KOKIRI);
+			break;
+		case 2:
+			song = readSongFile(PATH_FLINSTONES);
+			break;
+		case 3:
+			song = readSongFile(PATH_STAR_WARS);
+			break;
+		case 4:
+			song = readSongFile(PATH_CONTEMPORAIN);
+			break;
+		default:
+			break;
+	}
 
 	PianoStream stream;
 
@@ -43,7 +61,6 @@ bool sequence()
 	THREAD_MSleep(1000);
 	LCD_Printf("GO!!!\n");
 	THREAD_MSleep(1000);
-	LCD_PrintBmp(CHAPEAU);
 
 	while(currentNote < song.size)
 	{
