@@ -25,7 +25,9 @@ struct CorrectionData
 	float RightError;
 };
 
-//Turn
+/**
+ * Turns the robot
+ */
 bool turn(int direction, float degree, struct CorrectionData * error);
 
 //Spin
