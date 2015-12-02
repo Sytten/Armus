@@ -46,6 +46,9 @@ void OpenLEDForNotes(char noteSequence);
  */
 void AllLED(char couleur);
 
+/**
+ * Function that sets all LED to char couleur but does not communicate
+ */
 void p_allLED(char couleur);
 
 #endif
