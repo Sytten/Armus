@@ -1,7 +1,7 @@
 #include "MotorsControl/motorsControl.h"
 #include "MotorsControl/RollVariables.h"
 
-bool rollWithDetection(int distance, bool & firstDetection)
+void rollWithDetection(int distance, bool & firstDetection)
 {
 	int rightSpeed = RIGHT_STARTING_SPEED;
 	int leftSpeed = LEFT_STARTING_SPEED;
@@ -47,12 +47,8 @@ bool rollWithDetection(int distance, bool & firstDetection)
 			doneLeftTicks += leftEncoder;
 			expectedTicks += MOTOR_TARGET_SPEED/2.5;
 
-			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, reads*MOTOR_TARGET_SPEED-doneLeftTicks);
-			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, reads*MOTOR_TARGET_SPEED-doneRightTicks);
-
 			leftSpeed += (MOTOR_TARGET_SPEED/2.5-leftEncoder)*INSTANT_PROPORTIONALITY/2.5+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY/2.5;
 			rightSpeed += (MOTOR_TARGET_SPEED/2.5-rightEncoder)*INSTANT_PROPORTIONALITY/2.5+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY/2.5;
-			//LCD_Printf("LeftSpeed: %d\t RightSpeed: %d\n", leftSpeed, rightSpeed);
 		}
 
 		else
@@ -64,29 +60,22 @@ bool rollWithDetection(int distance, bool & firstDetection)
 
 			leftEncoder = ENCODER_Read(ENCODER_LEFT);
 			rightEncoder = ENCODER_Read(ENCODER_RIGHT);
-			//LCD_Printf("Left: %d\t Right: %d\n", leftEncoder, rightEncoder);
 
 			doneRightTicks += rightEncoder;
 			doneLeftTicks += leftEncoder;
 			expectedTicks += MOTOR_TARGET_SPEED;
 
-			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-leftEncoder, expectedTicks-doneLeftTicks);
-			//LCD_Printf("Instant: %d\tLong: %d\n", MOTOR_TARGET_SPEED-rightEncoder, expectedTicks-doneRightTicks);
-
 			leftSpeed += (MOTOR_TARGET_SPEED-leftEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneLeftTicks)*LONG_PROPORTIONALITY;
 			rightSpeed += (MOTOR_TARGET_SPEED-rightEncoder)*INSTANT_PROPORTIONALITY+(expectedTicks-doneRightTicks)*LONG_PROPORTIONALITY;
-			//LCD_Printf("Left: %d\t Right: %d\n", leftSpeed, rightSpeed);
 		}
 	}
 
 	//Stop robot
 	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
-
-	return true;
 }
 
-bool roll(int distance)
+void roll(int distance)
 {
 	int rightSpeed = RIGHT_STARTING_SPEED;
 	int leftSpeed = LEFT_STARTING_SPEED;
@@ -157,11 +146,9 @@ bool roll(int distance)
 	//Stop robot
 	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
-
-	return true;
 }
 
-bool roll(RollVariables *data)
+void roll(RollVariables *data)
 {
 	static float lastMS = 0;
 
@@ -214,6 +201,4 @@ bool roll(RollVariables *data)
 	//Stop robot
 	MOTOR_SetSpeed(MOTOR_RIGHT, 0);
 	MOTOR_SetSpeed(MOTOR_LEFT, 0);
-
-	return true;
 }

@@ -1,42 +1,41 @@
 #include "MotorsControl/motorsControl.h"
 
-bool spinXDegrees(int direction, float degree)
+void spinXDegrees(int direction, float degree)
 {
 
-	//Variables de timing pour ralentir les lectures d'encodeur
+	//Timing variables
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Distance que les roues doivent tourner pour faire une rotation de X degree
-	float distanceToTravel = distanceForDegree(degree) ;		// Définition de la distance d'un degrée.
+	//Distance the wheels need to travel
+	float distanceToTravel = distanceForDegree(degree);
 
-	// Définition des valeurs des distances parcourues Temporaire.
+	//Variables to keep up of the progress
 	float leftTravel = 0;
 	float rightTravel = 0;
 
-	// Variable des encodeurs pour se souvenir des distances.
+	//Encoder read value variables
 	int encoderValLeft = 0;
 	int encoderValRight = 0;
 
-	// Vitesse initial des moteurs par default
+	//Default motor speeds
 	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
 	int speedMotorRight = MOTOR_DEFAULT_SPEED;
 
 	float averageDistance = 0;
 
-	// On réinitialise les moteurs a 0.
+	//Init motors at 0 speed
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
-	// On lit la valeur de chaque encodeurs.
+	//Init encoder values by reading them
 	ENCODER_Read(ENCODER_LEFT);
 	ENCODER_Read(ENCODER_RIGHT);
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
-	//LCD_Printf("\n# distancetodo :%f cm\n",distanceToTravel);
-	// On comptabilise la distance parcouru pour un deg.
+
+	// While distance travelled is not as much as the objective
 	while(leftTravel <= distanceToTravel &&  rightTravel <= distanceToTravel)
-	//while(averageDistance <= distanceToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -51,7 +50,7 @@ bool spinXDegrees(int direction, float degree)
 
 		currentMS = SYSTEM_ReadTimerMSeconds();
 
-		//Si le delai d'execution est depasse
+		//If the execution delay of the encoder read time is passed
 		if(currentMS >= lastMS + READING_CYCLE_DELAY)
 		{
 			encoderValLeft += ENCODER_Read(ENCODER_LEFT);
@@ -75,50 +74,48 @@ bool spinXDegrees(int direction, float degree)
 		averageDistance = (rightTravel + leftTravel) * 0.5;
 	}
 
-	// On arrete les moteurs a 0.
+	//Init motors to 0 for safety
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
-
-	return true;
 }
 
 /********************************************************************************************************************************************/
 
-bool spinXDegreesByHoles(int direction, float degree)
+void spinXDegreesByHoles(int direction, float degree)
 {
-	//Variables de timing pour ralentir les lectures d'encodeur
+	//Timing variables
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantit� de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
-	float holesToTravel = holesForDistance(distanceForDegree(degree));		// D�finition de la distance d'un degr�e.
+	//Holes to travel
+	float holesToTravel = holesForDistance(distanceForDegree(degree));
 
-	// D�finition des valeurs des distances parcourues Temporaire.
+	//Values to keep track of progress
 	int holesLeft = 0;
 	int holesRight = 0;
 
-	// Variable des encodeurs pour se souvenir des distances.
+	//Encoder variables
 	int encoderValLeft = 0;
 	int encoderValRight = 0;
 
-	// Vitesse initial des moteurs par default
+	//Set default
 	int speedMotorLeft = MOTOR_DEFAULT_SPEED;
 	int speedMotorRight = MOTOR_DEFAULT_SPEED;
 
 	float holesAverage = 0;
 
-	// On r�initialise les moteurs a 0.
+	//Init motors at 0
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
-	// On lit la valeur de chaque encodeurs.
+	//Init encoder reading
 	ENCODER_Read(ENCODER_LEFT);
 	ENCODER_Read(ENCODER_RIGHT);
 
 	currentMS = lastMS = SYSTEM_ReadTimerMSeconds();
 
+	// While distance travelled is not as much as the objective
 	while(holesLeft <= holesToTravel &&  holesRight <= holesToTravel)
-	//while(holesAverage < holesToTravel)
 	{
 		if (direction == SPIN_LEFT)
 		{
@@ -132,7 +129,7 @@ bool spinXDegreesByHoles(int direction, float degree)
 		}
 		currentMS = SYSTEM_ReadTimerMSeconds();
 
-		//Si le delai d'execution est depasse
+		//IF execution delay is passed
 		if(currentMS >= lastMS + READING_CYCLE_DELAY)
 		{
 			encoderValLeft = ENCODER_Read(ENCODER_LEFT);
@@ -150,5 +147,4 @@ bool spinXDegreesByHoles(int direction, float degree)
 		}
 
 	}
-	return true;
 }

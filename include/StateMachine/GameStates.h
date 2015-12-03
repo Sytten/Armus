@@ -10,6 +10,9 @@
 #ifndef GAMESTATES_H_
 #define GAMESTATES_H_
 
+/**
+ * Contains all game state
+ */
 enum GameStates
 {
 	Free = 0,

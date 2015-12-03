@@ -10,6 +10,9 @@
 #ifndef GENERALSTATES_H_
 #define GENERALSTATES_H_
 
+/*
+ * General robot states
+ */
 enum GeneralStates
 {
 	Wander = 0,

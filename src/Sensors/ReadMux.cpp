@@ -17,6 +17,8 @@ char readMux(int z2, int z1, int s1, int s0)
 			DIGITALIO_Write(s1, i);
 			DIGITALIO_Write(s0, j);
 
+			//Use the I and J values to bit shift into the char 8-bit representation of the piano notes
+			//Using I and J, the notes are placed appropriately
 			returnValue |= (DIGITALIO_Read(z2) << 7 - ((2 * i) + j));
 			returnValue |= (DIGITALIO_Read(z1) << 3 - ((2 * i) + j));
 		}
@@ -36,7 +38,6 @@ bool isNotePressed(int note, char noteValues)
 
 	return returnedValue;
 }
-
 
 void CheckPressedKeys(PianoStream * stream)
 {

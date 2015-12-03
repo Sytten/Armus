@@ -1,20 +1,20 @@
 #include "MotorsControl/motorsControl.h"
 
-bool turn(int direction, float degree, struct CorrectionData * error)
+void turn(int direction, float degree, struct CorrectionData * error)
 {
-	//Variables de timing pour ralentir les lectures d'encodeur
+	//Timing variables
 	float lastMS = 0;
 	float currentMS = 0;
 
-	//Quantite de trous d'encodeur que les roues doivent tourner pour faire une rotation de X degree
+	//Number of holes to travel
 	float holesToTravel = holesForTurn(degree);
-	//LCD_Printf("%d HOLES : ", holesToTravel);
-	// Definition des valeurs des distances parcourues Temporaire.
+
+	// Values to use to follow progress
 	int holesTravelled = 0;
 	int wheel;
 	int encoder;
 
-	// Vitesse initial des moteurs par default
+	// Set initial motor speed
 	int speedMotor = MOTOR_DEFAULT_SPEED;
 
 	if(SPIN_LEFT == direction)
@@ -30,11 +30,11 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 		holesToTravel += (error->LeftError - error->RightError);
 	}
 
-	// On r�initialise les moteurs a 0.
+	//Reinitialise the motor speeds
 	MOTOR_SetSpeed (MOTOR_LEFT,0);
 	MOTOR_SetSpeed (MOTOR_RIGHT,0);
 
-	// On lit la valeur de chaque encodeurs.
+	//Read encoder values
 	ENCODER_Read(ENCODER_LEFT);
 	ENCODER_Read(ENCODER_RIGHT);
 
@@ -44,7 +44,7 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 	{
 		currentMS = SYSTEM_ReadTimerMSeconds();
 		MOTOR_SetSpeed(wheel, speedMotor);
-		//Si le delai d'execution est depasse
+		//If execution delay is passed
 		if(currentMS >= lastMS + READING_CYCLE_DELAY)
 		{
 			holesTravelled += ENCODER_Read(encoder);
@@ -65,45 +65,4 @@ bool turn(int direction, float degree, struct CorrectionData * error)
 	}
 
 	MOTOR_SetSpeed(wheel, 0);
-
-	return true;
 }
-
-/*int stateTurn(Robot * robus)
-{
-	int currentMS = SYSTEM_ReadTimerMSeconds();
-	float wheelTicks = holesForTurn(robus->StateDegree);
-
-	if(robus->StateDirection == TURN_LEFT)
-	{
-		if(robus->MotorRightEncoderTotal >= wheelTicks)
-		{
-			robus->MotorLeftSpeed = 0;
-			robus->MotorRightSpeed = 0;
-			return FINISHED_TURNING;
-		}
-
-		robus->MotorRightSpeed = MOTOR_DEFAULT_SPEED;
-		robus->MotorLeftSpeed = 0;
-		return CHANGED_SPEED;
-	}
-	else if(robus->StateDirection == TURN_RIGHT)
-	{
-		if(robus->MotorLeftEncoderTotal >= wheelTicks)
-		{
-			robus->MotorLeftSpeed = 0;
-			robus->MotorRightSpeed = 0;
-			return FINISHED_TURNING;
-		}
-
-		robus->MotorLeftSpeed = MOTOR_DEFAULT_SPEED;
-		robus->MotorRightSpeed = 0;
-		return CHANGED_SPEED;
-	}
-	else
-	{
-		return FINISHED_TURNING;
-	}
-
-	return NOTHING_DONE;
-}*/

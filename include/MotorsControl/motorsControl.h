@@ -26,19 +26,47 @@ struct CorrectionData
 };
 
 /**
- * Turns the robot
+ * Turns the robot in a direction of a certain number of degrees
+ * @param direction The direction to go
+ * @param degree The number of degrees to turn
+ * @param error The error correction structure
  */
-bool turn(int direction, float degree, struct CorrectionData * error);
+void turn(int direction, float degree, struct CorrectionData * error);
 
-//Spin
-bool spinXDegrees(int direction, float degree);
-bool spinXDegreesByHoles(int direction, float degree);
+/**
+ * Spins the robot on itself
+ * This function uses and does its verification based on distance
+ * @param direction The direction to take
+ * @param degree The number of degrees to turn
+ */
+void spinXDegrees(int direction, float degree);
 
+/**
+ * Spins the robot on itself
+ * This function uses and does its verification based on the number of encoder holes
+ * @param direction The direction to take
+ * @param degree The number of degrees to turn
+ */
+void spinXDegreesByHoles(int direction, float degree);
 
-//Roll
-bool roll(int distance);
-bool roll(RollVariables *data);
-bool rollWithDetection(int distance, bool & firstDetection);
+/**
+ * Robot rolls for the distance given. This is a blocking function
+ * @param distance Distance in centimeters to roll for
+ */
+void roll(int distance);
+
+/**
+ * Robot rolls for the distance given. This is not a blocking function
+ * @param data Roll variables
+ */
+void roll(RollVariables *data);
+
+/**
+ * Robot rolls but with added detection with the connected sonar. This is a blocking function
+ * @param distance Distance in centimeters to roll for
+ * @param firstDetection Variable to modify if a detection happens
+ */
+void rollWithDetection(int distance, bool & firstDetection);
 
 #endif /* MOTORSCONTROL_H_ */
 

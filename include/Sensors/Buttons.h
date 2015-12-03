@@ -12,6 +12,11 @@
 
 #include <libarmus.h>
 
+/**
+ * Reads the status of the buttons on the front interface
+ * @param number Button number to read
+ * @return Value of the state of the button
+ */
 int ButtonStatus(int number);
 
 #endif /* BUTTONS_H_ */

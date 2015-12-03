@@ -16,12 +16,40 @@
 #define CENTER_LINE_DETECT 16
 #define RIGHT_LINE_DETECT 15
 
+/*
+ * Function that reads the line detector and returns if a line is detected
+ * @return True if there is a line, false if not
+ */
 bool isLeftDetect();
+
+/*
+ * Function that reads the line detector and returns if a line is detected
+ * @return True if there is a line, false if not
+ */
 bool isCenterDetect();
+
+/*
+ * Function that reads the line detector and returns if a line is detected
+ * @return True if there is a line, false if not
+ */
 bool isRightDetect();
 
+/*
+ * Function that reads the line detector and returns if a line is detected
+ * @return True if there is a line, false if not
+ */
 bool isCentered();
+
+/*
+ * Function that reads the line detector and returns true if a line is not detected
+ * @return True if there is a line, false if not
+ */
 bool detectNoLine();
+
+/*
+ * Function that reads the line detector and returns true if all sensors read a line
+ * @return True if there is a line, false if not
+ */
 bool detectFull();
 
 #endif /* LINEDETECTION_H_ */

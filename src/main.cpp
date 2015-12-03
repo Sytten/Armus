@@ -12,8 +12,6 @@
 
 #include "StateMachine/StateMachine.h"
 
-
-
 int main()
 {
 	srand(time(NULL));
